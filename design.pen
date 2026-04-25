@@ -808,6 +808,2691 @@
           "height": 8
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "mOXtk",
+      "x": 3020,
+      "y": 3600,
+      "name": "Slide 1 — The Chaos",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#000000",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "EZhtr",
+          "x": 1400,
+          "y": -180,
+          "name": "wm1",
+          "opacity": 0.04,
+          "fill": "#FFFFFF",
+          "content": "!",
+          "fontFamily": "Inter",
+          "fontSize": 800,
+          "fontWeight": "900"
+        },
+        {
+          "type": "rectangle",
+          "id": "Qc0bb",
+          "x": 0,
+          "y": 0,
+          "name": "s1acc",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "NCETc",
+          "x": 120,
+          "y": 120,
+          "name": "s1cnt",
+          "width": 1680,
+          "height": 840,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "n42Ij",
+              "name": "s1top",
+              "fill": "#00000000",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "W0wfz",
+                  "name": "s1sq",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "s12b6",
+                  "name": "s1tag",
+                  "fill": "#FFFFFF",
+                  "content": "01 / THE CHAOS",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "9enQu",
+              "name": "s1ttl",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "84rZi",
+                  "name": "s1l1",
+                  "fill": "#FFFFFF",
+                  "content": "THE CHAOS.",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 220,
+                  "fontWeight": "900",
+                  "letterSpacing": -8
+                },
+                {
+                  "type": "text",
+                  "id": "SVVnX",
+                  "name": "s1l2",
+                  "fill": "#666666",
+                  "content": "BEFORE THE PLATFORM.",
+                  "lineHeight": 1,
+                  "fontFamily": "Inter",
+                  "fontSize": 72,
+                  "fontWeight": "900",
+                  "letterSpacing": -3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "n2R3t",
+              "name": "s1bot",
+              "width": "fill_container",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "kWYTk",
+                  "name": "s1bar",
+                  "fill": "#FFFFFF",
+                  "width": 120,
+                  "height": 6
+                },
+                {
+                  "type": "text",
+                  "id": "bWRzD",
+                  "name": "s1sub",
+                  "fill": "#AAAAAA",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "What happens when platform teams become the bottleneck — and how to think differently.",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "3R6Hf",
+          "x": 1720,
+          "y": 1060,
+          "name": "s1crn",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "SOT8B",
+          "x": 1780,
+          "y": 160,
+          "name": "s1d1",
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "1Jfal",
+          "x": 1820,
+          "y": 160,
+          "name": "s1d2",
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "l9AP7",
+          "x": 1860,
+          "y": 160,
+          "name": "s1d3",
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "ZGep3",
+          "x": 1780,
+          "y": 200,
+          "name": "s1d4",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "YdsNg",
+          "x": 1820,
+          "y": 200,
+          "name": "s1d5",
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "YO5x2",
+          "x": 1860,
+          "y": 200,
+          "name": "s1d6",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "3AOM8",
+          "x": 1780,
+          "y": 240,
+          "name": "s1d7",
+          "opacity": 0.2,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "YQHHj",
+          "x": 1820,
+          "y": 240,
+          "name": "s1d8",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "dadXC",
+          "x": 1860,
+          "y": 240,
+          "name": "s1d9",
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "4aGHE",
+      "x": 7060,
+      "y": 3600,
+      "name": "Slide 3 — Who Do You Call",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#000000",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "aOmdw",
+          "x": 1280,
+          "y": -60,
+          "name": "wm3",
+          "opacity": 0.05,
+          "fill": "#FFFFFF",
+          "content": "?",
+          "fontFamily": "Inter",
+          "fontSize": 700,
+          "fontWeight": "900"
+        },
+        {
+          "type": "rectangle",
+          "id": "FSLeK",
+          "x": 1912,
+          "y": 0,
+          "name": "s3acc",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "tHNr8",
+          "x": 120,
+          "y": 120,
+          "name": "s3cnt",
+          "width": 1680,
+          "height": 840,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "N1smO",
+              "name": "s3tagg",
+              "fill": "#00000000",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "UStME",
+                  "name": "s3sq",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "szCGd",
+                  "name": "s3tag",
+                  "fill": "#FFFFFF",
+                  "content": "01 / THE CHAOS",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "kS0OV",
+              "name": "s3stmt",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "V4cDV",
+                  "name": "s3l1",
+                  "fill": "#FFFFFF",
+                  "content": "WHO DO",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 200,
+                  "fontWeight": "900",
+                  "letterSpacing": -8
+                },
+                {
+                  "type": "text",
+                  "id": "ROc0c",
+                  "name": "s3l2",
+                  "fill": "#666666",
+                  "content": "YOU",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 200,
+                  "fontWeight": "900",
+                  "letterSpacing": -8
+                },
+                {
+                  "type": "text",
+                  "id": "41CCL",
+                  "name": "s3l3",
+                  "fill": "#FFFFFF",
+                  "content": "CALL?",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 200,
+                  "fontWeight": "900",
+                  "letterSpacing": -8
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "FjqCZ",
+              "name": "s3bot",
+              "width": "fill_container",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "HsDCw",
+                  "name": "s3bar",
+                  "fill": "#FFFFFF",
+                  "width": 120,
+                  "height": 6
+                },
+                {
+                  "type": "text",
+                  "id": "8cny3",
+                  "name": "s3sub",
+                  "fill": "#AAAAAA",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "When your team needs infrastructure. Today. Not next week.",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "fokph",
+          "x": 0,
+          "y": 1060,
+          "name": "s3crn",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "7UgY2",
+          "x": 60,
+          "y": 160,
+          "name": "s3dl1",
+          "opacity": 0.2,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "XMWVX",
+          "x": 60,
+          "y": 200,
+          "name": "s3dl2",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "JGfL4",
+          "x": 60,
+          "y": 240,
+          "name": "s3dl3",
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "5NOOU",
+      "x": 11100,
+      "y": 3600,
+      "name": "Slide 5 — Every Snowflake",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#000000",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "Ho4qg",
+          "x": 1520,
+          "y": 750,
+          "name": "ast3",
+          "opacity": 0.05,
+          "fill": "#FFFFFF",
+          "content": "*",
+          "fontFamily": "Inter",
+          "fontSize": 200,
+          "fontWeight": "900"
+        },
+        {
+          "type": "text",
+          "id": "CpMSB",
+          "x": 1780,
+          "y": 480,
+          "name": "ast2",
+          "opacity": 0.07,
+          "fill": "#FFFFFF",
+          "content": "*",
+          "fontFamily": "Inter",
+          "fontSize": 80,
+          "fontWeight": "900"
+        },
+        {
+          "type": "text",
+          "id": "4Kejj",
+          "x": 1650,
+          "y": 650,
+          "name": "ast1",
+          "opacity": 0.1,
+          "fill": "#FFFFFF",
+          "content": "*",
+          "fontFamily": "Inter",
+          "fontSize": 140,
+          "fontWeight": "900"
+        },
+        {
+          "type": "rectangle",
+          "id": "CiJU6",
+          "x": 1912,
+          "y": 0,
+          "name": "s5acc",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "TJIgP",
+          "x": 120,
+          "y": 120,
+          "name": "s5cnt",
+          "width": 1680,
+          "height": 840,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "FM6IU",
+              "name": "s5tagg",
+              "fill": "#00000000",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "QKH59",
+                  "name": "s5sq",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "RICYI",
+                  "name": "s5tag",
+                  "fill": "#FFFFFF",
+                  "content": "01 / THE CHAOS",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "UaMhG",
+              "name": "s5stmt",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "YsD7r",
+                  "name": "s5l1",
+                  "fill": "#FFFFFF",
+                  "content": "EVERY TEAM.",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 180,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                },
+                {
+                  "type": "text",
+                  "id": "CcyRJ",
+                  "name": "s5l2",
+                  "fill": "#666666",
+                  "content": "EVERY",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 180,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                },
+                {
+                  "type": "text",
+                  "id": "zASey",
+                  "name": "s5l3",
+                  "fill": "#FFFFFF",
+                  "content": "SNOWFLAKE.",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 180,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bCw6p",
+              "name": "s5bot",
+              "width": "fill_container",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "a6r8K",
+                  "name": "s5bar",
+                  "fill": "#FFFFFF",
+                  "width": 120,
+                  "height": 6
+                },
+                {
+                  "type": "text",
+                  "id": "BlCB2",
+                  "name": "s5sub",
+                  "fill": "#AAAAAA",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "No two teams build their infrastructure the same way. The platform team inherits the chaos.",
+                  "fontFamily": "Inter",
+                  "fontSize": 26,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "SLjnR",
+          "x": 0,
+          "y": 1060,
+          "name": "s5crn",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "dzmv2",
+          "x": 60,
+          "y": 160,
+          "name": "s5dl1",
+          "opacity": 0.2,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "LSdv8",
+          "x": 60,
+          "y": 200,
+          "name": "s5dl2",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "9Qhnh",
+          "x": 60,
+          "y": 240,
+          "name": "s5dl3",
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "AfQre",
+      "x": 1000,
+      "y": 3600,
+      "name": "Slide 0 — Opening",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#000000",
+      "layout": "none",
+      "children": [
+        {
+          "type": "rectangle",
+          "id": "c8WaU",
+          "x": 0,
+          "y": 0,
+          "name": "opacc",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "k5EW2",
+          "x": 120,
+          "y": 100,
+          "name": "opcnt",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "dlm57",
+              "name": "opconf",
+              "fill": "#00000000",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "Z604p",
+                  "name": "opcsq",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "tjJSy",
+                  "name": "opctag",
+                  "fill": "#FFFFFF",
+                  "content": "TECHORAMA BELGIUM",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ZOXEH",
+              "name": "optitle",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CpaiY",
+                  "name": "opt1",
+                  "fill": "#FFFFFF",
+                  "content": "CLOUD NATIVE",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 140,
+                  "fontWeight": "900",
+                  "letterSpacing": -6
+                },
+                {
+                  "type": "text",
+                  "id": "egULf",
+                  "name": "opt2",
+                  "fill": "#FFFFFF",
+                  "content": "PLATFORM",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 140,
+                  "fontWeight": "900",
+                  "letterSpacing": -6
+                },
+                {
+                  "type": "text",
+                  "id": "EORaS",
+                  "name": "opt3",
+                  "fill": "#666666",
+                  "content": "ENGINEERING",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 140,
+                  "fontWeight": "900",
+                  "letterSpacing": -6
+                },
+                {
+                  "type": "text",
+                  "id": "Z8zVm",
+                  "name": "opt4",
+                  "fill": "#444444",
+                  "content": "ON AZURE",
+                  "lineHeight": 1.2,
+                  "fontFamily": "Inter",
+                  "fontSize": 72,
+                  "fontWeight": "900",
+                  "letterSpacing": -3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "21RFD",
+              "name": "opspk",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "ACM6F",
+                  "name": "opsbar",
+                  "fill": "#FFFFFF",
+                  "width": 80,
+                  "height": 4
+                },
+                {
+                  "type": "text",
+                  "id": "l1aCU",
+                  "name": "opname",
+                  "fill": "#FFFFFF",
+                  "content": "Geert van der Cruijsen",
+                  "fontFamily": "Inter",
+                  "fontSize": 42,
+                  "fontWeight": "800",
+                  "letterSpacing": -1
+                },
+                {
+                  "type": "text",
+                  "id": "eC4Wp",
+                  "name": "oprole",
+                  "fill": "#888888",
+                  "content": "CEO & Co-founder · Zure NL",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "normal",
+                  "letterSpacing": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ellipse",
+          "id": "g63n3",
+          "x": 1780,
+          "y": 200,
+          "name": "opd1",
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "Ao2dQ",
+          "x": 1820,
+          "y": 200,
+          "name": "opd2",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "9AL3G",
+          "x": 1860,
+          "y": 200,
+          "name": "opd3",
+          "opacity": 0.2,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "c0i4a",
+          "x": 1780,
+          "y": 240,
+          "name": "opd4",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "kBEWK",
+          "x": 1820,
+          "y": 240,
+          "name": "opd5",
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "ellipse",
+          "id": "xrDZw",
+          "x": 1860,
+          "y": 240,
+          "name": "opd6",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "type": "rectangle",
+          "id": "dxhRS",
+          "x": 1720,
+          "y": 1072,
+          "name": "opcrn",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "LzW2m",
+      "x": 5040,
+      "y": 3600,
+      "name": "Slide 2 — Day One",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#FFFFFF",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "HAyWk",
+          "x": 1000,
+          "y": -120,
+          "name": "wm2",
+          "opacity": 0.03,
+          "fill": "#000000",
+          "content": "01",
+          "fontFamily": "Inter",
+          "fontSize": 700,
+          "fontWeight": "900",
+          "letterSpacing": -30
+        },
+        {
+          "type": "rectangle",
+          "id": "Dplkz",
+          "x": 0,
+          "y": 0,
+          "name": "acc2",
+          "fill": "#000000",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "z2Xl9",
+          "x": 120,
+          "y": 100,
+          "name": "cnt2",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "XZk3Y",
+              "name": "tg2",
+              "fill": "#00000000",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "eC1z3",
+                  "name": "tg2sq",
+                  "fill": "#000000",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "lUsW0",
+                  "name": "tg2tx",
+                  "fill": "#000000",
+                  "content": "01 / THE CHAOS",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "dmcvl",
+              "name": "ttl2",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ACg8H",
+                  "name": "t2big",
+                  "fill": "#000000",
+                  "content": "DAY ONE.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 240,
+                  "fontWeight": "900",
+                  "letterSpacing": -9
+                },
+                {
+                  "type": "text",
+                  "id": "Cr0T5",
+                  "name": "t2sm",
+                  "fill": "#AAAAAA",
+                  "content": "Three things. Zero answers.",
+                  "fontFamily": "Inter",
+                  "fontSize": 30,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "WxjIx",
+              "name": "cols2",
+              "width": "fill_container",
+              "fill": "#00000000",
+              "gap": 60,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "R7mcm",
+                  "name": "ca",
+                  "width": "fill_container",
+                  "fill": "#00000000",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "DjBQF",
+                      "name": "can",
+                      "fill": "#DDDDDD",
+                      "content": "01",
+                      "fontFamily": "Inter",
+                      "fontSize": 72,
+                      "fontWeight": "900",
+                      "letterSpacing": -3
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "Cnyjy",
+                      "name": "caln",
+                      "fill": "#000000",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "CgEk1",
+                      "name": "cat",
+                      "fill": "#000000",
+                      "content": "NAMESPACE.",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800",
+                      "letterSpacing": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rFWkS",
+                  "name": "cb",
+                  "width": "fill_container",
+                  "fill": "#00000000",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "USF08",
+                      "name": "cbn",
+                      "fill": "#DDDDDD",
+                      "content": "02",
+                      "fontFamily": "Inter",
+                      "fontSize": 72,
+                      "fontWeight": "900",
+                      "letterSpacing": -3
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "Ta78d",
+                      "name": "cbln",
+                      "fill": "#000000",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "cYFUK",
+                      "name": "cbt",
+                      "fill": "#000000",
+                      "content": "DATABASE.",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800",
+                      "letterSpacing": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "DPgdu",
+                  "name": "cc",
+                  "width": "fill_container",
+                  "fill": "#00000000",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "blnbW",
+                      "name": "ccn",
+                      "fill": "#DDDDDD",
+                      "content": "03",
+                      "fontFamily": "Inter",
+                      "fontSize": 72,
+                      "fontWeight": "900",
+                      "letterSpacing": -3
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "94zh2",
+                      "name": "ccln",
+                      "fill": "#000000",
+                      "width": "fill_container",
+                      "height": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "4IO50",
+                      "name": "cct",
+                      "fill": "#000000",
+                      "content": "PIPELINE.",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800",
+                      "letterSpacing": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "MbsRS",
+      "x": 9080,
+      "y": 3600,
+      "name": "Slide 4 — Ticket Queue",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#111111",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "j693V",
+          "x": 560,
+          "y": 80,
+          "name": "wm4",
+          "opacity": 0.05,
+          "fill": "#FFFFFF",
+          "content": "QUEUE",
+          "fontFamily": "Inter",
+          "fontSize": 480,
+          "fontWeight": "900",
+          "letterSpacing": -20
+        },
+        {
+          "type": "rectangle",
+          "id": "Pw01X",
+          "x": 0,
+          "y": 0,
+          "name": "acc4",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "AQN2A",
+          "x": 120,
+          "y": 100,
+          "name": "cnt4",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "mKct7",
+              "name": "tg4",
+              "fill": "#00000000",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "iq7wv",
+                  "name": "tg4sq",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "QYOcE",
+                  "name": "tg4tx",
+                  "fill": "#FFFFFF",
+                  "content": "01 / THE CHAOS",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yhFLV",
+              "name": "mid4",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ZzPa8",
+                  "name": "hdr4",
+                  "fill": "#444444",
+                  "content": "THE TICKET QUEUE.",
+                  "lineHeight": 1.6,
+                  "fontFamily": "Inter",
+                  "fontSize": 44,
+                  "fontWeight": "800",
+                  "letterSpacing": -1
+                },
+                {
+                  "type": "text",
+                  "id": "uS49h",
+                  "name": "sl4w1",
+                  "fill": "#FFFFFF",
+                  "content": "SLOW.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 200,
+                  "fontWeight": "900",
+                  "letterSpacing": -8
+                },
+                {
+                  "type": "text",
+                  "id": "EqgaS",
+                  "name": "sl4w2",
+                  "fill": "#444444",
+                  "content": "INCONSISTENT.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 96,
+                  "fontWeight": "900",
+                  "letterSpacing": -4
+                },
+                {
+                  "type": "text",
+                  "id": "GSPdE",
+                  "name": "sl4w3",
+                  "fill": "#FFFFFF",
+                  "content": "BOTTLENECK.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 128,
+                  "fontWeight": "900",
+                  "letterSpacing": -5
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Jx222",
+              "name": "bot4",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "HARZx",
+                  "name": "bar4",
+                  "fill": "#FFFFFF",
+                  "width": 80,
+                  "height": 4
+                },
+                {
+                  "type": "text",
+                  "id": "cmMHl",
+                  "name": "sub4",
+                  "fill": "#555555",
+                  "content": "The ticket queue is where developer velocity goes to die.",
+                  "fontFamily": "Inter",
+                  "fontSize": 22,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "0ggte",
+          "x": 1720,
+          "y": 1072,
+          "name": "crn4",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "aPNi6",
+          "x": 1780,
+          "y": 160,
+          "name": "d4a",
+          "opacity": 0.3,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "KkdNQ",
+          "x": 1820,
+          "y": 160,
+          "name": "d4b",
+          "opacity": 0.15,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "6qhtY",
+          "x": 1780,
+          "y": 200,
+          "name": "d4c",
+          "opacity": 0.15,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "jyrwC",
+          "x": 1820,
+          "y": 200,
+          "name": "d4d",
+          "opacity": 0.3,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "CK1vE",
+      "x": 13120,
+      "y": 3600,
+      "name": "Slide 6 — Cognitive Overload",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#000000",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "9iaY0",
+          "x": 80,
+          "y": 200,
+          "name": "fw1",
+          "opacity": 0.11,
+          "fill": "#FFFFFF",
+          "content": "FEATURES",
+          "fontFamily": "Inter",
+          "fontSize": 50,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "tmaR6",
+          "x": 1280,
+          "y": 140,
+          "name": "fw2",
+          "opacity": 0.09,
+          "fill": "#FFFFFF",
+          "content": "SECURITY",
+          "fontFamily": "Inter",
+          "fontSize": 42,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "PFDnw",
+          "x": 560,
+          "y": 870,
+          "name": "fw3",
+          "opacity": 0.08,
+          "fill": "#FFFFFF",
+          "content": "INFRASTRUCTURE",
+          "fontFamily": "Inter",
+          "fontSize": 34,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "kiv8z",
+          "x": 1380,
+          "y": 700,
+          "name": "fw4",
+          "opacity": 0.1,
+          "fill": "#FFFFFF",
+          "content": "COMPLIANCE",
+          "fontFamily": "Inter",
+          "fontSize": 44,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "VP9ys",
+          "x": 80,
+          "y": 820,
+          "name": "fw5",
+          "opacity": 0.09,
+          "fill": "#FFFFFF",
+          "content": "MONITORING",
+          "fontFamily": "Inter",
+          "fontSize": 38,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "pN5P8",
+          "x": 1120,
+          "y": 940,
+          "name": "fw6",
+          "opacity": 0.07,
+          "fill": "#FFFFFF",
+          "content": "NETWORKING",
+          "fontFamily": "Inter",
+          "fontSize": 32,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "O4Tws",
+          "x": 1620,
+          "y": 280,
+          "name": "fw7",
+          "opacity": 0.12,
+          "fill": "#FFFFFF",
+          "content": "COST",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "yuPDT",
+          "x": 1050,
+          "y": 580,
+          "name": "fw8",
+          "opacity": 0.08,
+          "fill": "#FFFFFF",
+          "content": "OBSERVABILITY",
+          "fontFamily": "Inter",
+          "fontSize": 30,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "id": "lLSLo",
+          "x": 0,
+          "y": 0,
+          "name": "cacc",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "aP3P3",
+          "x": 120,
+          "y": 100,
+          "name": "ccnt",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "0jmwX",
+              "name": "ctag",
+              "fill": "#00000000",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "MYi0H",
+                  "name": "ctsq",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "NbYVo",
+                  "name": "cttx",
+                  "fill": "#FFFFFF",
+                  "content": "01 / THE CHAOS",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "g0vtM",
+              "name": "cstmt",
+              "width": "fill_container",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "352gA",
+                  "name": "cl1",
+                  "fill": "#FFFFFF",
+                  "content": "TOO MUCH",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 180,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                },
+                {
+                  "type": "text",
+                  "id": "MIhXL",
+                  "name": "cl2",
+                  "fill": "#555555",
+                  "content": "TO",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 180,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                },
+                {
+                  "type": "text",
+                  "id": "a3xxu",
+                  "name": "cl3",
+                  "fill": "#FFFFFF",
+                  "content": "HOLD.",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 180,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "0mEb0",
+              "name": "cbot",
+              "width": "fill_container",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "Oq8yq",
+                  "name": "cbar",
+                  "fill": "#FFFFFF",
+                  "width": 120,
+                  "height": 4
+                },
+                {
+                  "type": "text",
+                  "id": "RGNSA",
+                  "name": "csub",
+                  "fill": "#666666",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Developers are asked to master features, security, and infrastructure simultaneously. Cognitive overload isn't a weakness — it's an architectural problem.",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "xH7Xf",
+          "x": 1720,
+          "y": 1072,
+          "name": "ccrn",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "6gQPX",
+      "x": 15140,
+      "y": 3600,
+      "name": "Slide 7 — The Pivot",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#000000",
+      "layout": "none",
+      "children": [
+        {
+          "type": "ellipse",
+          "id": "qyP4q",
+          "x": 900,
+          "y": -300,
+          "name": "circ",
+          "opacity": 0.03,
+          "fill": "#FFFFFF",
+          "width": 1400,
+          "height": 1400
+        },
+        {
+          "type": "rectangle",
+          "id": "REeHC",
+          "x": 0,
+          "y": 0,
+          "name": "acc7",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "x16uq",
+          "x": 120,
+          "y": 100,
+          "name": "cnt7",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "ccINp",
+              "name": "tg7",
+              "fill": "#00000000",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "3t3Ur",
+                  "name": "tg7sq",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "8Hrrs",
+                  "name": "tg7tx",
+                  "fill": "#FFFFFF",
+                  "content": "01 / THE CHAOS",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "bIhc1",
+              "name": "stmt7",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "aKPpT",
+                  "name": "s7l1",
+                  "fill": "#FFFFFF",
+                  "content": "WHAT IF THEY",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 158,
+                  "fontWeight": "900",
+                  "letterSpacing": -6
+                },
+                {
+                  "type": "text",
+                  "id": "4zrcq",
+                  "name": "s7l2",
+                  "fill": "#404040",
+                  "content": "NEVER NEEDED",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 158,
+                  "fontWeight": "900",
+                  "letterSpacing": -6
+                },
+                {
+                  "type": "text",
+                  "id": "YIoKx",
+                  "name": "s7l3",
+                  "fill": "#FFFFFF",
+                  "content": "TO CALL YOU?",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 158,
+                  "fontWeight": "900",
+                  "letterSpacing": -6
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "TZs1D",
+              "name": "bot7",
+              "fill": "#00000000",
+              "layout": "vertical",
+              "gap": 14,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "QMozD",
+                  "name": "bar7",
+                  "fill": "#FFFFFF",
+                  "width": 120,
+                  "height": 4
+                },
+                {
+                  "type": "text",
+                  "id": "69xuX",
+                  "name": "sub7",
+                  "fill": "#555555",
+                  "content": "The platform team's job isn't to say no. It's to make yes the default.",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "tqGqC",
+          "x": 0,
+          "y": 1072,
+          "name": "crn7",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "n3F4f",
+          "x": 1780,
+          "y": 820,
+          "name": "d7a",
+          "opacity": 0.3,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "6cLU6",
+          "x": 1820,
+          "y": 820,
+          "name": "d7b",
+          "opacity": 0.15,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "DVRny",
+          "x": 1860,
+          "y": 820,
+          "name": "d7c",
+          "opacity": 0.08,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "bKBT5",
+          "x": 1780,
+          "y": 860,
+          "name": "d7d",
+          "opacity": 0.15,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "z9nxh",
+          "x": 1820,
+          "y": 860,
+          "name": "d7e",
+          "opacity": 0.3,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "wf2v8",
+          "x": 1860,
+          "y": 860,
+          "name": "d7f",
+          "opacity": 0.15,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "5vJBq",
+      "x": 1000,
+      "y": 4780,
+      "name": "S2-01 DevOps Grew Up",
+      "width": 1920,
+      "height": 1080,
+      "fill": "#FFFFFF",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "FKy2G",
+          "x": 580,
+          "y": 240,
+          "name": "wm1",
+          "opacity": 0.05,
+          "fill": "#000000",
+          "content": "SCALE",
+          "fontFamily": "Inter",
+          "fontSize": 500,
+          "fontWeight": "900",
+          "letterSpacing": -20
+        },
+        {
+          "type": "rectangle",
+          "id": "9uxcm",
+          "x": 0,
+          "y": 0,
+          "name": "bar1",
+          "fill": "#000000",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "fjA7Q",
+          "x": 120,
+          "y": 100,
+          "name": "cf1",
+          "width": 1680,
+          "height": 880,
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "5KFtx",
+              "name": "tag1",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "tortv",
+                  "name": "dot1",
+                  "fill": "#000000",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "N7adQ",
+                  "name": "dtxt1",
+                  "fill": "#000000",
+                  "content": "02 / PLATFORM ENGINEERING",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "klO0N",
+              "name": "impsec1",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "BBB2c",
+                  "name": "mantra1",
+                  "fill": "#CCCCCC",
+                  "content": "YOU BUILD IT. YOU RUN IT.",
+                  "fontFamily": "Inter",
+                  "fontSize": 56,
+                  "fontWeight": "900",
+                  "letterSpacing": -2
+                },
+                {
+                  "type": "rectangle",
+                  "id": "4k2aA",
+                  "name": "divln1",
+                  "fill": "#000000",
+                  "width": 160,
+                  "height": 8
+                },
+                {
+                  "type": "text",
+                  "id": "ODGBH",
+                  "name": "impact1",
+                  "fill": "#000000",
+                  "content": "AT SCALE.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 200,
+                  "fontWeight": "900",
+                  "letterSpacing": -8
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "ZsqQF",
+              "name": "foot1",
+              "fill": "#888888",
+              "content": "Platform engineering is DevOps that scales — built for large teams and large organisations.",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "500"
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "W4Lre",
+          "x": 1720,
+          "y": 1060,
+          "name": "ca1",
+          "fill": "#000000",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "OQ1Ra",
+          "x": 1780,
+          "y": 100,
+          "name": "d1a",
+          "opacity": 0.15,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "g3hEe",
+          "x": 1820,
+          "y": 100,
+          "name": "d1b",
+          "opacity": 0.15,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "acsZA",
+          "x": 1860,
+          "y": 100,
+          "name": "d1c",
+          "opacity": 0.15,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "Db4ts",
+          "x": 1780,
+          "y": 140,
+          "name": "d1d",
+          "opacity": 0.08,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "t7l7w",
+          "x": 1820,
+          "y": 140,
+          "name": "d1e",
+          "opacity": 0.08,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "yg3SC",
+          "x": 1860,
+          "y": 140,
+          "name": "d1f",
+          "opacity": 0.04,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "0O2Up",
+      "x": 3020,
+      "y": 4780,
+      "name": "S2-02 Not an Ops Team",
+      "width": 1920,
+      "height": 1080,
+      "fill": "#111111",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "8UUTP",
+          "x": 900,
+          "y": 350,
+          "name": "wm2",
+          "opacity": 0.06,
+          "fill": "#FFFFFF",
+          "content": "TICKET",
+          "fontFamily": "Inter",
+          "fontSize": 300,
+          "fontWeight": "900",
+          "letterSpacing": -10
+        },
+        {
+          "type": "rectangle",
+          "id": "07Hzp",
+          "x": 0,
+          "y": 0,
+          "name": "bar2",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "5jHht",
+          "x": 120,
+          "y": 100,
+          "name": "cf2",
+          "width": 1680,
+          "height": 880,
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Woin0",
+              "name": "tag2",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "fXBSd",
+                  "name": "dot2",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "pDrAO",
+                  "name": "dtxt2",
+                  "fill": "#666666",
+                  "content": "02 / PLATFORM ENGINEERING",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "r9EB3",
+              "name": "mid2",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "yiXRx",
+                  "name": "impa2",
+                  "fill": "#FFFFFF",
+                  "content": "A PRODUCT.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 180,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                },
+                {
+                  "type": "text",
+                  "id": "2Oksa",
+                  "name": "impb2",
+                  "fill": "#444444",
+                  "content": "NOT A TICKET QUEUE.",
+                  "fontFamily": "Inter",
+                  "fontSize": 56,
+                  "fontWeight": "900",
+                  "letterSpacing": -3
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "3iDoZ",
+              "name": "foot2",
+              "fill": "#555555",
+              "content": "The platform team ships. Developers self-serve.",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "500",
+              "letterSpacing": 1
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "VgsvB",
+          "x": 1720,
+          "y": 1060,
+          "name": "ca2",
+          "fill": "#333333",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "rectangle",
+          "id": "F4XPH",
+          "x": 1380,
+          "y": 450,
+          "name": "tq1",
+          "opacity": 0.5,
+          "fill": "#333333",
+          "width": 500,
+          "height": 5
+        },
+        {
+          "type": "rectangle",
+          "id": "9zZbb",
+          "x": 1500,
+          "y": 480,
+          "name": "tq2",
+          "opacity": 0.3,
+          "fill": "#333333",
+          "width": 360,
+          "height": 5
+        },
+        {
+          "type": "rectangle",
+          "id": "kNjwn",
+          "x": 1600,
+          "y": 510,
+          "name": "tq3",
+          "opacity": 0.15,
+          "fill": "#333333",
+          "width": 220,
+          "height": 5
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "0IFZL",
+      "x": 5040,
+      "y": 4780,
+      "name": "S2-03 The IDP",
+      "width": 1920,
+      "height": 1080,
+      "fill": "#000000",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "Tje7P",
+          "x": 1000,
+          "y": 250,
+          "name": "wm3",
+          "opacity": 0.04,
+          "fill": "#FFFFFF",
+          "content": "IDP",
+          "fontFamily": "Inter",
+          "fontSize": 600,
+          "fontWeight": "900",
+          "letterSpacing": -20
+        },
+        {
+          "type": "rectangle",
+          "id": "VJ1FN",
+          "x": 0,
+          "y": 0,
+          "name": "bar3",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "1xaZ1",
+          "x": 120,
+          "y": 100,
+          "name": "cf3",
+          "width": 1680,
+          "height": 880,
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "whkHU",
+              "name": "tag3",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "GiWj3",
+                  "name": "dot3",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "PXu5C",
+                  "name": "dtxt3",
+                  "fill": "#666666",
+                  "content": "02 / PLATFORM ENGINEERING",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "6enuE",
+              "name": "impact3",
+              "fill": "#FFFFFF",
+              "content": "THE\nPLATFORM.",
+              "lineHeight": 0.88,
+              "fontFamily": "Inter",
+              "fontSize": 160,
+              "fontWeight": "900",
+              "letterSpacing": -7
+            },
+            {
+              "type": "frame",
+              "id": "vG2uI",
+              "name": "bot3",
+              "layout": "vertical",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "kI2II",
+                  "name": "sub3a",
+                  "fill": "#AAAAAA",
+                  "content": "A product your developers consume — not a system they wait for.",
+                  "fontFamily": "Inter",
+                  "fontSize": 22
+                },
+                {
+                  "type": "text",
+                  "id": "28DGK",
+                  "name": "sub3b",
+                  "fill": "#666666",
+                  "content": "Abstractions, golden path, self-service — built once, used by every team.",
+                  "fontFamily": "Inter",
+                  "fontSize": 22
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "jzB0p",
+          "x": 1720,
+          "y": 1060,
+          "name": "ca3",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "ZnXBD",
+      "x": 7060,
+      "y": 4780,
+      "name": "S2-04 The Golden Path",
+      "width": 1920,
+      "height": 1080,
+      "fill": "#FFFFFF",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "NpRYD",
+          "x": 820,
+          "y": 300,
+          "name": "wm4",
+          "opacity": 0.05,
+          "fill": "#000000",
+          "content": "PATH",
+          "fontFamily": "Inter",
+          "fontSize": 500,
+          "fontWeight": "900",
+          "letterSpacing": -20
+        },
+        {
+          "type": "rectangle",
+          "id": "hCd2S",
+          "x": 0,
+          "y": 0,
+          "name": "bar4",
+          "fill": "#000000",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "rfaPS",
+          "x": 120,
+          "y": 100,
+          "name": "cf4",
+          "width": 1680,
+          "height": 880,
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "KmWwX",
+              "name": "tag4",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "NEQcF",
+                  "name": "dot4",
+                  "fill": "#000000",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "NpLVM",
+                  "name": "dtxt4",
+                  "fill": "#000000",
+                  "content": "02 / PLATFORM ENGINEERING",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cGbv9",
+              "name": "mid4",
+              "layout": "vertical",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "UnuOI",
+                  "name": "impa4",
+                  "fill": "#000000",
+                  "content": "OPINIONATED.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 160,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                },
+                {
+                  "type": "text",
+                  "id": "gLwra",
+                  "name": "impb4",
+                  "fill": "#CCCCCC",
+                  "content": "NOT MANDATORY.",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 80,
+                  "fontWeight": "900",
+                  "letterSpacing": -4
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "Y5HrS",
+              "name": "foot4",
+              "fill": "#888888",
+              "content": "Make the right thing easy. Make the wrong thing intentional.",
+              "fontFamily": "Inter",
+              "fontSize": 22
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "OWQaD",
+          "x": 1720,
+          "y": 1060,
+          "name": "ca4",
+          "fill": "#000000",
+          "width": 200,
+          "height": 8
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "7mmFP",
+      "x": 9080,
+      "y": 4780,
+      "name": "S2-05 Three Outcomes",
+      "width": 1920,
+      "height": 1080,
+      "fill": "#111111",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "kJIEd",
+          "x": 1200,
+          "y": 50,
+          "name": "wm5",
+          "opacity": 0.05,
+          "fill": "#FFFFFF",
+          "content": "03",
+          "fontFamily": "Inter",
+          "fontSize": 700,
+          "fontWeight": "900",
+          "letterSpacing": -20
+        },
+        {
+          "type": "rectangle",
+          "id": "Fv2G5",
+          "x": 0,
+          "y": 0,
+          "name": "bar5",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "frame",
+          "id": "iHXsi",
+          "x": 120,
+          "y": 100,
+          "name": "cf5",
+          "width": 1680,
+          "height": 880,
+          "layout": "vertical",
+          "gap": 48,
+          "children": [
+            {
+              "type": "frame",
+              "id": "tfhio",
+              "name": "tag5",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "X0U3T",
+                  "name": "dot5",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "ESUQ9",
+                  "name": "dtxt5",
+                  "fill": "#666666",
+                  "content": "02 / PLATFORM ENGINEERING",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rOvSY",
+              "name": "words5",
+              "layout": "vertical",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "lbuoa",
+                  "name": "word5a",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "b8PM0",
+                      "name": "txt5a",
+                      "fill": "#FFFFFF",
+                      "content": "SELF-SERVICE.",
+                      "lineHeight": 0.88,
+                      "fontFamily": "Inter",
+                      "fontSize": 100,
+                      "fontWeight": "900",
+                      "letterSpacing": -5
+                    },
+                    {
+                      "type": "text",
+                      "id": "xpp8R",
+                      "name": "desc5a",
+                      "fill": "#666666",
+                      "content": "Developers provision what they need — on demand.",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "dHUzl",
+                  "name": "sep1",
+                  "fill": "#333333",
+                  "width": "fill_container",
+                  "height": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "e5Z60",
+                  "name": "word5b",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "KCYt8",
+                      "name": "txt5b",
+                      "fill": "#FFFFFF",
+                      "content": "CONSISTENCY.",
+                      "lineHeight": 0.88,
+                      "fontFamily": "Inter",
+                      "fontSize": 100,
+                      "fontWeight": "900",
+                      "letterSpacing": -5
+                    },
+                    {
+                      "type": "text",
+                      "id": "UEdyP",
+                      "name": "desc5b",
+                      "fill": "#666666",
+                      "content": "Every team's infrastructure follows the same platform standards.",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "NdJaq",
+                  "name": "sep2",
+                  "fill": "#333333",
+                  "width": "fill_container",
+                  "height": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "S9C5r",
+                  "name": "word5c",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "983rE",
+                      "name": "txt5c",
+                      "fill": "#FFFFFF",
+                      "content": "BOUNDARIES.",
+                      "lineHeight": 0.88,
+                      "fontFamily": "Inter",
+                      "fontSize": 100,
+                      "fontWeight": "900",
+                      "letterSpacing": -5
+                    },
+                    {
+                      "type": "text",
+                      "id": "ln2RT",
+                      "name": "desc5c",
+                      "fill": "#555555",
+                      "content": "Clear ownership between platform team and product team.",
+                      "fontFamily": "Inter",
+                      "fontSize": 18,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "id": "tarpH",
+          "x": 1720,
+          "y": 1060,
+          "name": "ca5",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        }
+      ]
     }
   ]
 }
