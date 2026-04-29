@@ -1,0 +1,30 @@
+# App-of-Apps root Application.
+#
+# This Application points Argo CD at demos/gitops/apps/, which contains one
+# child Application per demo (this demo, plus #2 ASO, #3 Crossplane,
+# #4 KRO, #5 Terranetes as they are added). New demos add exactly one file
+# under demos/gitops/apps/ and Argo CD picks it up automatically.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Geertvdc/platformengineering-talk
+    targetRevision: main
+    path: demos/gitops/apps
+    directory:
+      recurse: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
