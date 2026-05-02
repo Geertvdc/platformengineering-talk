@@ -3133,7 +3133,8 @@
                   "fill": "#AAAAAA",
                   "content": "A product your developers consume — not a system they wait for.",
                   "fontFamily": "Inter",
-                  "fontSize": 22
+                  "fontSize": 22,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "text",
@@ -3142,7 +3143,8 @@
                   "fill": "#666666",
                   "content": "Abstractions, golden path, self-service — built once, used by every team.",
                   "fontFamily": "Inter",
-                  "fontSize": 22
+                  "fontSize": 22,
+                  "fontWeight": "normal"
                 }
               ]
             }
@@ -3273,7 +3275,8 @@
               "fill": "#888888",
               "content": "Make the right thing easy. Make the wrong thing intentional.",
               "fontFamily": "Inter",
-              "fontSize": 22
+              "fontSize": 22,
+              "fontWeight": "normal"
             }
           ]
         },
@@ -3491,6 +3494,1384 @@
           "fill": "#FFFFFF",
           "width": 200,
           "height": 8
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "iG4kP",
+      "x": 1000,
+      "y": 5960,
+      "name": "S3-01 Why Kubernetes",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#000000",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "hy18s",
+          "x": 1100,
+          "y": 50,
+          "name": "wm",
+          "opacity": 0.05,
+          "fill": "#FFFFFF",
+          "content": "API",
+          "fontFamily": "Inter",
+          "fontSize": 700,
+          "fontWeight": "900",
+          "letterSpacing": -30
+        },
+        {
+          "type": "rectangle",
+          "id": "hTbpn",
+          "x": 0,
+          "y": 0,
+          "name": "bar",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "rectangle",
+          "id": "KgyM0",
+          "x": 1720,
+          "y": 1060,
+          "name": "crn",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "XfToH",
+          "x": 1780,
+          "y": 160,
+          "name": "d1",
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "04pPO",
+          "x": 1820,
+          "y": 160,
+          "name": "d2",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "qY8W6",
+          "x": 1860,
+          "y": 160,
+          "name": "d3",
+          "opacity": 0.2,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "K8tws",
+          "x": 1780,
+          "y": 200,
+          "name": "d4",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "hrr61",
+          "x": 1820,
+          "y": 200,
+          "name": "d5",
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "T0gvp",
+          "x": 1860,
+          "y": 200,
+          "name": "d6",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "frame",
+          "id": "0oqxx",
+          "x": 120,
+          "y": 100,
+          "name": "cnt",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "Jh5K8",
+              "name": "tag",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "0iTjQ",
+                  "name": "dot",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "7sXG1",
+                  "name": "label",
+                  "fill": "#888888",
+                  "content": "03 / CLOUD NATIVE + GITOPS",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "itQ03",
+              "name": "mid",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "C3NVL",
+                  "name": "a",
+                  "fill": "#FFFFFF",
+                  "content": "THE API.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 200,
+                  "fontWeight": "900",
+                  "letterSpacing": -8
+                },
+                {
+                  "type": "text",
+                  "id": "8ZZVB",
+                  "name": "b",
+                  "fill": "#666666",
+                  "content": "IS THE PRODUCT.",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 96,
+                  "fontWeight": "900",
+                  "letterSpacing": -4
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "vq3fw",
+              "name": "foot",
+              "fill": "#888888",
+              "content": "Kubernetes isn't a container scheduler — it's a declarative, extensible API with a reconciliation loop. That's the platform primitive.",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "500"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "6oy8K",
+      "x": 3020,
+      "y": 5960,
+      "name": "S3-02 Declarative Everything",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#FFFFFF",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "Juqlg",
+          "x": 560,
+          "y": 300,
+          "name": "wm",
+          "opacity": 0.05,
+          "fill": "#000000",
+          "content": "INTENT",
+          "fontFamily": "Inter",
+          "fontSize": 380,
+          "fontWeight": "900",
+          "letterSpacing": -15
+        },
+        {
+          "type": "rectangle",
+          "id": "TkSK1",
+          "x": 0,
+          "y": 0,
+          "name": "bar",
+          "fill": "#000000",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "rectangle",
+          "id": "YKA1V",
+          "x": 1720,
+          "y": 1060,
+          "name": "crn",
+          "fill": "#000000",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "2T07O",
+          "x": 1780,
+          "y": 160,
+          "name": "d1",
+          "opacity": 0.15,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "0StHl",
+          "x": 1820,
+          "y": 160,
+          "name": "d2",
+          "opacity": 0.15,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "GeDsI",
+          "x": 1860,
+          "y": 160,
+          "name": "d3",
+          "opacity": 0.08,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "IqwRI",
+          "x": 1780,
+          "y": 200,
+          "name": "d4",
+          "opacity": 0.08,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "R29eu",
+          "x": 1820,
+          "y": 200,
+          "name": "d5",
+          "opacity": 0.08,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "frame",
+          "id": "Ret3u",
+          "x": 120,
+          "y": 100,
+          "name": "cnt",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "XeofA",
+              "name": "tag",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "a1KoQ",
+                  "name": "dot",
+                  "fill": "#000000",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "6ieY5",
+                  "name": "label",
+                  "fill": "#000000",
+                  "content": "03 / CLOUD NATIVE + GITOPS",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IWBhY",
+              "name": "mid",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "F7c1E",
+                  "name": "a",
+                  "fill": "#000000",
+                  "content": "DESCRIBE INTENT.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 160,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                },
+                {
+                  "type": "text",
+                  "id": "xBSki",
+                  "name": "b",
+                  "fill": "#CCCCCC",
+                  "content": "LET IT CONVERGE.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 120,
+                  "fontWeight": "900",
+                  "letterSpacing": -5
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "fh0f1",
+              "name": "foot",
+              "fill": "#666666",
+              "content": "You write the desired state. The controller does the steps — over and over, forever. That's the contract.",
+              "fontFamily": "Inter",
+              "fontSize": 22,
+              "fontWeight": "500"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "kApwb",
+      "x": 5040,
+      "y": 5960,
+      "name": "S3-03 CNCF Toolkit",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#111111",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "Biook",
+          "x": 1280,
+          "y": 140,
+          "name": "w1",
+          "opacity": 0.1,
+          "fill": "#FFFFFF",
+          "content": "ARGO",
+          "fontFamily": "Inter",
+          "fontSize": 48,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "rBZq7",
+          "x": 80,
+          "y": 200,
+          "name": "w2",
+          "opacity": 0.08,
+          "fill": "#FFFFFF",
+          "content": "PROMETHEUS",
+          "fontFamily": "Inter",
+          "fontSize": 32,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "56hqy",
+          "x": 1620,
+          "y": 260,
+          "name": "w3",
+          "opacity": 0.1,
+          "fill": "#FFFFFF",
+          "content": "ISTIO",
+          "fontFamily": "Inter",
+          "fontSize": 54,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "cjQLR",
+          "x": 140,
+          "y": 820,
+          "name": "w4",
+          "opacity": 0.1,
+          "fill": "#FFFFFF",
+          "content": "FLUX",
+          "fontFamily": "Inter",
+          "fontSize": 62,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "9Uikh",
+          "x": 1260,
+          "y": 880,
+          "name": "w5",
+          "opacity": 0.08,
+          "fill": "#FFFFFF",
+          "content": "CROSSPLANE",
+          "fontFamily": "Inter",
+          "fontSize": 36,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "uN9Bf",
+          "x": 560,
+          "y": 920,
+          "name": "w6",
+          "opacity": 0.07,
+          "fill": "#FFFFFF",
+          "content": "OPENTELEMETRY",
+          "fontFamily": "Inter",
+          "fontSize": 30,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "bsjF2",
+          "x": 1500,
+          "y": 560,
+          "name": "w7",
+          "opacity": 0.09,
+          "fill": "#FFFFFF",
+          "content": "CILIUM",
+          "fontFamily": "Inter",
+          "fontSize": 38,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "AUqsX",
+          "x": 1100,
+          "y": 580,
+          "name": "w8",
+          "opacity": 0.1,
+          "fill": "#FFFFFF",
+          "content": "OPA",
+          "fontFamily": "Inter",
+          "fontSize": 44,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "iuadh",
+          "x": 60,
+          "y": 560,
+          "name": "w9",
+          "opacity": 0.07,
+          "fill": "#FFFFFF",
+          "content": "KEDA",
+          "fontFamily": "Inter",
+          "fontSize": 30,
+          "fontWeight": "800"
+        },
+        {
+          "type": "text",
+          "id": "19ZE5",
+          "x": 1680,
+          "y": 780,
+          "name": "w10",
+          "opacity": 0.08,
+          "fill": "#FFFFFF",
+          "content": "BACKSTAGE",
+          "fontFamily": "Inter",
+          "fontSize": 34,
+          "fontWeight": "800"
+        },
+        {
+          "type": "rectangle",
+          "id": "v81A3",
+          "x": 0,
+          "y": 0,
+          "name": "bar",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "rectangle",
+          "id": "uNVsF",
+          "x": 1720,
+          "y": 1060,
+          "name": "crn",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "frame",
+          "id": "NIpwE",
+          "x": 120,
+          "y": 100,
+          "name": "cnt",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "qFVyI",
+              "name": "tag",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "d7K8M",
+                  "name": "dot",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "Hzsxj",
+                  "name": "label",
+                  "fill": "#888888",
+                  "content": "03 / CLOUD NATIVE + GITOPS",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "cGnCa",
+              "name": "mid",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "JUVy7",
+                  "name": "a",
+                  "fill": "#FFFFFF",
+                  "content": "A TOOLKIT.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 200,
+                  "fontWeight": "900",
+                  "letterSpacing": -8
+                },
+                {
+                  "type": "text",
+                  "id": "AT008",
+                  "name": "b",
+                  "fill": "#555555",
+                  "content": "NOT A PRODUCT.",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 96,
+                  "fontWeight": "900",
+                  "letterSpacing": -4
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "zEfVM",
+              "name": "foot",
+              "fill": "#888888",
+              "content": "The CNCF gives you parts. Pick a few sharp ones, integrate them well, hide the seams from your developers.",
+              "fontFamily": "Inter",
+              "fontSize": 20,
+              "fontWeight": "500"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "YVj61",
+      "x": 7060,
+      "y": 5960,
+      "name": "S3-04 GitOps",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#FFFFFF",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "Ahorn",
+          "x": 540,
+          "y": 340,
+          "name": "wm",
+          "opacity": 0.05,
+          "fill": "#000000",
+          "content": "GITOPS",
+          "fontFamily": "Inter",
+          "fontSize": 340,
+          "fontWeight": "900",
+          "letterSpacing": -12
+        },
+        {
+          "type": "rectangle",
+          "id": "RC3Ph",
+          "x": 0,
+          "y": 0,
+          "name": "bar",
+          "fill": "#000000",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "rectangle",
+          "id": "WAs2K",
+          "x": 1720,
+          "y": 1060,
+          "name": "crn",
+          "fill": "#000000",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "frame",
+          "id": "FF6uA",
+          "x": 120,
+          "y": 100,
+          "name": "cnt",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "gap": 32,
+          "children": [
+            {
+              "type": "frame",
+              "id": "syfKh",
+              "name": "tag",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "B6qQQ",
+                  "name": "dot",
+                  "fill": "#000000",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "tsuoG",
+                  "name": "label",
+                  "fill": "#000000",
+                  "content": "03 / CLOUD NATIVE + GITOPS",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "6gF7C",
+              "name": "mid",
+              "layout": "vertical",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "TG3Ma",
+                  "name": "a",
+                  "fill": "#000000",
+                  "content": "GIT IS",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 160,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                },
+                {
+                  "type": "text",
+                  "id": "MnuCB",
+                  "name": "b",
+                  "fill": "#CCCCCC",
+                  "content": "THE TRUTH.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 160,
+                  "fontWeight": "900",
+                  "letterSpacing": -7
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "r9gNY",
+              "name": "list",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "mbVdr",
+                  "name": "p1",
+                  "width": 380,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "I3N8o",
+                      "name": "n",
+                      "fill": "#000000",
+                      "content": "01",
+                      "fontFamily": "Inter",
+                      "fontSize": 36,
+                      "fontWeight": "900",
+                      "letterSpacing": -1
+                    },
+                    {
+                      "type": "text",
+                      "id": "R2Qky",
+                      "name": "t",
+                      "fill": "#000000",
+                      "content": "DECLARATIVE",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "4PWdM",
+                      "name": "d",
+                      "fill": "#666666",
+                      "content": "Desired state as data, not steps.",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "PJrGs",
+                  "name": "p2",
+                  "width": 380,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ba4OW",
+                      "name": "n",
+                      "fill": "#000000",
+                      "content": "02",
+                      "fontFamily": "Inter",
+                      "fontSize": 36,
+                      "fontWeight": "900",
+                      "letterSpacing": -1
+                    },
+                    {
+                      "type": "text",
+                      "id": "ioePe",
+                      "name": "t",
+                      "fill": "#000000",
+                      "content": "VERSIONED",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "1vVOH",
+                      "name": "d",
+                      "fill": "#666666",
+                      "content": "Every change is a Git commit.",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BRnTM",
+                  "name": "p3",
+                  "width": 380,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "pfafT",
+                      "name": "n",
+                      "fill": "#000000",
+                      "content": "03",
+                      "fontFamily": "Inter",
+                      "fontSize": 36,
+                      "fontWeight": "900",
+                      "letterSpacing": -1
+                    },
+                    {
+                      "type": "text",
+                      "id": "tYGKb",
+                      "name": "t",
+                      "fill": "#000000",
+                      "content": "PULLED",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "V3FOy",
+                      "name": "d",
+                      "fill": "#666666",
+                      "content": "The cluster fetches; CI never pushes.",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "lGDMC",
+                  "name": "p4",
+                  "width": 380,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "XAcVM",
+                      "name": "n",
+                      "fill": "#000000",
+                      "content": "04",
+                      "fontFamily": "Inter",
+                      "fontSize": 36,
+                      "fontWeight": "900",
+                      "letterSpacing": -1
+                    },
+                    {
+                      "type": "text",
+                      "id": "K3lRB",
+                      "name": "t",
+                      "fill": "#000000",
+                      "content": "RECONCILED",
+                      "fontFamily": "Inter",
+                      "fontSize": 22,
+                      "fontWeight": "800",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "aGv2c",
+                      "name": "d",
+                      "fill": "#666666",
+                      "content": "Drift heals itself, continuously.",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "op0tz",
+      "x": 9080,
+      "y": 5960,
+      "name": "S3-05 Argo CD",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#000000",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "4MtVZ",
+          "x": 560,
+          "y": 240,
+          "name": "wm",
+          "opacity": 0.05,
+          "fill": "#FFFFFF",
+          "content": "ARGO",
+          "fontFamily": "Inter",
+          "fontSize": 520,
+          "fontWeight": "900",
+          "letterSpacing": -22
+        },
+        {
+          "type": "rectangle",
+          "id": "uCY7Q",
+          "x": 0,
+          "y": 0,
+          "name": "bar",
+          "fill": "#FFFFFF",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "rectangle",
+          "id": "B9WFw",
+          "x": 1720,
+          "y": 1060,
+          "name": "crn",
+          "fill": "#FFFFFF",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "Twm62",
+          "x": 1780,
+          "y": 160,
+          "name": "d1",
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "XMeMa",
+          "x": 1820,
+          "y": 160,
+          "name": "d2",
+          "opacity": 0.4,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "KfcEg",
+          "x": 1860,
+          "y": 160,
+          "name": "d3",
+          "opacity": 0.2,
+          "fill": "#FFFFFF",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "frame",
+          "id": "s3rc9",
+          "x": 120,
+          "y": 100,
+          "name": "cnt",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "GgIR7",
+              "name": "tag",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "TjmPd",
+                  "name": "dot",
+                  "fill": "#FFFFFF",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "fuwpI",
+                  "name": "label",
+                  "fill": "#888888",
+                  "content": "03 / CLOUD NATIVE + GITOPS  ·  DEMO",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "AMbsT",
+              "name": "mid",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ay1uM",
+                  "name": "a",
+                  "fill": "#FFFFFF",
+                  "content": "ARGO CD.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 200,
+                  "fontWeight": "900",
+                  "letterSpacing": -8
+                },
+                {
+                  "type": "text",
+                  "id": "7sxLu",
+                  "name": "b",
+                  "fill": "#666666",
+                  "content": "DRIFT? RECONCILE.",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 84,
+                  "fontWeight": "900",
+                  "letterSpacing": -4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yyqsj",
+              "name": "strip",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Z3by4",
+                  "name": "p1",
+                  "width": 520,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QUxqc",
+                      "name": "t",
+                      "fill": "#FFFFFF",
+                      "content": "APP OF APPS",
+                      "fontFamily": "Inter",
+                      "fontSize": 24,
+                      "fontWeight": "800",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "BLZI9",
+                      "name": "d",
+                      "fill": "#888888",
+                      "content": "One root Application bootstraps the whole platform.",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "d3gt9",
+                  "name": "p2",
+                  "width": 520,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ggZ6o",
+                      "name": "t",
+                      "fill": "#FFFFFF",
+                      "content": "APPLICATIONSETS",
+                      "fontFamily": "Inter",
+                      "fontSize": 24,
+                      "fontWeight": "800",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "jU1PT",
+                      "name": "d",
+                      "fill": "#888888",
+                      "content": "Generate Apps from a template plus a list of tenants.",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "O8QLD",
+                  "name": "p3",
+                  "width": 520,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "JqCs2",
+                      "name": "t",
+                      "fill": "#FFFFFF",
+                      "content": "DRIFT DETECTION",
+                      "fontFamily": "Inter",
+                      "fontSize": 24,
+                      "fontWeight": "800",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "kfhnN",
+                      "name": "d",
+                      "fill": "#888888",
+                      "content": "Continuously compare cluster to Git — and self-heal.",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "500"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "gjSv6",
+      "x": 11100,
+      "y": 5960,
+      "name": "S3-06 Azure / AKS",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "#FFFFFF",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "t2Z2A",
+          "x": 600,
+          "y": 280,
+          "name": "wm",
+          "opacity": 0.05,
+          "fill": "#000000",
+          "content": "AZURE",
+          "fontFamily": "Inter",
+          "fontSize": 460,
+          "fontWeight": "900",
+          "letterSpacing": -18
+        },
+        {
+          "type": "ellipse",
+          "id": "oPi1w",
+          "x": 1200,
+          "y": -200,
+          "name": "halo",
+          "opacity": 0.04,
+          "fill": "#000000",
+          "width": 1200,
+          "height": 1200
+        },
+        {
+          "type": "rectangle",
+          "id": "0ROjo",
+          "x": 0,
+          "y": 0,
+          "name": "bar",
+          "fill": "#000000",
+          "width": 8,
+          "height": 1080
+        },
+        {
+          "type": "rectangle",
+          "id": "Uc5vZ",
+          "x": 1720,
+          "y": 1060,
+          "name": "crn",
+          "fill": "#000000",
+          "width": 200,
+          "height": 8
+        },
+        {
+          "type": "ellipse",
+          "id": "euqpU",
+          "x": 1780,
+          "y": 160,
+          "name": "d1",
+          "opacity": 0.15,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "hiWq2",
+          "x": 1820,
+          "y": 160,
+          "name": "d2",
+          "opacity": 0.15,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "ellipse",
+          "id": "8snvs",
+          "x": 1860,
+          "y": 160,
+          "name": "d3",
+          "opacity": 0.08,
+          "fill": "#000000",
+          "width": 14,
+          "height": 14
+        },
+        {
+          "type": "frame",
+          "id": "PHxss",
+          "x": 120,
+          "y": 100,
+          "name": "cnt",
+          "width": 1680,
+          "height": 880,
+          "fill": "#00000000",
+          "layout": "vertical",
+          "justifyContent": "space_between",
+          "children": [
+            {
+              "type": "frame",
+              "id": "iaZwB",
+              "name": "tag",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "NioGn",
+                  "name": "dot",
+                  "fill": "#000000",
+                  "width": 14,
+                  "height": 14
+                },
+                {
+                  "type": "text",
+                  "id": "84uiu",
+                  "name": "label",
+                  "fill": "#000000",
+                  "content": "03 / CLOUD NATIVE + GITOPS",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "uuXVp",
+              "name": "mid",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "iVI12",
+                  "name": "a",
+                  "fill": "#000000",
+                  "content": "AKS IS WHERE",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 140,
+                  "fontWeight": "900",
+                  "letterSpacing": -6
+                },
+                {
+                  "type": "text",
+                  "id": "vOGzG",
+                  "name": "b",
+                  "fill": "#000000",
+                  "content": "IT RUNS.",
+                  "lineHeight": 0.88,
+                  "fontFamily": "Inter",
+                  "fontSize": 140,
+                  "fontWeight": "900",
+                  "letterSpacing": -6
+                },
+                {
+                  "type": "text",
+                  "id": "Jcn0k",
+                  "name": "c",
+                  "fill": "#CCCCCC",
+                  "content": "NOT WHERE IT STOPS.",
+                  "lineHeight": 0.9,
+                  "fontFamily": "Inter",
+                  "fontSize": 80,
+                  "fontWeight": "900",
+                  "letterSpacing": -4
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "WQIye",
+              "name": "foot",
+              "fill": "#666666",
+              "content": "Kubernetes API on the inside. Azure managed services on the outside. One control plane, one audit trail.",
+              "fontFamily": "Inter",
+              "fontSize": 22,
+              "fontWeight": "500"
+            }
+          ]
         }
       ]
     }
