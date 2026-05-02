@@ -3659,7 +3659,7 @@
                   "id": "C3NVL",
                   "name": "a",
                   "fill": "#FFFFFF",
-                  "content": "THE API.",
+                  "content": "KUBERNETES.",
                   "lineHeight": 0.88,
                   "fontFamily": "Inter",
                   "fontSize": 200,
@@ -3671,7 +3671,7 @@
                   "id": "8ZZVB",
                   "name": "b",
                   "fill": "#666666",
-                  "content": "IS THE PRODUCT.",
+                  "content": "AN API. NOT A SCHEDULER.",
                   "lineHeight": 0.9,
                   "fontFamily": "Inter",
                   "fontSize": 96,
@@ -3679,16 +3679,6 @@
                   "letterSpacing": -4
                 }
               ]
-            },
-            {
-              "type": "text",
-              "id": "vq3fw",
-              "name": "foot",
-              "fill": "#888888",
-              "content": "Kubernetes isn't a container scheduler — it's a declarative, extensible API with a reconciliation loop. That's the platform primitive.",
-              "fontFamily": "Inter",
-              "fontSize": 20,
-              "fontWeight": "500"
             }
           ]
         }
@@ -3847,7 +3837,7 @@
                   "id": "F7c1E",
                   "name": "a",
                   "fill": "#000000",
-                  "content": "DESCRIBE INTENT.",
+                  "content": "YOU DECLARE IT.",
                   "lineHeight": 0.88,
                   "fontFamily": "Inter",
                   "fontSize": 160,
@@ -3859,7 +3849,7 @@
                   "id": "xBSki",
                   "name": "b",
                   "fill": "#CCCCCC",
-                  "content": "LET IT CONVERGE.",
+                  "content": "KUBERNETES CONVERGES IT.",
                   "lineHeight": 0.88,
                   "fontFamily": "Inter",
                   "fontSize": 120,
@@ -3867,16 +3857,6 @@
                   "letterSpacing": -5
                 }
               ]
-            },
-            {
-              "type": "text",
-              "id": "fh0f1",
-              "name": "foot",
-              "fill": "#666666",
-              "content": "You write the desired state. The controller does the steps — over and over, forever. That's the contract.",
-              "fontFamily": "Inter",
-              "fontSize": 22,
-              "fontWeight": "500"
             }
           ]
         }
@@ -4096,7 +4076,7 @@
                   "id": "JUVy7",
                   "name": "a",
                   "fill": "#FFFFFF",
-                  "content": "A TOOLKIT.",
+                  "content": "CNCF TOOLKIT.",
                   "lineHeight": 0.88,
                   "fontFamily": "Inter",
                   "fontSize": 200,
@@ -4108,7 +4088,7 @@
                   "id": "AT008",
                   "name": "b",
                   "fill": "#555555",
-                  "content": "NOT A PRODUCT.",
+                  "content": "BUILD ON KUBERNETES.",
                   "lineHeight": 0.9,
                   "fontFamily": "Inter",
                   "fontSize": 96,
@@ -4116,16 +4096,6 @@
                   "letterSpacing": -4
                 }
               ]
-            },
-            {
-              "type": "text",
-              "id": "zEfVM",
-              "name": "foot",
-              "fill": "#888888",
-              "content": "The CNCF gives you parts. Pick a few sharp ones, integrate them well, hide the seams from your developers.",
-              "fontFamily": "Inter",
-              "fontSize": 20,
-              "fontWeight": "500"
             }
           ]
         }
@@ -4580,107 +4550,6 @@
                   "letterSpacing": -4
                 }
               ]
-            },
-            {
-              "type": "frame",
-              "id": "yyqsj",
-              "name": "strip",
-              "gap": 24,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "Z3by4",
-                  "name": "p1",
-                  "width": 520,
-                  "layout": "vertical",
-                  "gap": 6,
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "QUxqc",
-                      "name": "t",
-                      "fill": "#FFFFFF",
-                      "content": "APP OF APPS",
-                      "fontFamily": "Inter",
-                      "fontSize": 24,
-                      "fontWeight": "800",
-                      "letterSpacing": 1
-                    },
-                    {
-                      "type": "text",
-                      "id": "BLZI9",
-                      "name": "d",
-                      "fill": "#888888",
-                      "content": "One root Application bootstraps the whole platform.",
-                      "fontFamily": "Inter",
-                      "fontSize": 16,
-                      "fontWeight": "500"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "d3gt9",
-                  "name": "p2",
-                  "width": 520,
-                  "layout": "vertical",
-                  "gap": 6,
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "ggZ6o",
-                      "name": "t",
-                      "fill": "#FFFFFF",
-                      "content": "APPLICATIONSETS",
-                      "fontFamily": "Inter",
-                      "fontSize": 24,
-                      "fontWeight": "800",
-                      "letterSpacing": 1
-                    },
-                    {
-                      "type": "text",
-                      "id": "jU1PT",
-                      "name": "d",
-                      "fill": "#888888",
-                      "content": "Generate Apps from a template plus a list of tenants.",
-                      "fontFamily": "Inter",
-                      "fontSize": 16,
-                      "fontWeight": "500"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "O8QLD",
-                  "name": "p3",
-                  "width": 520,
-                  "layout": "vertical",
-                  "gap": 6,
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "JqCs2",
-                      "name": "t",
-                      "fill": "#FFFFFF",
-                      "content": "DRIFT DETECTION",
-                      "fontFamily": "Inter",
-                      "fontSize": 24,
-                      "fontWeight": "800",
-                      "letterSpacing": 1
-                    },
-                    {
-                      "type": "text",
-                      "id": "kfhnN",
-                      "name": "d",
-                      "fill": "#888888",
-                      "content": "Continuously compare cluster to Git — and self-heal.",
-                      "fontFamily": "Inter",
-                      "fontSize": 16,
-                      "fontWeight": "500"
-                    }
-                  ]
-                }
-              ]
             }
           ]
         }
@@ -4860,16 +4729,6 @@
                   "letterSpacing": -4
                 }
               ]
-            },
-            {
-              "type": "text",
-              "id": "WQIye",
-              "name": "foot",
-              "fill": "#666666",
-              "content": "Kubernetes API on the inside. Azure managed services on the outside. One control plane, one audit trail.",
-              "fontFamily": "Inter",
-              "fontSize": 22,
-              "fontWeight": "500"
             }
           ]
         }
@@ -5158,19 +5017,6 @@
                   "fontSize": 13,
                   "fontWeight": "600",
                   "letterSpacing": 1
-                },
-                {
-                  "type": "text",
-                  "id": "Zf1rl",
-                  "x": 1100,
-                  "y": 305,
-                  "name": "drift",
-                  "fill": "#FFFFFF44",
-                  "content": "drift detected  →  argo self-heals",
-                  "fontFamily": "Inter",
-                  "fontSize": 12,
-                  "fontWeight": "600",
-                  "letterSpacing": 2
                 }
               ]
             },
@@ -5201,15 +5047,6 @@
                       "fontSize": 18,
                       "fontWeight": "800",
                       "letterSpacing": 1
-                    },
-                    {
-                      "type": "text",
-                      "id": "r4znK",
-                      "name": "i1t",
-                      "fill": "#888888",
-                      "content": "Argo watches Git. No push credentials in CI.",
-                      "fontFamily": "Inter",
-                      "fontSize": 13
                     }
                   ]
                 },
@@ -5233,15 +5070,6 @@
                       "fontSize": 18,
                       "fontWeight": "800",
                       "letterSpacing": 1
-                    },
-                    {
-                      "type": "text",
-                      "id": "x13SYM",
-                      "name": "i2t",
-                      "fill": "#888888",
-                      "content": "Every change is versioned, reviewed, and auditable.",
-                      "fontFamily": "Inter",
-                      "fontSize": 13
                     }
                   ]
                 },
@@ -5265,15 +5093,6 @@
                       "fontSize": 18,
                       "fontWeight": "800",
                       "letterSpacing": 1
-                    },
-                    {
-                      "type": "text",
-                      "id": "FWOxd",
-                      "name": "i3t",
-                      "fill": "#888888",
-                      "content": "Drift is automatically detected and corrected.",
-                      "fontFamily": "Inter",
-                      "fontSize": 13
                     }
                   ]
                 }
