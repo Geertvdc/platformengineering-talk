@@ -1,0 +1,97 @@
+# Platform Composition: AppStorage → Azure Storage Account + Blob Container
+#
+# Platform team's implementation of the AppStorage API. Developers never edit
+# this file — they only write an AppStorage claim with name + size.
+#
+# Platform opinions encoded here (NOT exposed to developers):
+#   - Target resource group:   rg-platform-demo
+#   - Azure region:            westeurope
+#   - Naming prefix:           "st" + spec.name  (e.g. "stmyapp")
+#   - Container name:          spec.name + "-data"
+#   - Mandatory tags:          managed-by=crossplane, platform=true,
+#                              environment=demo, source=gitops
+#   - Security baseline:       httpsTrafficOnly, TLS 1.2 minimum
+#   - Replication tier:        small=LRS, medium=GRS, large=RAGRS
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xappstorages-azure
+  labels:
+    provider: azure
+    platform: "true"
+spec:
+  compositeTypeRef:
+    apiVersion: platform.demo.io/v1alpha1
+    kind: XAppStorage
+
+  resources:
+    # ── Azure Storage Account ─────────────────────────────────────────────────
+    - name: storage-account
+      base:
+        apiVersion: storage.azure.upbound.io/v1beta1
+        kind: Account
+        spec:
+          forProvider:
+            accountKind: StorageV2
+            accountTier: Standard
+            accountReplicationType: LRS   # overridden by size patch below
+            location: westeurope
+            resourceGroupName: rg-platform-demo
+            httpsTrafficOnlyEnabled: true
+            minTlsVersion: TLS1_2
+            tags:
+              managed-by: crossplane
+              platform: "true"
+              environment: demo
+              source: gitops
+          providerConfigRef:
+            name: default
+      patches:
+        # Set the Azure resource name to "st<spec.name>"
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.name
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+          transforms:
+            - type: string
+              string:
+                type: Format
+                fmt: "st%s"
+        # Map size tier → replication type
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.size
+          toFieldPath: spec.forProvider.accountReplicationType
+          transforms:
+            - type: map
+              map:
+                small: LRS
+                medium: GRS
+                large: RAGRS
+        # Surface the provisioned account name in XR status for kubectl inspection
+        - type: ToCompositeFieldPath
+          fromFieldPath: metadata.annotations[crossplane.io/external-name]
+          toFieldPath: status.storageAccountName
+
+    # ── Azure Blob Container ──────────────────────────────────────────────────
+    - name: blob-container
+      base:
+        apiVersion: storage.azure.upbound.io/v1beta1
+        kind: Container
+        spec:
+          forProvider:
+            containerAccessType: private
+            # matchControllerRef automatically resolves to the Account
+            # provisioned by this same Composition instance.
+            storageAccountNameSelector:
+              matchControllerRef: true
+          providerConfigRef:
+            name: default
+      patches:
+        # Container name derived from spec.name + "-data"
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.name
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+          transforms:
+            - type: string
+              string:
+                type: Format
+                fmt: "%s-data"

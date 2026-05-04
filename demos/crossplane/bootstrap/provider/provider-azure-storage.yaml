@@ -1,0 +1,15 @@
+# Installs the Crossplane Azure Storage provider package.
+# Managed by Argo CD (cluster-scoped resource).
+#
+# The provider image is pulled from the Upbound marketplace and installed
+# as a Crossplane package. Once INSTALLED=True and HEALTHY=True, the
+# storage.azure.upbound.io CRDs (Account, Container, …) become available
+# and the ProviderConfig below can authenticate.
+#
+# Version pin: bump here when upgrading. Check https://marketplace.upbound.io/providers/upbound/provider-azure-storage
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: upbound-provider-azure-storage
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-storage:v1.3.0

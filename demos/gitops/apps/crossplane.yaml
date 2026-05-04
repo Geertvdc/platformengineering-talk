@@ -1,0 +1,36 @@
+# Argo CD Application for the Crossplane demo (Section 7).
+#
+# Convention from demos/gitops/README.md: exactly one Application file per demo,
+# selfHeal: true, own destination namespace, consumes shared azure-creds.
+#
+# This Application manages (via recursive directory sync):
+#   bootstrap/provider/  — Provider + ProviderConfig (cluster-scoped)
+#   composition/         — XRD + Composition (cluster-scoped)
+#   samples/             — crossplane-demo Namespace + AppStorage developer CR
+#
+# Prerequisite: Crossplane controller installed and azure-provider-creds Secret
+# created. See demos/crossplane/bootstrap/install-crossplane.md.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-demo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Geertvdc/platformengineering-talk
+    targetRevision: main
+    path: demos/crossplane
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: crossplane-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

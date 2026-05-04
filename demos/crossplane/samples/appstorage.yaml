@@ -1,0 +1,11 @@
+# Developer-facing AppStorage claim.
+# Platform team owns the implementation — developer only specifies name + size.
+# No Azure-specific fields, no resource group, no region, no tags.
+apiVersion: platform.demo.io/v1alpha1
+kind: AppStorage
+metadata:
+  name: demo-app-store
+  namespace: crossplane-demo
+spec:
+  name: demoapp
+  size: small
