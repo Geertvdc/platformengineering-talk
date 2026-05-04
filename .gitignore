@@ -11,6 +11,11 @@
 *.sln.docstates
 *.env
 
+# Demo: never commit populated Azure credential files (template-only is OK).
+# Real values are loaded from env vars by demos/gitops/bootstrap/30-azure-creds.sh.
+**/azure-creds.local.*
+**/azure-credentials.local.*
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

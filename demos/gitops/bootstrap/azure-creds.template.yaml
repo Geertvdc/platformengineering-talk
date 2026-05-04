@@ -1,0 +1,23 @@
+# Template ONLY - do not commit a populated copy of this file.
+# Use bootstrap/30-azure-creds.sh to create the real Secret from env vars.
+#
+# Shared Azure service principal credentials consumed by the ASO, Crossplane,
+# KRO and Terranetes demos. One SP, Contributor on a single sandbox RG.
+#
+# Production guidance: prefer workload identity / federated credentials.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: azure-creds
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: azure-credentials
+  namespace: azure-creds
+type: Opaque
+stringData:
+  AZURE_TENANT_ID: "REPLACE_ME"
+  AZURE_SUBSCRIPTION_ID: "REPLACE_ME"
+  AZURE_CLIENT_ID: "REPLACE_ME"
+  AZURE_CLIENT_SECRET: "REPLACE_ME"

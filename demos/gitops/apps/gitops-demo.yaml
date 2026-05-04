@@ -1,0 +1,29 @@
+# First child of the App-of-Apps: the trivial nginx workload used to make
+# GitOps drift detection + self-heal visceral in the live demo.
+#
+# Convention for demos #2-#5: each adds ONE Application file in this folder
+# pointing at its own demos/<tool>/ path, with automated.selfHeal: true and
+# its own destination namespace. No demo modifies bootstrap/ or another
+# demo's folder.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitops-demo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Geertvdc/platformengineering-talk
+    targetRevision: main
+    path: demos/gitops/workloads/nginx
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

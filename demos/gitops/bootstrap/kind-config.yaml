@@ -1,0 +1,14 @@
+# kind cluster definition for the platform engineering talk demos.
+# Single-node is intentional: boots in seconds, fully reproducible,
+# and is the foundation every later demo (#2-#5) builds on.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: platformeng-demo
+nodes:
+  - role: control-plane
+    # Expose the Argo CD UI via a stable host port so we can demo without
+    # reissuing port-forwards if the pod restarts.
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 8080
+        protocol: TCP
