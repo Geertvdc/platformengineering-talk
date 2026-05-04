@@ -1,0 +1,21 @@
+# Template ONLY — do not commit a populated copy of this file.
+# Use bootstrap/identity/40-wire-aso-creds.sh to create the real Secret.
+#
+# ASO v2 reads controller-level credentials from a Secret named
+# `aso-controller-settings` in the `azureserviceoperator-system` namespace.
+# The 40-wire-aso-creds.sh script creates this Secret by reading the values
+# from the shared `azure-creds/azure-credentials` Secret so that no new
+# service principal is needed.
+#
+# Production guidance: prefer workload identity / federated credentials.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: aso-controller-settings
+  namespace: azureserviceoperator-system
+type: Opaque
+stringData:
+  AZURE_SUBSCRIPTION_ID: "REPLACE_ME"
+  AZURE_TENANT_ID: "REPLACE_ME"
+  AZURE_CLIENT_ID: "REPLACE_ME"
+  AZURE_CLIENT_SECRET: "REPLACE_ME"
