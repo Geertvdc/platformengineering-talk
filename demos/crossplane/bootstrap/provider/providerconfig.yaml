@@ -1,0 +1,20 @@
+# Wires the Azure Storage provider to the shared SP credentials.
+# Managed by Argo CD (cluster-scoped resource).
+#
+# The Secret referenced here (crossplane-system/azure-provider-creds) is NOT
+# stored in Git. It is created by demos/crossplane/bootstrap/20-crossplane-azure-creds.sh,
+# which derives it from the shared azure-creds/azure-credentials Secret
+# (no new service principal is created).
+#
+# Production: replace source: Secret with source: InjectedIdentity (workload identity).
+apiVersion: azure.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: azure-provider-creds
+      key: credentials

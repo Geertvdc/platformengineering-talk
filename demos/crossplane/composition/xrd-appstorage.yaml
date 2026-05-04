@@ -1,0 +1,57 @@
+# Platform API: AppStorage
+#
+# This XRD defines the developer-facing abstraction. Developers create
+# AppStorage *claims* (namespaced); Crossplane creates an XAppStorage
+# *composite* (cluster-scoped) and the underlying Azure resources.
+#
+# Developer-visible fields:
+#   spec.name  — logical name; used to derive Azure resource names
+#   spec.size  — small | medium | large (maps to LRS / GRS / RAGRS)
+#
+# Everything else (RG, location, tags, naming prefix, TLS settings) is
+# encoded in the Composition — invisible to developers.
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xappstorages.platform.demo.io
+spec:
+  group: platform.demo.io
+  names:
+    kind: XAppStorage
+    plural: xappstorages
+  claimNames:
+    kind: AppStorage
+    plural: appstorages
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: >-
+                    Logical name used to derive Azure resource names.
+                    The Storage Account is named "st<name>" — must be
+                    3–22 lowercase alphanumeric characters and globally
+                    unique within Azure.
+                size:
+                  type: string
+                  enum: [small, medium, large]
+                  description: >-
+                    Storage tier — maps to Azure replication:
+                    small = LRS, medium = GRS, large = RAGRS.
+              required:
+                - name
+                - size
+            status:
+              type: object
+              properties:
+                storageAccountName:
+                  type: string
+                  description: Provisioned Azure Storage Account name.
