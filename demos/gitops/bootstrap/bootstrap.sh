@@ -6,8 +6,11 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+source ${SCRIPT_DIR}/.env
+
 bash "${SCRIPT_DIR}/00-create-cluster.sh"
 bash "${SCRIPT_DIR}/10-install-argocd.sh"
+bash "${SCRIPT_DIR}/15-add-github-repo.sh"
 
 if [[ -n "${AZURE_TENANT_ID:-}" && -n "${AZURE_SUBSCRIPTION_ID:-}" \
    && -n "${AZURE_CLIENT_ID:-}" && -n "${AZURE_CLIENT_SECRET:-}" ]]; then

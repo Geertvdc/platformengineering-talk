@@ -31,6 +31,18 @@ Install on the laptop before the talk:
 - [`kind`](https://kind.sigs.k8s.io/) ≥ v0.24
 - `kubectl` ≥ v1.30
 - `helm` ≥ v3.14 (only needed if you swap the manifest install for the chart)
+- A **GitHub Personal Access Token** (PAT) with `repo` (or `contents: read`)
+  access — needed so Argo CD can clone this repository if it is private:
+
+  ```bash
+  export GITHUB_TOKEN=ghp_...
+  export GITHUB_USER=<your-github-username>   # optional, defaults to 'git'
+  ```
+
+  These are read by `bootstrap/15-add-github-repo.sh` and registered as an
+  Argo CD repository secret. They are **never** written to disk and **never**
+  committed.
+
 - An Azure service principal with **Contributor** on a single sandbox resource
   group, exported as env vars:
 
@@ -54,13 +66,15 @@ Single command:
 ./demos/gitops/bootstrap/bootstrap.sh
 ```
 
-This wraps the three numbered scripts:
+This wraps the four numbered scripts:
 
 1. `00-create-cluster.sh` — creates the `platformeng-demo` kind cluster from
    `kind-config.yaml`
 2. `10-install-argocd.sh` — installs Argo CD into the `argocd` namespace and
    applies the App-of-Apps root (`20-apply-root-app.yaml`)
-3. `30-azure-creds.sh` — creates the shared `azure-credentials` Secret in the
+3. `15-add-github-repo.sh` — registers this GitHub repo with Argo CD using
+   `GITHUB_TOKEN` so Argo CD can clone it (required if the repo is private)
+4. `30-azure-creds.sh` — creates the shared `azure-credentials` Secret in the
    `azure-creds` namespace from your env vars (skipped if env vars are unset)
 
 Then, in a separate terminal, port-forward the Argo CD UI and grab the admin
@@ -105,6 +119,7 @@ demos/gitops/
 │   ├── kind-config.yaml          # kind cluster definition
 │   ├── 00-create-cluster.sh      # create / recreate the kind cluster
 │   ├── 10-install-argocd.sh      # install Argo CD + apply root App
+│   ├── 15-add-github-repo.sh     # register GitHub repo creds with Argo CD
 │   ├── 20-apply-root-app.yaml    # App-of-Apps root Application
 │   ├── 30-azure-creds.sh         # creates the shared Secret from env vars
 │   └── azure-creds.template.yaml # SP credential Secret template (no values)
