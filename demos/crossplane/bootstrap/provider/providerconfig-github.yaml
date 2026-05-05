@@ -1,0 +1,22 @@
+# GitHub ProviderConfig — wires the GitHub provider to the PAT Secret.
+# Managed by Argo CD (cluster-scoped resource).
+#
+# The Secret referenced here (crossplane-system/github-provider-creds) is NOT
+# stored in Git. It is created by demos/crossplane/bootstrap/30-github-creds.sh
+# from the GITHUB_TOKEN environment variable.
+#
+# The PAT must have the following scopes for the AppTeam Composition:
+#   repo          — create/manage private repositories
+#   read:org      — read org membership (needed for org repo creation)
+#   delete_repo   — allow Crossplane to deprovision repos on claim deletion
+apiVersion: github.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: github-default
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: github-provider-creds
+      key: token

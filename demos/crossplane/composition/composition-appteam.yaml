@@ -1,0 +1,151 @@
+# Platform Composition: AppTeam → Azure RG + Storage Account + GitHub Repository
+#
+# This is the multi-cloud demo: ONE developer claim triggers resources
+# across TWO providers (Azure and GitHub) in a single, atomic reconciliation.
+#
+# Platform opinions encoded here (NOT exposed to developers):
+#   ── Azure ───────────────────────────────────────────────────────────────────
+#   - Resource Group name:   rg-team-<teamName>          (azure.upbound.io)
+#   - Storage Account name:  stteam<teamName>             (storage.azure.upbound.io)
+#   - Azure region:          westeurope
+#   - Mandatory tags:        managed-by=crossplane, platform=true,
+#                            environment=demo, source=gitops
+#   - Security baseline:     httpsTrafficOnly, TLS 1.2 minimum, LRS replication
+#   ── GitHub ──────────────────────────────────────────────────────────────────
+#   - Repository name:       <teamName>-platform-infra   (github.crossplane.io)
+#   - Visibility:            private
+#   - Auto-init:             true (so the repo is immediately cloneable)
+#   - Description:           Platform infrastructure repo for team <teamName>
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xappteams-azure-github
+  labels:
+    provider: azure-github
+    platform: "true"
+spec:
+  compositeTypeRef:
+    apiVersion: platform.demo.io/v1alpha1
+    kind: XAppTeam
+
+  resources:
+    # ── Azure Resource Group ──────────────────────────────────────────────────
+    - name: resource-group
+      base:
+        apiVersion: azure.upbound.io/v1beta1
+        kind: ResourceGroup
+        spec:
+          forProvider:
+            location: westeurope
+            tags:
+              managed-by: crossplane
+              platform: "true"
+              environment: demo
+              source: gitops
+          providerConfigRef:
+            name: default
+      patches:
+        # RG name: rg-team-<teamName>
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.teamName
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+          transforms:
+            - type: string
+              string:
+                type: Format
+                fmt: "rg-team-%s"
+        # Tag the RG with the team name
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.teamName
+          toFieldPath: spec.forProvider.tags[team]
+        # Surface RG name in XR status
+        - type: ToCompositeFieldPath
+          fromFieldPath: metadata.annotations[crossplane.io/external-name]
+          toFieldPath: status.resourceGroupName
+
+    # ── Azure Storage Account ─────────────────────────────────────────────────
+    - name: storage-account
+      base:
+        apiVersion: storage.azure.upbound.io/v1beta1
+        kind: Account
+        spec:
+          forProvider:
+            accountKind: StorageV2
+            accountTier: Standard
+            accountReplicationType: LRS
+            location: westeurope
+            httpsTrafficOnlyEnabled: true
+            minTlsVersion: TLS1_2
+            tags:
+              managed-by: crossplane
+              platform: "true"
+              environment: demo
+              source: gitops
+          providerConfigRef:
+            name: default
+      patches:
+        # Account name: stteam<teamName>
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.teamName
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+          transforms:
+            - type: string
+              string:
+                type: Format
+                fmt: "stteam%s"
+        # Place the account in the team's RG (derived from teamName)
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.teamName
+          toFieldPath: spec.forProvider.resourceGroupName
+          transforms:
+            - type: string
+              string:
+                type: Format
+                fmt: "rg-team-%s"
+        # Tag with team name
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.teamName
+          toFieldPath: spec.forProvider.tags[team]
+        # Surface Storage Account name in XR status
+        - type: ToCompositeFieldPath
+          fromFieldPath: metadata.annotations[crossplane.io/external-name]
+          toFieldPath: status.storageAccountName
+
+    # ── GitHub Repository ─────────────────────────────────────────────────────
+    - name: github-repo
+      base:
+        apiVersion: github.crossplane.io/v1alpha1
+        kind: Repository
+        spec:
+          forProvider:
+            visibility: private
+            autoInit: true
+          providerConfigRef:
+            name: github-default
+      patches:
+        # Repo name: <teamName>-platform-infra
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.teamName
+          toFieldPath: metadata.annotations[crossplane.io/external-name]
+          transforms:
+            - type: string
+              string:
+                type: Format
+                fmt: "%s-platform-infra"
+        # Set repo description using teamName
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.teamName
+          toFieldPath: spec.forProvider.description
+          transforms:
+            - type: string
+              string:
+                type: Format
+                fmt: "Platform infrastructure repository for team %s"
+        # Set the GitHub org from the claim spec
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.githubOrg
+          toFieldPath: spec.forProvider.org
+        # Surface repo name in XR status
+        - type: ToCompositeFieldPath
+          fromFieldPath: metadata.annotations[crossplane.io/external-name]
+          toFieldPath: status.githubRepoName

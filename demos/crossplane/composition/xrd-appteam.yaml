@@ -1,0 +1,67 @@
+# Platform API: AppTeam
+#
+# Multi-cloud abstraction: a single AppTeam claim provisions BOTH Azure
+# resources (Resource Group + Storage Account) AND a GitHub repository.
+# This demonstrates Crossplane's key differentiator over ASO and KRO:
+# one platform API can span multiple clouds / services.
+#
+# Developer-visible fields:
+#   spec.teamName   — logical team name; used to derive all resource names
+#   spec.githubOrg  — GitHub org where the team repo is created
+#
+# Platform team encodes (NOT exposed to developers):
+#   - Azure RG name:      rg-team-<teamName>
+#   - Storage Account:    stteam<teamName>
+#   - GitHub repo name:   <teamName>-platform-infra
+#   - Azure region:       westeurope
+#   - Mandatory tags:     managed-by=crossplane, platform=true,
+#                         environment=demo, source=gitops
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xappteams.platform.demo.io
+spec:
+  group: platform.demo.io
+  names:
+    kind: XAppTeam
+    plural: xappteams
+  claimNames:
+    kind: AppTeam
+    plural: appteams
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                teamName:
+                  type: string
+                  description: >-
+                    Logical team name. Used to derive all resource names:
+                    Azure RG (rg-team-<teamName>), Storage Account
+                    (stteam<teamName>), GitHub repo (<teamName>-platform-infra).
+                    Must be 3–16 lowercase alphanumeric characters.
+                githubOrg:
+                  type: string
+                  description: >-
+                    GitHub organization where the team repository is created.
+              required:
+                - teamName
+                - githubOrg
+            status:
+              type: object
+              properties:
+                resourceGroupName:
+                  type: string
+                  description: Provisioned Azure Resource Group name.
+                storageAccountName:
+                  type: string
+                  description: Provisioned Azure Storage Account name.
+                githubRepoName:
+                  type: string
+                  description: Provisioned GitHub repository name.
