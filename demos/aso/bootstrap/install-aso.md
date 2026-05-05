@@ -19,6 +19,25 @@ helm repo add aso2 https://raw.githubusercontent.com/Azure/azure-service-operato
 helm repo update
 ```
 
+## Step 1b — Install cert-manager (required by ASO)
+
+```bash
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
+
+# Wait for cert-manager to be ready before proceeding
+kubectl rollout status deployment/cert-manager -n cert-manager --timeout=3m
+kubectl rollout status deployment/cert-manager-webhook -n cert-manager --timeout=3m
+kubectl rollout status deployment/cert-manager-cainjector -n cert-manager --timeout=3m
+
+# Verify cert-manager CRDs are installed
+kubectl get crds | grep cert-manager.io
+# Expected: certificates.cert-manager.io, issuers.cert-manager.io, clusterissuers.cert-manager.io, etc.
+
+# Verify all cert-manager pods are running
+kubectl get pods -n cert-manager
+# Expected: all pods in Running state
+```
+
 ---
 
 ## Step 2 — Install the ASO v2 controller
@@ -36,8 +55,32 @@ helm install --devel aso2 aso2/azure-service-operator \
   --set azureTenantID="${AZURE_TENANT_ID}" \
   --set azureClientID="${AZURE_CLIENT_ID}" \
   --set azureClientSecret="${AZURE_CLIENT_SECRET}" \
-  --wait --timeout=5m
+  --set crdPattern="resources.azure.com/*;storage.azure.com/*;managedidentity.azure.com/*" \
+  --wait --timeout=10m
 ```
+
+> **Timeout note:** On a kind cluster the controller image pull can take a few
+> minutes. If you still hit a timeout, check progress with:
+> ```bash
+> kubectl get pods -n azureserviceoperator-system
+> kubectl describe pod -n azureserviceoperator-system -l app=azure-service-operator
+> ```
+> Common causes:
+> - **`ContainerCreating`** — image is still pulling, just wait.
+> - **`CrashLoopBackOff`** — the controller started but immediately exited, almost always a credential problem. Check the logs:
+>   ```bash
+>   kubectl logs -n azureserviceoperator-system -l app=azure-service-operator --previous
+>   ```
+>   Then verify your env vars are actually set before re-running the install:
+>   ```bash
+>   echo $AZURE_SUBSCRIPTION_ID $AZURE_TENANT_ID $AZURE_CLIENT_ID $AZURE_CLIENT_SECRET
+>   ```
+>   If any are empty, re-source your `.env` file and uninstall before retrying:
+>   ```bash
+>   helm uninstall aso2 -n azureserviceoperator-system
+>   source demos/aso/bootstrap/.env
+>   # then re-run the helm install
+>   ```
 
 > **What this does:** Helm deploys the CRD bundle (which includes
 > `StorageAccount`, `ResourceGroup`, `RoleAssignment`, and hundreds of other

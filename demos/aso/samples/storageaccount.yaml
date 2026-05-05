@@ -1,26 +1,14 @@
-# Live demo resource — provisioned through the GitOps loop established in demo #1.
-# ASO v2 translates this plain Kubernetes manifest into an Azure ARM API call.
-# No Terraform. No Bicep. Just YAML committed to Git.
-#
-# Before committing this file for real use:
-#   1. Replace REPLACE_WITH_SUBSCRIPTION_ID with your Azure subscription ID.
-#   2. Replace REPLACE_WITH_RESOURCE_GROUP with the pre-created sandbox RG name.
-#   3. Replace asoplatengdemo with a globally unique name you choose
-#      (3–24 lowercase letters/digits only, no hyphens — names are global in Azure).
-#
-# Provisioning time: ~15–30 s — fast enough for a live demo.
-# Delete this file from Git to trigger ASO to delete the Azure resource (prune: true).
 apiVersion: storage.azure.com/v1api20210401
 kind: StorageAccount
 metadata:
-  name: asoplatengdemo
+  name: techoramabe26
   namespace: aso-demo
 spec:
   location: westeurope
   kind: StorageV2
   owner:
     # armId lets ASO manage a resource inside a pre-existing (non-ASO-managed) RG.
-    armId: /subscriptions/REPLACE_WITH_SUBSCRIPTION_ID/resourceGroups/REPLACE_WITH_RESOURCE_GROUP
+    armId: /subscriptions/b8affb75-1fd8-4116-8065-dc871fdbe8bc/resourceGroups/aso-demo-rg
   sku:
     name: Standard_LRS
   accessTier: Hot
