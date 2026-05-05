@@ -253,27 +253,34 @@ demos/crossplane/
 │   ├── install-crossplane.md          # Full bootstrap guide
 │   ├── 10-install-crossplane.sh       # Helm install (run before talk)
 │   ├── 20-crossplane-azure-creds.sh   # Bridge SP creds to Crossplane format
-│   ├── 30-github-creds.sh             # Create github-provider-creds from GITHUB_TOKEN
+│   ├── 30-github-creds.sh             # Create github-provider-creds from GITHUB_TOKEN + GITHUB_OWNER
 │   ├── 40-install-providers.sh        # Apply Providers + wait for healthy + apply ProviderConfigs
 │   └── provider/
-│       ├── provider-azure-resources.yaml  # Azure Resources provider (ResourceGroup CRD)
-│       ├── provider-azure-storage.yaml    # Azure Storage provider (Account, Container CRDs)
-│       ├── provider-github.yaml           # GitHub provider (Repository CRD)
+│       ├── provider-azure-resources.yaml  # Azure Resources provider (ghcr.io, v2.5.0)
+│       ├── provider-azure-storage.yaml    # Azure Storage provider (ghcr.io, v2.5.0)
+│       ├── provider-github.yaml           # GitHub provider (ghcr.io, v0.19.0)
 │       ├── providerconfig.yaml            # Azure ProviderConfig → azure-provider-creds
 │       └── providerconfig-github.yaml     # GitHub ProviderConfig → github-provider-creds
 ├── composition/
-│   ├── xrd-appstorage.yaml            # Platform API: AppStorage (name + size)
-│   ├── composition-appstorage.yaml    # Azure Storage Account + Container
-│   ├── xrd-appteam.yaml               # Platform API: AppTeam (teamName + githubOrg)
-│   └── composition-appteam.yaml       # Azure RG + Storage Account + GitHub Repo
+│   ├── appstorage/
+│   │   ├── xrd-appstorage.yaml            # Platform API: AppStorage (name + size)
+│   │   └── composition-appstorage.yaml    # Azure Storage Account + Container
+│   └── appteam/
+│       ├── xrd-appteam.yaml               # Platform API: AppTeam (teamName + githubOrg)
+│       └── composition-appteam.yaml       # Azure RG + Storage Account + GitHub Repo
 ├── samples/
-│   ├── namespace.yaml                 # crossplane-demo namespace
-│   ├── appstorage.yaml                # AppStorage claim (11 lines, name + size only)
-│   └── appteam.yaml                   # AppTeam claim (10 lines, teamName + githubOrg)
+│   ├── appstorage/
+│   │   ├── namespace.yaml                 # crossplane-demo namespace
+│   │   └── appstorage.yaml                # AppStorage claim (name + size only)
+│   └── appteam/
+│       ├── namespace.yaml                 # crossplane-demo namespace
+│       └── appteam.yaml                   # AppTeam claim (teamName + githubOrg)
 └── README.md
 ```
 
-Argo CD Application: `demos/gitops/apps/crossplane.yaml`
+Argo CD Applications (both labelled `demo: demo-3`):
+- `demos/gitops/apps/crossplane-appstorage.yaml` — XRD + Composition + claim for AppStorage
+- `demos/gitops/apps/crossplane-appteam.yaml` — XRD + Composition + claim for AppTeam
 
 ---
 

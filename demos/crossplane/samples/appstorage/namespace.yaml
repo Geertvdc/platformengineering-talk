@@ -3,6 +3,6 @@ kind: Namespace
 metadata:
   name: crossplane-demo
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "2"
   labels:
     purpose: crossplane-demo

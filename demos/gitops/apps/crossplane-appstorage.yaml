@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-appstorage
+  namespace: argocd
+  labels:
+    demo: demo-3
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/Geertvdc/platformengineering-talk
+      targetRevision: main
+      path: demos/crossplane/composition/appstorage
+    - repoURL: https://github.com/Geertvdc/platformengineering-talk
+      targetRevision: main
+      path: demos/crossplane/samples/appstorage
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: crossplane-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true

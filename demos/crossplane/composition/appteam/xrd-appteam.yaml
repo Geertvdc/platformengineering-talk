@@ -1,21 +1,3 @@
-# Platform API: AppTeam
-#
-# Multi-cloud abstraction: a single AppTeam claim provisions BOTH Azure
-# resources (Resource Group + Storage Account) AND a GitHub repository.
-# This demonstrates Crossplane's key differentiator over ASO and KRO:
-# one platform API can span multiple clouds / services.
-#
-# Developer-visible fields:
-#   spec.teamName   — logical team name; used to derive all resource names
-#   spec.githubOrg  — GitHub org where the team repo is created
-#
-# Platform team encodes (NOT exposed to developers):
-#   - Azure RG name:      rg-team-<teamName>
-#   - Storage Account:    stteam<teamName>
-#   - GitHub repo name:   <teamName>-platform-infra
-#   - Azure region:       westeurope
-#   - Mandatory tags:     managed-by=crossplane, platform=true,
-#                         environment=demo, source=gitops
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:

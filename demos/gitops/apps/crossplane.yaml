@@ -1,27 +1,4 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: crossplane-demo
-  namespace: argocd
-  labels:
-    demo: demo-3
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: default
-  sources:
-    - repoURL: https://github.com/Geertvdc/platformengineering-talk
-      targetRevision: main
-      path: demos/crossplane/composition
-    - repoURL: https://github.com/Geertvdc/platformengineering-talk
-      targetRevision: main
-      path: demos/crossplane/samples
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: crossplane-system
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+# This file is intentionally empty.
+# The crossplane demo is split into two Argo CD Applications:
+#   - crossplane-appstorage.yaml  (AppStorage XRD + Composition + claim)
+#   - crossplane-appteam.yaml     (AppTeam XRD + Composition + claim)
