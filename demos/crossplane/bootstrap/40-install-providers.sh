@@ -30,7 +30,7 @@ for provider in \
   upbound-provider-azure-storage \
   crossplane-contrib-provider-github; do
   echo "    Waiting for ${provider}..."
-  kubectl wait provider "${provider}" \
+  kubectl wait providers.pkg.crossplane.io "${provider}" \
     --for=condition=Healthy \
     --timeout="${TIMEOUT}"
 done
