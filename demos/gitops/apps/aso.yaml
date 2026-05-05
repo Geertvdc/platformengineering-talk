@@ -1,15 +1,10 @@
-# Argo CD Application for the ASO demo (Section 6).
-#
-# Watches demos/aso/samples/ — any manifest committed there is reconciled
-# into the aso-demo namespace automatically via the GitOps loop.
-#
-# Convention: one file per demo under demos/gitops/apps/,
-# selfHeal: true, own namespace, shared azure-creds.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: aso-demo
   namespace: argocd
+  labels:
+    demo: demo-2
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:

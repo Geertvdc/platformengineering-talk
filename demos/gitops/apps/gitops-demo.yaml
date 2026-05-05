@@ -10,6 +10,8 @@ kind: Application
 metadata:
   name: gitops-demo
   namespace: argocd
+  labels:
+    demo: demo-1
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
