@@ -9,6 +9,8 @@ kind: Application
 metadata:
   name: app-of-apps
   namespace: argocd
+  labels:
+    demo: demo-1
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
