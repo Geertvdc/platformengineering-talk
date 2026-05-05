@@ -11,5 +11,7 @@ apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: crossplane-contrib-provider-github
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   package: xpkg.upbound.io/crossplane-contrib/provider-github:v0.22.0

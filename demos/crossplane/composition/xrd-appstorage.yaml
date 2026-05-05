@@ -14,6 +14,8 @@ apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
   name: xappstorages.platform.demo.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   group: platform.demo.io
   names:

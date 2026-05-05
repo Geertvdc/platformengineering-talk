@@ -16,6 +16,8 @@ apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
   name: xappstorages-azure
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
   labels:
     provider: azure
     platform: "true"

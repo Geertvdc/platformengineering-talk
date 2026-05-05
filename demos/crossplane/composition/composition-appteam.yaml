@@ -20,6 +20,8 @@ apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
   name: xappteams-azure-github
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
   labels:
     provider: azure-github
     platform: "true"
