@@ -1,3 +1,6 @@
+# XRD + Composition only — no claims here.
+# Claims live in crossplane-appstorage-claims.yaml which syncs AFTER this app
+# is Healthy (i.e. after the AppStorage CRD is registered by Crossplane).
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -9,13 +12,10 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  sources:
-    - repoURL: https://github.com/Geertvdc/platformengineering-talk
-      targetRevision: main
-      path: demos/crossplane/composition/appstorage
-    - repoURL: https://github.com/Geertvdc/platformengineering-talk
-      targetRevision: main
-      path: demos/crossplane/samples/appstorage
+  source:
+    repoURL: https://github.com/Geertvdc/platformengineering-talk
+    targetRevision: main
+    path: demos/crossplane/composition/appstorage
   destination:
     server: https://kubernetes.default.svc
     namespace: crossplane-system
@@ -25,4 +25,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - SkipDryRunOnMissingResource=true
