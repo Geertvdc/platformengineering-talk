@@ -12,7 +12,7 @@
 #                            environment=demo, source=gitops
 #   - Security baseline:     httpsTrafficOnly, TLS 1.2 minimum, LRS replication
 #   ── GitHub ──────────────────────────────────────────────────────────────────
-#   - Repository name:       <teamName>-platform-infra   (github.crossplane.io)
+#   - Repository name:       <teamName>-platform-infra   (repo.github.upbound.io)
 #   - Visibility:            private
 #   - Auto-init:             true (so the repo is immediately cloneable)
 #   - Description:           Platform infrastructure repo for team <teamName>
@@ -21,7 +21,7 @@ kind: Composition
 metadata:
   name: xappteams-azure-github
   annotations:
-    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-wave: "2"
   labels:
     provider: azure-github
     platform: "true"
@@ -116,7 +116,7 @@ spec:
     # ── GitHub Repository ─────────────────────────────────────────────────────
     - name: github-repo
       base:
-        apiVersion: github.crossplane.io/v1alpha1
+        apiVersion: repo.github.upbound.io/v1alpha1
         kind: Repository
         spec:
           forProvider:

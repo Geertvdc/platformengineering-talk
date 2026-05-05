@@ -9,12 +9,13 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: https://github.com/Geertvdc/platformengineering-talk
-    targetRevision: main
-    path: demos/crossplane
-    directory:
-      recurse: true
+  sources:
+    - repoURL: https://github.com/Geertvdc/platformengineering-talk
+      targetRevision: main
+      path: demos/crossplane/composition
+    - repoURL: https://github.com/Geertvdc/platformengineering-talk
+      targetRevision: main
+      path: demos/crossplane/samples
   destination:
     server: https://kubernetes.default.svc
     namespace: crossplane-system
@@ -24,4 +25,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - SkipDryRunOnMissingResource=true

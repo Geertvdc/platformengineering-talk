@@ -8,7 +8,7 @@ metadata:
   name: alpha-team
   namespace: crossplane-demo
   annotations:
-    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   teamName: alpha
   githubOrg: Geertvdc

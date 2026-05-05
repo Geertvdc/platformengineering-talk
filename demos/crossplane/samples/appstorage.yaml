@@ -7,7 +7,7 @@ metadata:
   name: demo-app-store
   namespace: crossplane-demo
   annotations:
-    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   name: demoapp
   size: small

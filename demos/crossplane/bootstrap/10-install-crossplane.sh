@@ -6,7 +6,7 @@
 # See demos/crossplane/bootstrap/install-crossplane.md for full context.
 set -euo pipefail
 
-CROSSPLANE_VERSION="${CROSSPLANE_VERSION:-1.17.1}"
+CROSSPLANE_VERSION="${CROSSPLANE_VERSION:-2.2.1}"
 NAMESPACE="crossplane-system"
 
 echo "==> Adding Crossplane Helm repo"

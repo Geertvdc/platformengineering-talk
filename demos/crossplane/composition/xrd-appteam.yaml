@@ -21,7 +21,7 @@ kind: CompositeResourceDefinition
 metadata:
   name: xappteams.platform.demo.io
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   group: platform.demo.io
   names:

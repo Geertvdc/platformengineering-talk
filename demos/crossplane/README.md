@@ -101,7 +101,7 @@ and creates the shared `azure-credentials` Secret in `azure-creds`.
 bash demos/crossplane/bootstrap/10-install-crossplane.sh
 ```
 
-Installs Crossplane `v1.17.1` via Helm into `crossplane-system`.
+Installs Crossplane `v2.2.1` via Helm into `crossplane-system`.
 See `bootstrap/install-crossplane.md` for details.
 
 ### 3 — Create the Azure provider credentials Secret
@@ -118,32 +118,39 @@ for the Crossplane Azure provider. **No new service principal is created.**
 
 ```bash
 export GITHUB_TOKEN=ghp_...   # PAT with repo + read:org + delete_repo scopes
+export GITHUB_OWNER=Geertvdc  # your GitHub username or org
 bash demos/crossplane/bootstrap/30-github-creds.sh
 ```
 
-Writes `crossplane-system/github-provider-creds` with key `token`. The same
-`GITHUB_TOKEN` already set for Argo CD (Demo 1) works here if it has the
-required scopes.
+Writes `crossplane-system/github-provider-creds` with key `credentials` as a JSON blob
+`{"token":"...","owner":"..."}`. The same `GITHUB_TOKEN` already set for Argo CD
+(Demo 1) works here if it has the required scopes.
 
-### 5 — Let Argo CD sync the rest
+### 5 — Install Providers and wait for CRDs
+
+```bash
+bash demos/crossplane/bootstrap/40-install-providers.sh
+```
+
+Applies the three Provider packages and **blocks until each is `HEALTHY=True`**
+(~2–3 min on first run while images pull). This pre-registers all Azure and
+GitHub CRDs so Argo CD never encounters a missing resource during sync.
+
+### 6 — Let Argo CD sync the rest
 
 The `crossplane-demo` Application is registered in `demos/gitops/apps/crossplane.yaml`.
-Argo CD picks it up automatically and applies, in order:
+It watches only `composition/` and `samples/` (providers live in `bootstrap/` and
+are managed imperatively). Argo CD applies in three sync waves:
 
-| Resource | Kind | Source |
-|----------|------|--------|
-| `upbound-provider-azure-resources` | `Provider` | `bootstrap/provider/` |
-| `upbound-provider-azure-storage` | `Provider` | `bootstrap/provider/` |
-| `crossplane-contrib-provider-github` | `Provider` | `bootstrap/provider/` |
-| `default` | `ProviderConfig` (Azure) | `bootstrap/provider/` |
-| `github-default` | `ProviderConfig` (GitHub) | `bootstrap/provider/` |
-| `xappstorages.platform.demo.io` | `CompositeResourceDefinition` | `composition/` |
-| `xappstorages-azure` | `Composition` | `composition/` |
-| `xappteams.platform.demo.io` | `CompositeResourceDefinition` | `composition/` |
-| `xappteams-azure-github` | `Composition` | `composition/` |
-| `crossplane-demo` | `Namespace` | `samples/` |
-| `demo-app-store` | `AppStorage` | `samples/` |
-| `alpha-team` | `AppTeam` | `samples/` |
+| Resource | Kind | Wave |
+|----------|------|------|
+| `xappstorages.platform.demo.io` | `CompositeResourceDefinition` | 1 |
+| `xappteams.platform.demo.io` | `CompositeResourceDefinition` | 1 |
+| `xappstorages-azure` | `Composition` | 2 |
+| `xappteams-azure-github` | `Composition` | 2 |
+| `crossplane-demo` | `Namespace` | 3 |
+| `demo-app-store` | `AppStorage` | 3 |
+| `alpha-team` | `AppTeam` | 3 |
 
 Wait for all Providers to become healthy (~2–3 min while images pull):
 
@@ -247,6 +254,7 @@ demos/crossplane/
 │   ├── 10-install-crossplane.sh       # Helm install (run before talk)
 │   ├── 20-crossplane-azure-creds.sh   # Bridge SP creds to Crossplane format
 │   ├── 30-github-creds.sh             # Create github-provider-creds from GITHUB_TOKEN
+│   ├── 40-install-providers.sh        # Apply Providers + wait for healthy + apply ProviderConfigs
 │   └── provider/
 │       ├── provider-azure-resources.yaml  # Azure Resources provider (ResourceGroup CRD)
 │       ├── provider-azure-storage.yaml    # Azure Storage provider (Account, Container CRDs)
