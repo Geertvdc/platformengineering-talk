@@ -1,0 +1,12 @@
+# Developer-facing AppTeam claim.
+# One claim provisions BOTH Azure resources AND a GitHub repo.
+# No Azure-specific fields, no resource group, no region, no tags —
+# and no GitHub API tokens, visibility settings, or naming decisions.
+apiVersion: platform.demo.io/v1alpha1
+kind: AppTeam
+metadata:
+  name: alpha-team
+  namespace: crossplane-demo
+spec:
+  teamName: alpha
+  githubOrg: Geertvdc

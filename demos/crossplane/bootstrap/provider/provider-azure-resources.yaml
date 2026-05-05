@@ -1,0 +1,12 @@
+# Installs the Crossplane Azure Resources provider package.
+# Provides the ResourceGroup CRD used by the AppTeam Composition.
+# Managed by Argo CD (cluster-scoped resource).
+#
+# Version pin: bump when upgrading.
+# https://marketplace.upbound.io/providers/upbound/provider-azure-resources
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: upbound-provider-azure-resources
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-resources:v1.3.0

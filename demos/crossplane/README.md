@@ -6,6 +6,19 @@
 
 ---
 
+## Two compositions — two talking points
+
+This demo includes **two independent compositions** to illustrate different aspects of Crossplane:
+
+| Composition | Claim | Provisions | Key talking point |
+|---|---|---|---|
+| `AppStorage` | `name` + `size` | Azure Storage Account + Blob Container | Platform-owned abstraction vs ASO's raw CRDs |
+| `AppTeam` | `teamName` + `githubOrg` | Azure RG + Storage Account **+** GitHub repo | **Multi-cloud**: one claim, two providers |
+
+Use `AppStorage` to contrast with Demo 2 (ASO), then introduce `AppTeam` to land Crossplane's multi-provider differentiation.
+
+---
+
 ## Why Crossplane, why `AppStorage`?
 
 **ASO** (Demo 2) exposes Azure CRDs directly — great for Azure-native teams, but
@@ -31,6 +44,21 @@ developer only picks a logical tier.
 
 ---
 
+## Why `AppTeam`? The multi-cloud moment
+
+The `AppTeam` composition is the "wow" moment: a developer applies **one 10-line
+claim** and Crossplane simultaneously:
+
+1. Creates an **Azure Resource Group** (`rg-team-<name>`) with platform tags
+2. Creates an **Azure Storage Account** (`stteam<name>`) inside that RG
+3. Creates a **private GitHub repository** (`<name>-platform-infra`) in the org
+
+Two providers, two clouds, one claim — no Azure knowledge, no GitHub API
+familiarity required from the developer. This is a capability ASO and KRO
+cannot offer alone.
+
+---
+
 ## Prereqs
 
 Everything from [Demo 1 (GitOps)][demo-gitops] plus:
@@ -38,10 +66,10 @@ Everything from [Demo 1 (GitOps)][demo-gitops] plus:
 | Tool | Version | Why |
 |------|---------|-----|
 | `helm` | ≥ v3.14 | Install Crossplane via Helm |
-| Azure SP | Contributor on `rg-platform-demo` | Same SP as other demos |
+| Azure SP | Contributor on sandbox subscription | Same SP as other demos |
+| `GITHUB_TOKEN` | PAT with `repo`, `read:org`, `delete_repo` scopes | GitHub provider authentication |
 
-The sandbox resource group **`rg-platform-demo`** must exist in `westeurope`
-(the Composition hardcodes it). Create it once:
+For `AppStorage`: the Composition targets `rg-platform-demo`. Pre-create it:
 
 ```bash
 az group create \
@@ -49,6 +77,10 @@ az group create \
   --location westeurope \
   --tags managed-by=crossplane platform=true environment=demo
 ```
+
+For `AppTeam`: the Composition dynamically creates `rg-team-<teamName>` — no
+pre-creation needed (the Azure provider creates it). Ensure the SP has
+**Resource Group create** permissions on the subscription.
 
 ---
 
@@ -72,7 +104,7 @@ bash demos/crossplane/bootstrap/10-install-crossplane.sh
 Installs Crossplane `v1.17.1` via Helm into `crossplane-system`.
 See `bootstrap/install-crossplane.md` for details.
 
-### 3 — Create the provider credentials Secret
+### 3 — Create the Azure provider credentials Secret
 
 ```bash
 bash demos/crossplane/bootstrap/20-crossplane-azure-creds.sh
@@ -82,81 +114,114 @@ Reads the four fields from `azure-creds/azure-credentials` (the shared SP
 Secret) and writes `crossplane-system/azure-provider-creds` as a JSON blob
 for the Crossplane Azure provider. **No new service principal is created.**
 
-### 4 — Let Argo CD sync the rest
+### 4 — Create the GitHub provider credentials Secret
+
+```bash
+export GITHUB_TOKEN=ghp_...   # PAT with repo + read:org + delete_repo scopes
+bash demos/crossplane/bootstrap/30-github-creds.sh
+```
+
+Writes `crossplane-system/github-provider-creds` with key `token`. The same
+`GITHUB_TOKEN` already set for Argo CD (Demo 1) works here if it has the
+required scopes.
+
+### 5 — Let Argo CD sync the rest
 
 The `crossplane-demo` Application is registered in `demos/gitops/apps/crossplane.yaml`.
 Argo CD picks it up automatically and applies, in order:
 
 | Resource | Kind | Source |
 |----------|------|--------|
+| `upbound-provider-azure-resources` | `Provider` | `bootstrap/provider/` |
 | `upbound-provider-azure-storage` | `Provider` | `bootstrap/provider/` |
-| `default` | `ProviderConfig` | `bootstrap/provider/` |
+| `crossplane-contrib-provider-github` | `Provider` | `bootstrap/provider/` |
+| `default` | `ProviderConfig` (Azure) | `bootstrap/provider/` |
+| `github-default` | `ProviderConfig` (GitHub) | `bootstrap/provider/` |
 | `xappstorages.platform.demo.io` | `CompositeResourceDefinition` | `composition/` |
 | `xappstorages-azure` | `Composition` | `composition/` |
+| `xappteams.platform.demo.io` | `CompositeResourceDefinition` | `composition/` |
+| `xappteams-azure-github` | `Composition` | `composition/` |
 | `crossplane-demo` | `Namespace` | `samples/` |
 | `demo-app-store` | `AppStorage` | `samples/` |
+| `alpha-team` | `AppTeam` | `samples/` |
 
-Wait for the Provider to become healthy (pulls provider image, ~2–3 min):
+Wait for all Providers to become healthy (~2–3 min while images pull):
 
 ```bash
-kubectl get provider upbound-provider-azure-storage -w
-# NAME                              INSTALLED   HEALTHY
-# upbound-provider-azure-storage   True        True
+kubectl get providers -w
+# NAME                                INSTALLED   HEALTHY
+# upbound-provider-azure-resources   True        True
+# upbound-provider-azure-storage     True        True
+# crossplane-contrib-provider-github True        True
 ```
 
-Verify XRD is established and offered:
+Verify XRDs are established and offered:
 
 ```bash
-kubectl get xrd xappstorages.platform.demo.io
-# NAME                              ESTABLISHED   OFFERED   AGE
-# xappstorages.platform.demo.io   True          True      ...
+kubectl get xrd
+# NAME                              ESTABLISHED   OFFERED
+# xappstorages.platform.demo.io   True          True
+# xappteams.platform.demo.io      True          True
 ```
 
 ---
 
 ## The ≤ 3-minute live demo script
 
+### Part A — AppStorage (contrast with ASO)
+
 | # | Action | Expected output |
 |---|--------|-----------------|
-| 1 | Show the **developer CR** | `demos/crossplane/samples/appstorage.yaml` — 10 lines, only `name` and `size` |
-| 2 | Show the **Composition** side-by-side | `demos/crossplane/composition/composition-appstorage.yaml` — tags, naming, RG, TLS all platform-owned |
-| 3 | `git commit && git push` the developer CR (or it's already in repo) | Argo CD picks it up in ≤ 30 s |
-| 4 | `kubectl -n crossplane-demo get appstorage` | Claim appears, `SYNCED=True`, `READY=True` |
-| 5 | `kubectl get xappstorage` | Composite resource visible |
-| 6 | `kubectl get account` | Managed resource: `stdemosapp` in Azure |
-| 7 | Azure Portal | Storage Account `stdemoapp` present with tags `managed-by=crossplane` |
+| 1 | Show the **developer CR** | `demos/crossplane/samples/appstorage.yaml` — 11 lines, only `name` and `size` |
+| 2 | Show the **Composition** side-by-side | `composition/composition-appstorage.yaml` — tags, naming, RG, TLS all platform-owned |
+| 3 | `kubectl -n crossplane-demo get appstorage` | Claim `SYNCED=True`, `READY=True` |
+| 4 | `kubectl get account` | Managed resource `stdemoapp` visible |
+| 5 | Azure Portal | Storage Account present with tags `managed-by=crossplane` |
+
+### Part B — AppTeam (the multi-cloud moment)
+
+| # | Action | Expected output |
+|---|--------|-----------------|
+| 1 | Show `samples/appteam.yaml` | 10 lines: just `teamName: alpha` and `githubOrg: Geertvdc` |
+| 2 | Show `composition/composition-appteam.yaml` | Three sections: RG, Storage Account, GitHub repo |
+| 3 | `git commit && git push` the AppTeam claim (or it's already in repo) | Argo CD picks it up |
+| 4 | `kubectl -n crossplane-demo get appteam alpha-team -w` | Claim becomes `READY=True` |
+| 5 | `kubectl get resourcegroup` + `kubectl get account` | Azure RG + Storage Account |
+| 6 | GitHub → `Geertvdc/alpha-platform-infra` | Private repo created automatically |
 
 **Useful commands:**
 
 ```bash
-# Watch the claim status
-kubectl -n crossplane-demo get appstorage demo-app-store -w
+# Watch both claims
+kubectl -n crossplane-demo get appstorage,appteam
 
-# See what Crossplane composed
-kubectl get xappstorage
-kubectl get account
-kubectl get container.storage
+# Inspect all composed managed resources
+kubectl get managed
 
-# Describe the managed resource for full detail
-kubectl describe account stdemoapp
+# Show the Azure and GitHub resources side by side
+kubectl get resourcegroup,account,repository.github
+
+# Describe the AppTeam XR to see all status fields
+kubectl describe xappteam
 ```
 
 **One-liner for the audience:**
 
-> _"The developer wrote 10 lines with a name and a size. The Composition added
-> the resource group, the region, the TLS settings, the tags — and spun up
-> the Storage Account and the container. Developer experience and platform
-> standards, fully separated."_
+> _"The developer wrote 10 lines with a team name and a GitHub org. Crossplane's
+> Composition created an Azure Resource Group, a Storage Account inside it, AND
+> a private GitHub repo — all from a single claim. Two providers, two clouds,
+> one platform API. No Azure knowledge, no GitHub API token, no manual steps."_
 
 ---
 
 ## Fallback (if Azure provisioning is slow)
 
-If the Storage Account hasn't appeared yet:
+If the Storage Account or RG hasn't appeared yet:
 
 1. Show the **pre-provisioned** resource from a rehearsal run in the Azure Portal
-2. Walk through the Composition YAML (`composition/composition-appstorage.yaml`)
-   and narrate each platform opinion — this is compelling even without live provisioning
+   and the GitHub org
+2. Walk through the Composition YAML (`composition/composition-appteam.yaml`)
+   and narrate each section — this is compelling even without live provisioning
 
 ---
 
@@ -181,15 +246,22 @@ demos/crossplane/
 │   ├── install-crossplane.md          # Full bootstrap guide
 │   ├── 10-install-crossplane.sh       # Helm install (run before talk)
 │   ├── 20-crossplane-azure-creds.sh   # Bridge SP creds to Crossplane format
+│   ├── 30-github-creds.sh             # Create github-provider-creds from GITHUB_TOKEN
 │   └── provider/
-│       ├── provider-azure-storage.yaml  # Crossplane Provider package (Argo CD managed)
-│       └── providerconfig.yaml          # ProviderConfig → azure-provider-creds (Argo CD managed)
+│       ├── provider-azure-resources.yaml  # Azure Resources provider (ResourceGroup CRD)
+│       ├── provider-azure-storage.yaml    # Azure Storage provider (Account, Container CRDs)
+│       ├── provider-github.yaml           # GitHub provider (Repository CRD)
+│       ├── providerconfig.yaml            # Azure ProviderConfig → azure-provider-creds
+│       └── providerconfig-github.yaml     # GitHub ProviderConfig → github-provider-creds
 ├── composition/
-│   ├── xrd-appstorage.yaml            # Platform API definition (XRD)
-│   └── composition-appstorage.yaml    # Implementation (Storage Account + Container)
+│   ├── xrd-appstorage.yaml            # Platform API: AppStorage (name + size)
+│   ├── composition-appstorage.yaml    # Azure Storage Account + Container
+│   ├── xrd-appteam.yaml               # Platform API: AppTeam (teamName + githubOrg)
+│   └── composition-appteam.yaml       # Azure RG + Storage Account + GitHub Repo
 ├── samples/
 │   ├── namespace.yaml                 # crossplane-demo namespace
-│   └── appstorage.yaml                # Developer-facing claim (10 lines, name + size only)
+│   ├── appstorage.yaml                # AppStorage claim (11 lines, name + size only)
+│   └── appteam.yaml                   # AppTeam claim (10 lines, teamName + githubOrg)
 └── README.md
 ```
 
@@ -203,7 +275,8 @@ Delete the managed resources and re-apply:
 
 ```bash
 kubectl -n crossplane-demo delete appstorage demo-app-store
-# Wait for Azure resources to deprovision, then re-commit the file
+kubectl -n crossplane-demo delete appteam alpha-team
+# Wait for Azure resources and GitHub repo to deprovision, then re-commit the files
 ```
 
 Or nuke and recreate the whole cluster:
@@ -213,6 +286,8 @@ kind delete cluster --name platformeng-demo
 ./demos/gitops/bootstrap/bootstrap.sh
 bash demos/crossplane/bootstrap/10-install-crossplane.sh
 bash demos/crossplane/bootstrap/20-crossplane-azure-creds.sh
+export GITHUB_TOKEN=ghp_...
+bash demos/crossplane/bootstrap/30-github-creds.sh
 ```
 
 [demo-gitops]: ../gitops/README.md

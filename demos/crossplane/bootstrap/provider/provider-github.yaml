@@ -1,0 +1,15 @@
+# Installs the Crossplane GitHub provider package (crossplane-contrib).
+# Provides the Repository CRD used by the AppTeam Composition.
+# Managed by Argo CD (cluster-scoped resource).
+#
+# Authentication: PAT stored in crossplane-system/github-provider-creds.
+# Created by demos/crossplane/bootstrap/30-github-creds.sh.
+#
+# Version pin: bump when upgrading.
+# https://marketplace.upbound.io/providers/crossplane-contrib/provider-github
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: crossplane-contrib-provider-github
+spec:
+  package: xpkg.upbound.io/crossplane-contrib/provider-github:v0.22.0
