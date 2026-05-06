@@ -77,7 +77,7 @@ spec:
             # Set by bootstrap/bootstrap.sh — do not edit manually.
             armId: /subscriptions/b8affb75-1fd8-4116-8065-dc871fdbe8bc/resourceGroups/kro-demo-rg
           sku:
-            name: ${schema.spec.size == 'large' ? 'Standard_RAGRS' : schema.spec.size == 'medium' ? 'Standard_GRS' : 'Standard_LRS'}
+            name: "${schema.spec.size == 'large' ? 'Standard_RAGRS' : schema.spec.size == 'medium' ? 'Standard_GRS' : 'Standard_LRS'}"
           accessTier: Hot
           minimumTlsVersion: TLS1_2
           allowBlobPublicAccess: false
