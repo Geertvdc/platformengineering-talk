@@ -20,4 +20,3 @@ spec:
       namespace: crossplane-system
       name: github-provider-creds
       key: credentials
-      key: token
