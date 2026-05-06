@@ -102,6 +102,9 @@ echo "    armId set to: ${ARM_ID}"
 # Apply directly to the cluster
 kubectl apply -f "${RGD_FILE}"
 
+# Create the namespace where MyApp instances are submitted
+kubectl create namespace kro-demo --dry-run=client -o yaml | kubectl apply -f -
+
 echo
 echo "    Waiting for KRO to register the MyApp CRD (up to 30 s)..."
 for i in $(seq 1 30); do
