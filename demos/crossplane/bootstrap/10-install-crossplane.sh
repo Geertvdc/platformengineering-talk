@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
-# Wait for Crossplane to be installed by Argo CD.
+# Install Crossplane via Helm and wait for it to be ready.
 #
-# Crossplane is now managed GitOps-style via:
-#   demos/gitops/apps/crossplane-install.yaml
-#
-# Argo CD installs Crossplane from the Helm chart automatically once the
-# app-of-apps syncs. This script just blocks until the rollout is healthy
-# so that subsequent bootstrap steps (provider creds, 40-install-providers.sh)
-# don't race ahead before the Crossplane CRDs are registered.
-#
-# To change the Crossplane version: edit targetRevision in crossplane-install.yaml.
 # Run BEFORE the talk. Not part of the live demo.
 set -euo pipefail
 
 NAMESPACE="crossplane-system"
+CROSSPLANE_VERSION="2.2.1"
 
-echo "==> Waiting for Argo CD to sync the Crossplane Helm Application..."
-kubectl -n argocd wait application/crossplane \
-  --for=jsonpath='{.status.health.status}'=Healthy \
-  --timeout=5m
+echo "==> Adding Crossplane Helm repo"
+helm repo add crossplane-stable https://charts.crossplane.io/stable
+helm repo update
+
+echo "==> Installing Crossplane ${CROSSPLANE_VERSION}"
+helm upgrade --install crossplane crossplane-stable/crossplane \
+  --namespace "${NAMESPACE}" \
+  --create-namespace \
+  --version "${CROSSPLANE_VERSION}" \
+  --wait
 
 echo "==> Waiting for Crossplane pods to be ready"
 kubectl rollout status -n "${NAMESPACE}" deploy/crossplane --timeout=3m

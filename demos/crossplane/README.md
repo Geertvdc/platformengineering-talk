@@ -101,17 +101,17 @@ Argo CD treats an XRD as `Healthy` only once Crossplane has set
 `Established=True` **and** `Offered=True`. This is what allows the claims
 Applications to wait safely for the CRDs to be registered before syncing.
 
-### 2 — Wait for Argo CD to install Crossplane
-
-Crossplane is managed GitOps-style via `demos/gitops/apps/crossplane-install.yaml`.
-Argo CD installs it automatically from the Helm chart once the app-of-apps syncs.
-Run this script to block until Crossplane is healthy before proceeding:
+### 2 — Install Crossplane
 
 ```bash
 bash demos/crossplane/bootstrap/10-install-crossplane.sh
 ```
 
-To upgrade Crossplane, change `targetRevision` in `crossplane-install.yaml` and push — Argo CD does the rest.
+This adds the Crossplane Helm repo and runs `helm upgrade --install` to deploy
+Crossplane into `crossplane-system`, then waits for both Deployments to be ready.
+
+To change the Crossplane version, edit the `CROSSPLANE_VERSION` variable at the
+top of the script.
 
 ### 3 — Create the Azure and GitHub provider credentials Secrets
 
@@ -137,7 +137,7 @@ export GITHUB_OWNER=Geertvdc  # your GitHub username or org
 bash demos/crossplane/bootstrap/30-github-creds.sh
 ```
 
-### 3 — Install Providers and wait for CRDs
+### 4 — Install Providers and wait for CRDs
 
 ```bash
 bash demos/crossplane/bootstrap/40-install-providers.sh
@@ -149,7 +149,7 @@ GitHub CRDs so Argo CD never encounters a missing resource during sync.
 
 ### 4 — Let Argo CD sync the rest
 
-Providers live in `bootstrap/` and are managed imperatively (step 5 above).
+Providers live in `bootstrap/` and are managed imperatively (step 4 above).
 Everything else — XRDs, Compositions, and claims — is managed by Argo CD via
 four Applications in `demos/gitops/apps/`, all labelled `demo: demo-3`:
 

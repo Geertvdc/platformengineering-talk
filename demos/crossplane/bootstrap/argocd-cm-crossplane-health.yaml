@@ -27,6 +27,8 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
   namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: argocd
 data:
   # Preserve the XRD bootstrap check (must not be removed)
   resource.customizations.health.apiextensions.crossplane.io_CompositeResourceDefinition: |
