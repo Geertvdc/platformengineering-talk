@@ -210,71 +210,242 @@ kubectl get application -n argocd -l demo=demo-3
 
 ---
 
-## The ≤ 3-minute live demo script
+## The ≤ 5-minute live demo script
 
-### Part 0 — Argo CD sees Crossplane resources as black boxes (setup for the reveal)
+The demo builds in four parts. Each part is a talking point layer — you're not
+rushing to provision things live, you're **narrating a story** with running
+resources as props.
 
-Before showing anything, point to the Argo CD UI and note that all resources
-are already green — **Argo CD has no idea what state the underlying cloud
-resources are actually in**. It just knows the YAML was applied.
+```
+Part A — What is Crossplane?       (concepts, build the mental model)
+Part B — AppStorage                (developer UX vs ASO, contrast)
+Part C — AppTeam                   (multi-cloud, the wow moment)
+Part D — Lua health checks         (GitOps observability, the reveal)
+```
 
-Then apply the health checks:
+---
+
+### Part A — Crossplane concepts walkthrough
+
+> _"Before I show you a demo, let me walk you through the three building blocks.
+> Once you have these three concepts the whole thing clicks."_
+
+**1 — Providers**
+
+```bash
+kubectl get providers.pkg.crossplane.io
+```
+
+> _"A Provider is a Kubernetes controller that knows how to talk to a cloud API.
+> Think of it as a driver. We have one for Azure Resources, one for Azure Storage,
+> and one for GitHub. Each one registers its own CRDs — one CRD per cloud
+> resource type it can manage."_
+
+```bash
+# Show the CRDs that the Azure storage provider registered
+kubectl get crd | grep storage.azure.upbound.io
+```
+
+**2 — Managed Resources**
+
+> _"A Managed Resource is a single cloud resource represented as a Kubernetes
+> object. This is the raw, unabstracted layer — every field maps directly to
+> the Azure API. You can use them directly, but developers would need to know
+> every Azure field. That's what ASO gives you — and it's great for
+> platform-native teams. Crossplane lets you go one level higher."_
+
+```bash
+# Show a live managed resource and its status
+kubectl get account    # Azure Storage Account managed resource
+kubectl get resourcegroup
+kubectl get repository.repo.github.upbound.io
+```
+
+**3 — Compositions and XRDs**
+
+> _"A CompositeResourceDefinition — XRD — is a custom API you define for your
+> platform. You pick the fields developers are allowed to set. Everything else
+> is fixed by the platform team. Then a Composition wires that API to the
+> underlying managed resources. The developer sees your API. The platform team
+> owns the implementation."_
+
+```bash
+kubectl get xrd
+# xappstorages.platform.demo.io   Established=True   Offered=True
+# xappteams.platform.demo.io      Established=True   Offered=True
+```
+
+> _"Two platform APIs, registered as Kubernetes CRDs, owned by us."_
+
+---
+
+### Part B — AppStorage (contrast with ASO)
+
+> _"Let's look at the first one. AppStorage. Compare this to what you saw in
+> the ASO demo — where developers wrote Azure YAML with SKUs and replication
+> types. Here's what the developer writes with Crossplane:"_
+
+**Show the claim:**
+
+```bash
+cat demos/crossplane/samples/appstorage/appstorage.yaml
+```
+
+> _"Eleven lines. A name and a size tier. No Azure fields. No resource group.
+> No region. No replication type. The platform team chose all of that. The
+> developer picked `small`."_
+
+**Show the Composition:**
+
+```bash
+cat demos/crossplane/composition/appstorage/composition-appstorage.yaml
+```
+
+> _"This is what the platform team wrote. The `size` field maps to an LRS,
+> GRS, or RAGRS replication type. Tags, naming conventions, TLS baseline —
+> all baked in here. The developer never sees any of this."_
+
+**Show it running:**
+
+```bash
+kubectl -n crossplane-appstorage-demo get appstorage demo-app-store
+# SYNCED=True   READY=True
+
+kubectl get managed | grep demoapp
+```
+
+| # | Action | Expected output |
+|---|--------|-----------------|
+| 1 | `cat samples/appstorage/appstorage.yaml` | 11 lines: `name` + `size` only |
+| 2 | `cat composition/appstorage/composition-appstorage.yaml` | Platform-owned: tags, naming, RG, TLS |
+| 3 | `kubectl -n crossplane-appstorage-demo get appstorage` | `SYNCED=True READY=True` |
+| 4 | `kubectl get account` | Managed resource `stdemoapp` visible |
+| 5 | Azure Portal | Storage Account with `managed-by=crossplane` tag |
+
+---
+
+### Part C — AppTeam (the multi-cloud moment)
+
+> _"Now here's where Crossplane does something ASO and KRO genuinely cannot do
+> alone. One claim, two cloud providers."_
+
+**Show the claim:**
+
+```bash
+cat demos/crossplane/samples/appteam/appteam.yaml
+```
+
+> _"Ten lines. A team name and a GitHub org. That's it. Watch what happens."_
+
+**Show the Composition:**
+
+```bash
+cat demos/crossplane/composition/appteam/composition-appteam.yaml
+```
+
+> _"Three sections. An Azure Resource Group. An Azure Storage Account inside
+> that RG. And a private GitHub repository — via a completely different
+> provider, a completely different cloud. One Composition, two providers."_
+
+**Show it running:**
+
+```bash
+kubectl -n crossplane-appteam-demo get appteam techorama-team
+# SYNCED=True   READY=True
+
+kubectl get resourcegroup   # Azure RG: rg-team-techorama
+kubectl get account         # Azure Storage: stteamtechorama
+kubectl get repository.repo.github.upbound.io   # GitHub: techorama-platform-infra
+```
+
+> _"The developer wrote ten lines. Crossplane created an Azure Resource Group,
+> a Storage Account inside it, AND a private GitHub repository — two providers,
+> two clouds, one platform API."_
+
+| # | Action | Expected output |
+|---|--------|-----------------|
+| 1 | `cat samples/appteam/appteam.yaml` | 10 lines: `teamName` + `githubOrg` |
+| 2 | `cat composition/appteam/composition-appteam.yaml` | Three sections: RG, Account, GitHub repo |
+| 3 | `kubectl -n crossplane-appteam-demo get appteam techorama-team` | `SYNCED=True READY=True` |
+| 4 | `kubectl get resourcegroup,account` | Azure RG + Storage Account live |
+| 5 | GitHub → `Geertvdc/techorama-platform-infra` | Private repo exists |
+
+---
+
+### Part D — Lua health checks (the GitOps observability reveal)
+
+> _"One last thing. Everything you just saw is running and healthy — but watch
+> what Argo CD thinks right now."_
+
+Open the Argo CD UI and point at `crossplane-appteam-claims`. All resources
+show **green hearts immediately**. There's no provisioning state. Argo CD just
+knows the YAML was applied — it has no idea whether Azure actually did anything.
+
+> _"Argo CD has no built-in knowledge of Crossplane's resource lifecycle. The
+> moment the YAML lands in the cluster, it calls it Healthy. That's fine for
+> YAML resources — but these aren't YAML resources. These are cloud API calls
+> that might be in flight, or failing, right now."_
+
+**Apply the full health checks:**
 
 ```bash
 kubectl apply -f demos/crossplane/bootstrap/argocd-cm-crossplane-health.yaml
 kubectl rollout restart -n argocd deploy/argocd-repo-server
 ```
 
-> _"Now Argo CD can see what Crossplane is actually doing — each resource
-> reflects the real provisioning state from Azure and GitHub."_
+> _"I've just loaded a ConfigMap with Lua scripts — one per resource kind.
+> Each script reads the `Synced` and `Ready` conditions Crossplane writes onto
+> every managed resource and maps them to Argo CD health states."_
 
-Watch the apps update in the UI: yellow (provisioning) → green (ready).
+Watch the UI update: **yellow** (Progressing — Crossplane is reconciling) →
+**green** (Healthy — the cloud resource is live and ready).
+
+> _"Now Argo CD actually reflects reality. Yellow means Crossplane is talking
+> to Azure or GitHub right now. Green means the resource exists. Red means
+> something went wrong and here's the error message. This is what GitOps
+> observability looks like for cloud resources."_
+
+**Commands to watch the transition:**
+
+```bash
+# Watch claim status
+kubectl -n crossplane-appteam-demo get appteam techorama-team -w
+
+# Watch all managed resources at once
+kubectl get managed -w
+
+# Check the argocd-cm to see what was applied
+kubectl -n argocd get cm argocd-cm -o yaml | grep "resource.customizations"
+```
+
+**Reset Lua to minimal (to repeat the reveal):**
+
+```bash
+bash demos/crossplane/bootstrap/50-reset-lua.sh
+```
+
+This reverts `argocd-cm` to the minimal XRD-only health check and restarts
+repo-server — so Argo CD goes back to showing everything green immediately,
+ready for you to do the reveal again.
 
 ---
 
-### Part A — AppStorage (contrast with ASO)
-
-| # | Action | Expected output |
-|---|--------|-----------------|
-| 1 | Show the **developer CR** | `demos/crossplane/samples/appstorage.yaml` — 11 lines, only `name` and `size` |
-| 2 | Show the **Composition** side-by-side | `composition/composition-appstorage.yaml` — tags, naming, RG, TLS all platform-owned |
-| 3 | `kubectl -n crossplane-demo get appstorage` | Claim `SYNCED=True`, `READY=True` |
-| 4 | `kubectl get account` | Managed resource `stdemoapp` visible |
-| 5 | Azure Portal | Storage Account present with tags `managed-by=crossplane` |
-
-### Part B — AppTeam (the multi-cloud moment)
-
-| # | Action | Expected output |
-|---|--------|-----------------|
-| 1 | Show `samples/appteam.yaml` | 10 lines: just `teamName: alpha` and `githubOrg: Geertvdc` |
-| 2 | Show `composition/composition-appteam.yaml` | Three sections: RG, Storage Account, GitHub repo |
-| 3 | `git commit && git push` the AppTeam claim (or it's already in repo) | Argo CD picks it up |
-| 4 | `kubectl -n crossplane-demo get appteam alpha-team -w` | Claim becomes `READY=True` |
-| 5 | `kubectl get resourcegroup` + `kubectl get account` | Azure RG + Storage Account |
-| 6 | GitHub → `Geertvdc/alpha-platform-infra` | Private repo created automatically |
-
-**Useful commands:**
+**Useful commands (any part):**
 
 ```bash
-# Watch both claims
-kubectl -n crossplane-demo get appstorage,appteam
+# All claims at once
+kubectl get appstorage,appteam -A
 
-# Inspect all composed managed resources
+# Everything Crossplane manages
 kubectl get managed
 
-# Show the Azure and GitHub resources side by side
-kubectl get resourcegroup,account,repository.github
+# Azure + GitHub resources side by side
+kubectl get resourcegroup,account,repository.repo.github.upbound.io
 
-# Describe the AppTeam XR to see all status fields
+# Full XR status (shows all composed resource refs)
+kubectl describe xappstorage
 kubectl describe xappteam
 ```
-
-**One-liner for the audience:**
-
-> _"The developer wrote 10 lines with a team name and a GitHub org. Crossplane's
-> Composition created an Azure Resource Group, a Storage Account inside it, AND
-> a private GitHub repo — all from a single claim. Two providers, two clouds,
-> one platform API. No Azure knowledge, no GitHub API token, no manual steps."_
 
 ---
 
@@ -312,7 +483,8 @@ demos/crossplane/
 │   ├── 20-crossplane-azure-creds.sh   # Bridge SP creds to Crossplane format
 │   ├── 30-github-creds.sh             # Create github-provider-creds from GITHUB_TOKEN + GITHUB_OWNER
 │   ├── 40-install-providers.sh        # Apply Providers + wait for Healthy + apply ProviderConfigs
-│   ├── argocd-cm-crossplane-health.yaml  # Full health checks — apply LIVE during demo (Part 0)
+│   ├── argocd-cm-crossplane-health.yaml  # Full health checks — apply LIVE during demo (Part D)
+│   ├── 50-reset-lua.sh                # Revert argocd-cm to minimal — resets Part D reveal
 │   └── provider/
 │       ├── provider-azure-resources.yaml  # Azure Resources provider (v2.5.4)
 │       ├── provider-azure-storage.yaml    # Azure Storage provider (v2.5.4)
@@ -340,7 +512,6 @@ Argo CD Applications in `demos/gitops/apps/` (all labelled `demo: demo-3`):
 
 | File | Watches | Purpose |
 |---|---|---|
-| `crossplane-install.yaml` | Helm chart | Installs Crossplane v2.2.1 via Argo CD (GitOps-managed) |
 | `crossplane-appstorage.yaml` | `composition/appstorage/` | Syncs XRD + Composition for AppStorage |
 | `crossplane-appstorage-claims.yaml` | `samples/appstorage/` | Syncs namespace + AppStorage claim |
 | `crossplane-appteam.yaml` | `composition/appteam/` | Syncs XRD + Composition for AppTeam |
