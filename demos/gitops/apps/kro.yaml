@@ -1,0 +1,33 @@
+# Argo CD Application — KRO demo (installs the ResourceGraphDefinition).
+#
+# This Application points at demos/kro/composition/ and keeps the RGD
+# (ResourceGraphDefinition) in sync. The developer CR (demos/kro/samples/myapp.yaml)
+# is applied during the live demo via `kubectl apply` or a branch merge.
+#
+# Convention for demos #2-#5: exactly one Application file per demo in this
+# folder, pointing at the demo's own path. No demo modifies another demo's folder.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kro-demo
+  namespace: argocd
+  labels:
+    demo: demo-4
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Geertvdc/platformengineering-talk
+    targetRevision: main
+    path: demos/kro/composition
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kro-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
