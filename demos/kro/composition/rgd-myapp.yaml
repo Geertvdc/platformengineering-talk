@@ -45,7 +45,7 @@ spec:
           name: ${schema.spec.name}
           labels:
             app.kubernetes.io/managed-by: kro
-            team: ${schema.spec.team}
+            team: "${schema.spec.team}"
 
     # ── RBAC — bind team group to the edit ClusterRole in the app namespace ───
     - id: rolebinding
