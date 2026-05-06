@@ -1,0 +1,38 @@
+# Installs Crossplane via Helm, managed by Argo CD.
+#
+# This replaces the imperative 10-install-crossplane.sh for the bootstrap.
+# Argo CD pulls the chart directly from the Crossplane Helm repo and keeps
+# it in sync — version bumps are a one-line PR to this file.
+#
+# Sync wave 0 — must be fully Healthy before providers (wave 1 in
+# crossplane-appstorage/crossplane-appteam) are applied, so Argo CD uses the
+# Deployment health check built in to Argo CD to wait for the Crossplane pods.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane
+  namespace: argocd
+  labels:
+    demo: demo-3
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://charts.crossplane.io/stable
+    chart: crossplane
+    targetRevision: 2.2.1
+    helm:
+      releaseName: crossplane
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: crossplane-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
