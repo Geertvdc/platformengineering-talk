@@ -116,6 +116,15 @@ spec:
               string:
                 type: Format
                 fmt: "%s-platform-infra"
+        # GitHub provider requires spec.forProvider.name explicitly
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.teamName
+          toFieldPath: spec.forProvider.name
+          transforms:
+            - type: string
+              string:
+                type: Format
+                fmt: "%s-platform-infra"
         # Set repo description using teamName
         - type: FromCompositeFieldPath
           fromFieldPath: spec.teamName
