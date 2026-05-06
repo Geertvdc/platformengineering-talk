@@ -1,17 +1,17 @@
 # Developer-facing MyApp instance.
-# Platform team owns the implementation — developer only specifies name, team, and size.
+# Platform team owns the RGD — developers only specify name, team, and size.
 # No Azure fields, no resource group, no region, no SKU details.
 #
-# spec.name: logical app name used to derive the namespace, Azure Storage Account
-#            ("st<name>"), and connection secret. Intentionally separate from
-#            metadata.name so the Kubernetes CR name can differ from the app name
-#            if needed (e.g. multiple instances of the same app).
+# What this creates (via KRO + ASO):
+#   - Namespace:       myapp
+#   - RoleBinding:     platform-team-edit  (in namespace myapp)
+#   - StorageAccount:  stmyapp             (Azure, in kro-demo-rg)
 apiVersion: kro.run/v1alpha1
 kind: MyApp
 metadata:
   name: myapp
   namespace: kro-demo
 spec:
-  name: myappx9812
+  name: myapp
   team: platform-team
   size: small

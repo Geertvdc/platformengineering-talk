@@ -6,10 +6,10 @@
 
 ## What you will show
 
-One developer CR (`MyApp`) → KRO composes it into four real resources:
-a Kubernetes **Namespace**, a **RoleBinding**, an **ASO-managed Azure Storage Account**, and a **connection Secret**.
+One developer CR (`MyApp`) → KRO composes it into three real resources:
+a Kubernetes **Namespace**, a **RoleBinding**, and an **ASO-managed Azure Storage Account**.
 
-The platform team encodes all the Azure opinions (region, resource group, SKU mapping, TLS settings) once in the `ResourceGraphDefinition`. The developer writes three fields: name, team, size.
+The platform team encodes all Azure opinions (region, resource group, SKU mapping, TLS settings) once in a `ResourceGraphDefinition`. The developer writes three fields: name, team, size.
 
 ---
 
@@ -26,6 +26,20 @@ The platform team encodes all the Azure opinions (region, resource group, SKU ma
 
 ---
 
+## How the naming works
+
+The `spec.name` field drives all derived resource names. With `spec.name: myapp`:
+
+| Resource | Name | Where |
+|---|---|---|
+| Namespace | `myapp` | Kubernetes |
+| RoleBinding | `platform-team-edit` | in namespace `myapp` |
+| StorageAccount | `stmyapp` | Azure, in `kro-demo-rg` |
+
+The developer never sees resource groups, SKU names, or regions — those are encoded in the RGD.
+
+---
+
 ## Pre-demo checklist
 
 Everything below must be in place **before you walk on stage**:
@@ -38,9 +52,10 @@ Everything below must be in place **before you walk on stage**:
 | 4 | KRO controller installed (`kro-system`) | `demos/kro/bootstrap/bootstrap.sh` ✓ |
 | 5 | Azure resource group `kro-demo-rg` created | `demos/kro/bootstrap/bootstrap.sh` ✓ |
 | 6 | `rgd-myapp.yaml` patched with correct subscription ID | `demos/kro/bootstrap/bootstrap.sh` ✓ |
-| 7 | `ResourceGraphDefinition myapp` is `Ready: True` | verify below |
+| 7 | `kro-demo` namespace exists | `demos/kro/bootstrap/bootstrap.sh` ✓ |
+| 8 | `ResourceGraphDefinition myapp` is `Active` and `Ready: True` | verify below |
 
-Steps 4–6 are all handled by the bootstrap script.
+Steps 4–7 are all handled by the bootstrap script.
 
 ---
 
@@ -52,10 +67,11 @@ bash demos/kro/bootstrap/bootstrap.sh
 ```
 
 The script:
-1. Checks that the shared platform (kind cluster, Argo CD, ASO) is already running.
+1. Checks the shared platform (kind cluster, Argo CD, ASO) is already running.
 2. Installs the KRO controller via Helm into `kro-system`.
-3. Creates the dedicated Azure resource group `kro-demo-rg` (separate from any other demo).
+3. Creates the dedicated Azure resource group `kro-demo-rg`.
 4. Patches `demos/kro/composition/rgd-myapp.yaml` with your subscription ID and applies it.
+5. Creates the `kro-demo` namespace where MyApp instances are submitted.
 
 If you use Argo CD to manage the RGD, also push the patched file:
 
@@ -69,26 +85,33 @@ git push
 
 ```bash
 kubectl get resourcegraphdefinition myapp
-# NAME    SYNCED   READY
-# myapp   True     True
+# NAME    APIVERSION   KIND    STATE    READY
+# myapp   v1alpha1     MyApp   Active   True
 
 kubectl get crd myapps.kro.run
-# NAME              ESTABLISHED
-# myapps.kro.run   True
+# NAME             CREATED AT
+# myapps.kro.run   ...
 ```
 
 ### Pre-validate end-to-end (rehearsal)
 
 ```bash
+# Submit the developer CR
 kubectl apply -f demos/kro/samples/myapp.yaml
-kubectl get namespace myapp                    # appears in < 1 s
-kubectl get rolebinding -n myapp               # platform-team-edit
-kubectl get storageaccount -n myapp -w         # Provisioning → Succeeded (~30-60 s)
-kubectl get secret myapp-connection -n myapp   # written by ASO on success
+
+# KRO creates these immediately (< 1 s):
+kubectl get namespace myapp
+kubectl get rolebinding -n myapp              # platform-team-edit
+
+# ASO provisions the Azure resource (~30–60 s):
+kubectl get storageaccount -n myapp -w
+# NAME      READY   SEVERITY   REASON      MESSAGE
+# stmyapp   True               Succeeded
 
 # Reset
 kubectl delete -f demos/kro/samples/myapp.yaml
-kubectl delete namespace myapp --ignore-not-found
+# KRO removes the namespace and everything in it automatically.
+# The Azure Storage Account deletion is triggered by ASO when the CR is removed.
 ```
 
 ---
@@ -97,38 +120,36 @@ kubectl delete namespace myapp --ignore-not-found
 
 | # | You do | Audience sees |
 |---|---|---|
-| 1 | Open `demos/kro/composition/rgd-myapp.yaml` | Point out the template: namespace, RoleBinding, ASO StorageAccount, connection secret — all wired together in one file |
-| 2 | Open `demos/kro/samples/myapp.yaml` | "Three fields. Name, team, size. That's it." |
-| 3 | `kubectl apply -f demos/kro/samples/myapp.yaml` | Apply completes |
-| 4 | `kubectl get namespace myapp` | Namespace created immediately |
+| 1 | Open `demos/kro/composition/rgd-myapp.yaml` | Point out the template: namespace, RoleBinding, ASO StorageAccount — all wired together. Highlight that region, RG, SKU, TLS are all encoded here. |
+| 2 | Open `demos/kro/samples/myapp.yaml` | "Three fields. Name, team, size. That's the entire developer interface." |
+| 3 | `kubectl apply -f demos/kro/samples/myapp.yaml` | `myapp.kro.run/myapp created` |
+| 4 | `kubectl get namespace myapp` | Namespace appears in < 1 s |
 | 5 | `kubectl get rolebinding -n myapp` | `platform-team-edit` present |
-| 6 | `kubectl get storageaccount -n myapp -w` | Status: `Provisioning → Succeeded` (~30-60 s) |
-| 7 | `kubectl get secret myapp-connection -n myapp` | Connection secret written by ASO |
+| 6 | `kubectl get storageaccount -n myapp -w` | Status transitions `Reconciling → Succeeded` (~30–60 s) |
+| 7 | Open Azure Portal → Storage Accounts, filter `kro-demo-rg` | `stmyapp` is there |
 | 8 | Verbal contrast with Crossplane | _"KRO composes; Crossplane abstracts."_ |
 
 **Talking points:**
 
-- *"The ResourceGraphDefinition is the platform team's blueprint. They write it once. The developer writes three fields."*
-- *"One `kubectl apply` — or one Git commit through Argo CD — produces four real resources: a namespace, RBAC, an Azure Storage Account, and a connection secret."*
+- *"The ResourceGraphDefinition is the platform team's blueprint. They write it once. It bundles the namespace, the RBAC, and the Azure Storage Account into one composable unit."*
+- *"The developer writes three fields. They don't know about Azure SKUs, resource groups, or TLS settings — the platform encoded all of that in the RGD."*
+- *"One `kubectl apply` produces three real resources: a namespace, RBAC, and an Azure Storage Account — all consistently named and labelled."*
 - *"KRO doesn't need its own credential setup. It reuses ASO, which already handles Azure auth. Fewer moving parts than Crossplane for this use case."*
-- *"The developer doesn't know about Azure SKUs, resource groups, or TLS settings. The platform encoded all of that in the RGD."*
+- *"When you delete the CR, KRO removes the namespace and everything in it. ASO cascades that to Azure and deletes the Storage Account. One delete, full cleanup."*
 
 ---
 
 ## Fallback plan
 
-**Azure is slow (60–90 s is normal on conference Wi-Fi):**
+**Azure is slow (30–60 s is normal, up to 90 s on conference Wi-Fi):**
 
 - Show the namespace and RoleBinding immediately — they appear in < 1 s.
-  Say: *"The Kubernetes resources are instant. The Storage Account is in progress — this normally finishes in under a minute."*
-
-- If you pre-applied `myapp.yaml` before the talk, skip the apply live and go straight to showing the resources. Walk through the Portal to prove the Azure resource is real.
-
-- Record `kubectl get storageaccount -n myapp -w` during rehearsal and play it back as a fallback. Audiences accept recordings for long-running operations.
+  Say: *"The Kubernetes resources are instant. The Storage Account is provisioning in the background — this normally finishes in under a minute."*
+- If you pre-applied `myapp.yaml` before the talk, open the Azure Portal immediately and show `stmyapp` already there. Then walk through the composed Kubernetes resources.
 
 **Cluster unreachable:**
 
-- Open the Azure Portal directly and show the Storage Account in `kro-demo-rg`.
+- Open the Azure Portal and show the Storage Account in `kro-demo-rg`.
 - Walk through the RGD YAML in the editor and explain the composition without running anything live.
 
 ---
@@ -136,26 +157,17 @@ kubectl delete namespace myapp --ignore-not-found
 ## Resetting between runs
 
 ```bash
-# Remove the developer CR — KRO removes the composed Kubernetes resources
+# Delete the developer CR — KRO removes the namespace, RoleBinding, and StorageAccount CR.
+# ASO then deletes the Azure Storage Account.
 kubectl delete -f demos/kro/samples/myapp.yaml
 
-# ASO does NOT cascade-delete Azure resources when the StorageAccount CR is removed
-# by KRO. Delete it explicitly to clean up Azure:
-kubectl delete storageaccount stmyapp -n myapp --ignore-not-found
+# Confirm the namespace is gone (KRO handles this automatically):
+kubectl get namespace myapp
+# Error from server (NotFound): ...
 
-# Wait for Azure deletion, then remove the namespace
-kubectl get storageaccount -n myapp -w   # until gone
-kubectl delete namespace myapp --ignore-not-found
-```
-
-To fully reset the KRO controller:
-
-```bash
-helm upgrade --install kro oci://registry.k8s.io/kro/charts/kro \
-  --namespace kro-system \
-  --create-namespace \
-  --version 0.9.1 \
-  --wait
+# Confirm the Azure resource is being deleted:
+# (may take 30–60 s for ASO to finish)
+az storage account show --name stmyapp --resource-group kro-demo-rg 2>&1 | grep provisioningState
 ```
 
 ---
@@ -165,9 +177,9 @@ helm upgrade --install kro oci://registry.k8s.io/kro/charts/kro \
 ```
 demos/kro/
 ├── bootstrap/
-│   └── bootstrap.sh          # one-command setup: KRO + Azure RG + RGD patch
+│   └── bootstrap.sh          # one-command setup: KRO + Azure RG + RGD patch + kro-demo namespace
 ├── composition/
-│   └── rgd-myapp.yaml        # ResourceGraphDefinition (namespace + RBAC + ASO + secret)
+│   └── rgd-myapp.yaml        # ResourceGraphDefinition (namespace + RBAC + ASO StorageAccount)
 ├── samples/
 │   └── myapp.yaml            # what a developer writes (three fields)
 └── README.md                 # this file
