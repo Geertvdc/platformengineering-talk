@@ -1,4 +1,4 @@
-# Platform composition: MyApp → Namespace + RBAC + ASO StorageAccount + connection Secret
+# Platform composition: MyApp → Namespace + RBAC + ASO StorageAccount
 #
 # Platform team writes this once. Developers never edit this file — they only
 # write a MyApp instance (demos/kro/samples/myapp.yaml) with name, team, and size.
@@ -9,7 +9,11 @@
 #   - Storage naming:      "st" + spec.name  (e.g. "stmyapp")
 #   - Security baseline:   TLS 1.2, no public blob access
 #   - Size → SKU mapping:  small=LRS, medium=GRS, large=RAGRS
-#   - Connection secret:   <name>-connection in the app namespace (written by ASO)
+#
+# Note on connection secrets: ASO's operatorSpec.secrets uses a freeform map
+# that KRO cannot introspect (x-kubernetes-preserve-unknown-fields). Connection
+# secret wiring is therefore handled outside KRO — e.g. via a SecretProviderClass
+# or a post-provisioning job — and is not part of this composition.
 #
 # Prereqs: KRO controller running in kro-system, ASO installed on the platform cluster.
 #          Run demos/kro/bootstrap/bootstrap.sh to set up everything for this demo.
@@ -27,8 +31,8 @@ spec:
       name:
         type: string
         description: >-
-          Logical app name. Used to derive the app namespace, Azure Storage
-          Account name ("st<name>"), and the connection secret name.
+          Logical app name. Used to derive the app namespace and Azure Storage
+          Account name ("st<name>").
           Must be 3–18 lowercase alphanumeric characters.
       team:
         type: string
@@ -72,8 +76,6 @@ spec:
           apiGroup: rbac.authorization.k8s.io
 
     # ── ASO Storage Account ────────────────────────────────────────────────────
-    # ASO provisions the Azure resource and writes connection details to the
-    # "<name>-connection" Secret in the same namespace (via operatorSpec.secrets).
     - id: storageaccount
       template:
         apiVersion: storage.azure.com/v1api20210401
@@ -93,16 +95,3 @@ spec:
           accessTier: Hot
           minimumTlsVersion: TLS1_2
           allowBlobPublicAccess: false
-          operatorSpec:
-            # ASO writes the provisioned keys into "<name>-connection" Secret.
-            # The Secret is created/updated by ASO when the account is Ready.
-            secrets:
-              primaryKey:
-                name: ${schema.spec.name}-connection
-                key: primaryKey
-              secondaryKey:
-                name: ${schema.spec.name}-connection
-                key: secondaryKey
-              blobEndpoint:
-                name: ${schema.spec.name}-connection
-                key: blobEndpoint
