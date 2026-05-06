@@ -1,0 +1,44 @@
+# Argo CD ConfigMap — minimum health check required for the Crossplane demo bootstrap.
+#
+# Applied by 10-install-argocd.sh during cluster setup.
+#
+# Why this single check is needed at bootstrap time:
+#   Argo CD has no built-in knowledge of Crossplane's XRD lifecycle. Without
+#   this check it treats a CompositeResourceDefinition as Healthy the moment
+#   kubectl apply returns — before Crossplane has actually registered the CRD.
+#   That causes the claims Application to sync before the platform.demo.io CRDs
+#   exist, producing: "The Kubernetes API could not find platform.demo.io/AppStorage"
+#
+#   With this check Argo CD keeps the XRD Application in Progressing until
+#   Crossplane sets Established=True AND Offered=True, guaranteeing the CRD
+#   is registered before the claims Application starts syncing.
+#
+# The full set of managed-resource health checks (for the live demo reveal) lives in:
+#   demos/crossplane/bootstrap/argocd-cm-crossplane-health.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  resource.customizations.health.apiextensions.crossplane.io_CompositeResourceDefinition: |
+    hs = {}
+    hs.status = "Progressing"
+    hs.message = "Waiting for XRD to be established and offered"
+    if obj.status ~= nil and obj.status.conditions ~= nil then
+      local established = false
+      local offered = false
+      for _, c in ipairs(obj.status.conditions) do
+        if c.type == "Established" and c.status == "True" then
+          established = true
+        end
+        if c.type == "Offered" and c.status == "True" then
+          offered = true
+        end
+      end
+      if established and offered then
+        hs.status = "Healthy"
+        hs.message = "XRD is established and offered"
+      end
+    end
+    return hs

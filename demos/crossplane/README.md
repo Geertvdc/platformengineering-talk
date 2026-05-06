@@ -207,6 +207,26 @@ kubectl get application -n argocd -l demo=demo-3
 
 ## The ≤ 3-minute live demo script
 
+### Part 0 — Argo CD sees Crossplane resources as black boxes (setup for the reveal)
+
+Before showing anything, point to the Argo CD UI and note that all resources
+are already green — **Argo CD has no idea what state the underlying cloud
+resources are actually in**. It just knows the YAML was applied.
+
+Then apply the health checks:
+
+```bash
+kubectl apply -f demos/crossplane/bootstrap/argocd-cm-crossplane-health.yaml
+kubectl rollout restart -n argocd deploy/argocd-repo-server
+```
+
+> _"Now Argo CD can see what Crossplane is actually doing — each resource
+> reflects the real provisioning state from Azure and GitHub."_
+
+Watch the apps update in the UI: yellow (provisioning) → green (ready).
+
+---
+
 ### Part A — AppStorage (contrast with ASO)
 
 | # | Action | Expected output |
@@ -287,6 +307,7 @@ demos/crossplane/
 │   ├── 20-crossplane-azure-creds.sh   # Bridge SP creds to Crossplane format
 │   ├── 30-github-creds.sh             # Create github-provider-creds from GITHUB_TOKEN + GITHUB_OWNER
 │   ├── 40-install-providers.sh        # Apply Providers + wait for Healthy + apply ProviderConfigs
+│   ├── argocd-cm-crossplane-health.yaml  # Full health checks — apply LIVE during demo (Part 0)
 │   └── provider/
 │       ├── provider-azure-resources.yaml  # Azure Resources provider (ghcr.io, v2.5.0)
 │       ├── provider-azure-storage.yaml    # Azure Storage provider (ghcr.io, v2.5.0)

@@ -1,0 +1,166 @@
+# Argo CD ConfigMap patch — full Crossplane managed-resource health checks.
+#
+# Apply this DURING the live demo to show Argo CD reflecting real provisioning
+# status for every Crossplane resource. Without it, Argo CD shows all
+# Crossplane managed resources as Healthy immediately after apply, which hides
+# what Crossplane is actually doing.
+#
+# Apply with:
+#   kubectl apply -f demos/crossplane/bootstrap/argocd-cm-crossplane-health.yaml
+#   kubectl rollout restart -n argocd deploy/argocd-repo-server
+#
+# Demo talking point:
+#   "Before: Argo CD shows everything green the moment the YAML lands in the
+#    cluster — it has no idea whether Azure has actually provisioned anything.
+#    After: each resource shows its real state. Yellow means Crossplane is
+#    reconciling. Green means the cloud resource exists and is ready."
+#
+# Generic Lua helper used by every managed-resource check:
+#   - Synced=False  → Degraded   (💔 reconcile error, message surfaced)
+#   - Synced=True, Ready=False → Progressing (⏳ provisioning in progress)
+#   - Synced=True, Ready=True  → Healthy     (💚 cloud resource is live)
+#
+# Argo CD requires one entry per group+Kind — wildcards are not supported.
+# All entries below use identical logic; only the key name differs.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  # Preserve the XRD bootstrap check (must not be removed)
+  resource.customizations.health.apiextensions.crossplane.io_CompositeResourceDefinition: |
+    hs = {}
+    hs.status = "Progressing"
+    hs.message = "Waiting for XRD to be established and offered"
+    if obj.status ~= nil and obj.status.conditions ~= nil then
+      local established = false
+      local offered = false
+      for _, c in ipairs(obj.status.conditions) do
+        if c.type == "Established" and c.status == "True" then established = true end
+        if c.type == "Offered"     and c.status == "True" then offered     = true end
+      end
+      if established and offered then
+        hs.status = "Healthy"
+        hs.message = "XRD is established and offered"
+      end
+    end
+    return hs
+
+  # ── Provider ──────────────────────────────────────────────────────────────────
+  resource.customizations.health.pkg.crossplane.io_Provider: |
+    hs = {}
+    hs.status = "Progressing"
+    hs.message = "Waiting for provider to be installed and healthy"
+    if obj.status ~= nil and obj.status.conditions ~= nil then
+      local installed = false
+      local healthy   = false
+      for _, c in ipairs(obj.status.conditions) do
+        if c.type == "Healthy" and c.status == "False" then
+          hs.status  = "Degraded"
+          hs.message = c.message or "Provider is unhealthy"
+          return hs
+        end
+        if c.type == "Installed" and c.status == "True" then installed = true end
+        if c.type == "Healthy"   and c.status == "True" then healthy   = true end
+      end
+      if installed and healthy then
+        hs.status  = "Healthy"
+        hs.message = "Provider is installed and healthy"
+      end
+    end
+    return hs
+
+  # ── Azure managed resources ───────────────────────────────────────────────────
+  resource.customizations.health.azure.upbound.io_ResourceGroup: |
+    hs = {}
+    hs.status = "Progressing"
+    hs.message = "Provisioning"
+    if obj.status ~= nil and obj.status.conditions ~= nil then
+      local synced = false
+      local ready  = false
+      for _, c in ipairs(obj.status.conditions) do
+        if c.type == "Synced" and c.status == "False" then
+          hs.status  = "Degraded"
+          hs.message = c.message or "Reconcile error"
+          return hs
+        end
+        if c.type == "Synced" and c.status == "True" then synced = true end
+        if c.type == "Ready"  and c.status == "True" then ready  = true end
+      end
+      if synced and ready then
+        hs.status  = "Healthy"
+        hs.message = "Ready"
+      end
+    end
+    return hs
+
+  resource.customizations.health.storage.azure.upbound.io_Account: |
+    hs = {}
+    hs.status = "Progressing"
+    hs.message = "Provisioning"
+    if obj.status ~= nil and obj.status.conditions ~= nil then
+      local synced = false
+      local ready  = false
+      for _, c in ipairs(obj.status.conditions) do
+        if c.type == "Synced" and c.status == "False" then
+          hs.status  = "Degraded"
+          hs.message = c.message or "Reconcile error"
+          return hs
+        end
+        if c.type == "Synced" and c.status == "True" then synced = true end
+        if c.type == "Ready"  and c.status == "True" then ready  = true end
+      end
+      if synced and ready then
+        hs.status  = "Healthy"
+        hs.message = "Ready"
+      end
+    end
+    return hs
+
+  resource.customizations.health.storage.azure.upbound.io_Container: |
+    hs = {}
+    hs.status = "Progressing"
+    hs.message = "Provisioning"
+    if obj.status ~= nil and obj.status.conditions ~= nil then
+      local synced = false
+      local ready  = false
+      for _, c in ipairs(obj.status.conditions) do
+        if c.type == "Synced" and c.status == "False" then
+          hs.status  = "Degraded"
+          hs.message = c.message or "Reconcile error"
+          return hs
+        end
+        if c.type == "Synced" and c.status == "True" then synced = true end
+        if c.type == "Ready"  and c.status == "True" then ready  = true end
+      end
+      if synced and ready then
+        hs.status  = "Healthy"
+        hs.message = "Ready"
+      end
+    end
+    return hs
+
+  # ── GitHub managed resources ──────────────────────────────────────────────────
+  resource.customizations.health.repo.github.upbound.io_Repository: |
+    hs = {}
+    hs.status = "Progressing"
+    hs.message = "Provisioning"
+    if obj.status ~= nil and obj.status.conditions ~= nil then
+      local synced = false
+      local ready  = false
+      for _, c in ipairs(obj.status.conditions) do
+        if c.type == "Synced" and c.status == "False" then
+          hs.status  = "Degraded"
+          hs.message = c.message or "Reconcile error"
+          return hs
+        end
+        if c.type == "Synced" and c.status == "True" then synced = true end
+        if c.type == "Ready"  and c.status == "True" then ready  = true end
+      end
+      if synced and ready then
+        hs.status  = "Healthy"
+        hs.message = "Ready"
+      end
+    end
+    return hs
