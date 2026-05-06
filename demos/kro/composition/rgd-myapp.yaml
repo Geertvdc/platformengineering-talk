@@ -42,10 +42,10 @@ spec:
         apiVersion: v1
         kind: Namespace
         metadata:
-          name: "${schema.spec.name}"
+          name: "${string(schema.spec.name)}"
           labels:
             app.kubernetes.io/managed-by: kro
-            team: "${schema.spec.team}"
+            team: "${string(schema.spec.team)}"
 
     # ── RBAC — bind team group to the edit ClusterRole in the app namespace ───
     - id: rolebinding
@@ -54,10 +54,10 @@ spec:
         kind: RoleBinding
         metadata:
           name: "${string(schema.spec.team)+'-edit'}"
-          namespace: "${schema.spec.name}"
+          namespace: "${string(schema.spec.name)}"
         subjects:
           - kind: Group
-            name: "${schema.spec.team}"
+            name: "${string(schema.spec.team)}"
             apiGroup: rbac.authorization.k8s.io
         roleRef:
           kind: ClusterRole
@@ -71,7 +71,7 @@ spec:
         kind: StorageAccount
         metadata:
           name: "${'st'+string(schema.spec.name)}"
-          namespace: "${schema.spec.name}"
+          namespace: "${string(schema.spec.name)}"
         spec:
           location: westeurope
           kind: StorageV2
