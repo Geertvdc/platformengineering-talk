@@ -15,6 +15,10 @@
 #
 # The full set of managed-resource health checks (for the live demo reveal) lives in:
 #   demos/crossplane/bootstrap/argocd-cm-crossplane-health.yaml
+#
+# IMPORTANT: Keep this file to the XRD check only. Adding claim or managed-resource
+# checks here will spoil the Part D reveal — claims would already show hearts before
+# the full health ConfigMap is applied on stage.
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -45,48 +49,4 @@ data:
     end
     return hs
 
-  resource.customizations.health.platform.demo.io_AppStorage: |
-    hs = {}
-    hs.status = "Progressing"
-    hs.message = "Provisioning"
-    if obj.status ~= nil and obj.status.conditions ~= nil then
-      local synced = false
-      local ready  = false
-      for _, c in ipairs(obj.status.conditions) do
-        if c.type == "Synced" and c.status == "False" then
-          hs.status  = "Degraded"
-          hs.message = c.message or "Reconcile error"
-          return hs
-        end
-        if c.type == "Synced" and c.status == "True" then synced = true end
-        if c.type == "Ready"  and c.status == "True" then ready  = true end
-      end
-      if synced and ready then
-        hs.status  = "Healthy"
-        hs.message = "Ready"
-      end
-    end
-    return hs
 
-  resource.customizations.health.platform.demo.io_AppTeam: |
-    hs = {}
-    hs.status = "Progressing"
-    hs.message = "Provisioning"
-    if obj.status ~= nil and obj.status.conditions ~= nil then
-      local synced = false
-      local ready  = false
-      for _, c in ipairs(obj.status.conditions) do
-        if c.type == "Synced" and c.status == "False" then
-          hs.status  = "Degraded"
-          hs.message = c.message or "Reconcile error"
-          return hs
-        end
-        if c.type == "Synced" and c.status == "True" then synced = true end
-        if c.type == "Ready"  and c.status == "True" then ready  = true end
-      end
-      if synced and ready then
-        hs.status  = "Healthy"
-        hs.message = "Ready"
-      end
-    end
-    return hs
