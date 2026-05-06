@@ -30,13 +30,10 @@ spec:
     spec:
       name:
         type: string
-        description: "Logical app name. Derives the namespace and Storage Account name (st<name>). 3-18 lowercase alphanumeric characters."
       team:
         type: string
-        description: "Team name. Bound to the edit ClusterRole in the app namespace."
       size:
         type: string
-        description: "Storage tier: small=LRS, medium=GRS, large=RAGRS."
 
   resources:
     # ── App Namespace ──────────────────────────────────────────────────────────
