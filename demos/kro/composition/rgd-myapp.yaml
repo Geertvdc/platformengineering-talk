@@ -36,7 +36,6 @@ spec:
         description: "Team name. Bound to the edit ClusterRole in the app namespace."
       size:
         type: string
-        default: small
         description: "Storage tier: small=LRS, medium=GRS, large=RAGRS."
 
   resources:
