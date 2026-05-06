@@ -28,12 +28,9 @@ spec:
     apiVersion: v1alpha1
     kind: MyApp
     spec:
-      name:
-        type: string
-      team:
-        type: string
-      size:
-        type: string
+      name: string
+      team: string
+      size: string
 
   resources:
     # ── App Namespace ──────────────────────────────────────────────────────────
@@ -42,10 +39,10 @@ spec:
         apiVersion: v1
         kind: Namespace
         metadata:
-          name: "${string(schema.spec.name)}"
+          name: ${schema.spec.name}
           labels:
             app.kubernetes.io/managed-by: kro
-            team: "${string(schema.spec.team)}"
+            team: ${schema.spec.team}
 
     # ── RBAC — bind team group to the edit ClusterRole in the app namespace ───
     - id: rolebinding
@@ -53,11 +50,11 @@ spec:
         apiVersion: rbac.authorization.k8s.io/v1
         kind: RoleBinding
         metadata:
-          name: "${string(schema.spec.team)+'-edit'}"
-          namespace: "${string(schema.spec.name)}"
+          name: ${schema.spec.team}-edit
+          namespace: ${schema.spec.name}
         subjects:
           - kind: Group
-            name: "${string(schema.spec.team)}"
+            name: ${schema.spec.team}
             apiGroup: rbac.authorization.k8s.io
         roleRef:
           kind: ClusterRole
@@ -70,8 +67,8 @@ spec:
         apiVersion: storage.azure.com/v1api20210401
         kind: StorageAccount
         metadata:
-          name: "${'st'+string(schema.spec.name)}"
-          namespace: "${string(schema.spec.name)}"
+          name: st${schema.spec.name}
+          namespace: ${schema.spec.name}
         spec:
           location: westeurope
           kind: StorageV2
@@ -80,7 +77,7 @@ spec:
             # Set by bootstrap/bootstrap.sh — do not edit manually.
             armId: /subscriptions/b8affb75-1fd8-4116-8065-dc871fdbe8bc/resourceGroups/kro-demo-rg
           sku:
-            name: "${schema.spec.size == 'large' ? 'Standard_RAGRS' : schema.spec.size == 'medium' ? 'Standard_GRS' : 'Standard_LRS'}"
+            name: ${schema.spec.size == 'large' ? 'Standard_RAGRS' : schema.spec.size == 'medium' ? 'Standard_GRS' : 'Standard_LRS'}
           accessTier: Hot
           minimumTlsVersion: TLS1_2
           allowBlobPublicAccess: false
