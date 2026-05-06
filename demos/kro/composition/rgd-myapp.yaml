@@ -42,7 +42,7 @@ spec:
         apiVersion: v1
         kind: Namespace
         metadata:
-          name: ${schema.spec.name}
+          name: "${schema.spec.name}"
           labels:
             app.kubernetes.io/managed-by: kro
             team: "${schema.spec.team}"
@@ -53,11 +53,11 @@ spec:
         apiVersion: rbac.authorization.k8s.io/v1
         kind: RoleBinding
         metadata:
-          name: ${schema.spec.team}-edit
-          namespace: ${schema.spec.name}
+          name: "${schema.spec.team}-edit"
+          namespace: "${schema.spec.name}"
         subjects:
           - kind: Group
-            name: ${schema.spec.team}
+            name: "${schema.spec.team}"
             apiGroup: rbac.authorization.k8s.io
         roleRef:
           kind: ClusterRole
@@ -70,8 +70,8 @@ spec:
         apiVersion: storage.azure.com/v1api20210401
         kind: StorageAccount
         metadata:
-          name: st${schema.spec.name}
-          namespace: ${schema.spec.name}
+          name: "st${schema.spec.name}"
+          namespace: "${schema.spec.name}"
         spec:
           location: westeurope
           kind: StorageV2
