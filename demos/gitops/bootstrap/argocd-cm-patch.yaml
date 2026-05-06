@@ -20,6 +20,8 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
   namespace: argocd
+  labels:
+    app.kubernetes.io/part-of: argocd
 data:
   resource.customizations.health.apiextensions.crossplane.io_CompositeResourceDefinition: |
     hs = {}
@@ -39,6 +41,52 @@ data:
       if established and offered then
         hs.status = "Healthy"
         hs.message = "XRD is established and offered"
+      end
+    end
+    return hs
+
+  resource.customizations.health.platform.demo.io_AppStorage: |
+    hs = {}
+    hs.status = "Progressing"
+    hs.message = "Provisioning"
+    if obj.status ~= nil and obj.status.conditions ~= nil then
+      local synced = false
+      local ready  = false
+      for _, c in ipairs(obj.status.conditions) do
+        if c.type == "Synced" and c.status == "False" then
+          hs.status  = "Degraded"
+          hs.message = c.message or "Reconcile error"
+          return hs
+        end
+        if c.type == "Synced" and c.status == "True" then synced = true end
+        if c.type == "Ready"  and c.status == "True" then ready  = true end
+      end
+      if synced and ready then
+        hs.status  = "Healthy"
+        hs.message = "Ready"
+      end
+    end
+    return hs
+
+  resource.customizations.health.platform.demo.io_AppTeam: |
+    hs = {}
+    hs.status = "Progressing"
+    hs.message = "Provisioning"
+    if obj.status ~= nil and obj.status.conditions ~= nil then
+      local synced = false
+      local ready  = false
+      for _, c in ipairs(obj.status.conditions) do
+        if c.type == "Synced" and c.status == "False" then
+          hs.status  = "Degraded"
+          hs.message = c.message or "Reconcile error"
+          return hs
+        end
+        if c.type == "Synced" and c.status == "True" then synced = true end
+        if c.type == "Ready"  and c.status == "True" then ready  = true end
+      end
+      if synced and ready then
+        hs.status  = "Healthy"
+        hs.message = "Ready"
       end
     end
     return hs
