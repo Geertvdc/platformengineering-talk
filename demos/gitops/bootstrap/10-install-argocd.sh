@@ -18,36 +18,10 @@ echo "==> Waiting for Argo CD server to become ready (this can take a minute on 
 kubectl rollout status -n "${ARGOCD_NAMESPACE}" deploy/argocd-server --timeout=5m
 kubectl rollout status -n "${ARGOCD_NAMESPACE}" deploy/argocd-repo-server --timeout=5m
 
-echo "==> Patching argocd-cm: custom health checks for Crossplane XRDs"
-# Argo CD needs to know that a CompositeResourceDefinition is only 'Healthy'
-# once Crossplane has finished establishing it (i.e. the AppStorage / AppTeam
-# CRDs are actually registered). Without this, Argo CD advances to the next
-# sync-wave before the claim CRD exists and the sync fails with:
-#   "The Kubernetes API could not find platform.demo.io/AppStorage"
-kubectl -n "${ARGOCD_NAMESPACE}" patch configmap argocd-cm --type merge -p '
-data:
-  resource.customizations.health.apiextensions.crossplane.io_CompositeResourceDefinition: |
-    hs = {}
-    hs.status = "Progressing"
-    hs.message = "Waiting for XRD to be established and offered"
-    if obj.status ~= nil and obj.status.conditions ~= nil then
-      local established = false
-      local offered = false
-      for _, c in ipairs(obj.status.conditions) do
-        if c.type == "Established" and c.status == "True" then
-          established = true
-        end
-        if c.type == "Offered" and c.status == "True" then
-          offered = true
-        end
-      end
-      if established and offered then
-        hs.status = "Healthy"
-        hs.message = "XRD is established and offered"
-      end
-    end
-    return hs
-'
+echo "==> Applying argocd-cm: custom health checks for Crossplane XRDs"
+# Declarative source of truth lives in argocd-cm-patch.yaml.
+# See that file for a full explanation of why this is needed.
+kubectl apply -f "${SCRIPT_DIR}/argocd-cm-patch.yaml"
 
 echo "==> Applying App-of-Apps root Application"
 kubectl apply -f "${SCRIPT_DIR}/20-apply-root-app.yaml"

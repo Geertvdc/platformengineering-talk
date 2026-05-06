@@ -95,11 +95,11 @@ pre-creation needed (the Azure provider creates it). Ensure the SP has
 This creates the kind cluster, installs Argo CD, registers the GitHub repo,
 and creates the shared `azure-credentials` Secret in `azure-creds`.
 
-It also patches `argocd-cm` with a custom Lua health check for
-`CompositeResourceDefinition` so that Argo CD treats an XRD as `Healthy` only
-once Crossplane has set `Established=True` **and** `Offered=True`. This is what
-allows the claims Applications to wait safely for the CRDs to be registered
-before syncing.
+It also applies `demos/gitops/bootstrap/argocd-cm-patch.yaml` — a ConfigMap
+that adds a custom Lua health check for `CompositeResourceDefinition` so that
+Argo CD treats an XRD as `Healthy` only once Crossplane has set
+`Established=True` **and** `Offered=True`. This is what allows the claims
+Applications to wait safely for the CRDs to be registered before syncing.
 
 ### 2 — Install Crossplane
 
@@ -322,6 +322,10 @@ Argo CD Applications in `demos/gitops/apps/` (all labelled `demo: demo-3`):
 
 The compositions and claims are in **separate Applications** by design — see
 step 6 of the bootstrap section for the full explanation.
+
+The Lua health check that makes the sequencing safe lives in
+`demos/gitops/bootstrap/argocd-cm-patch.yaml` and is applied by
+`demos/gitops/bootstrap/10-install-argocd.sh`.
 
 ---
 
