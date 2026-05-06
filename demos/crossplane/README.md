@@ -101,26 +101,35 @@ Argo CD treats an XRD as `Healthy` only once Crossplane has set
 `Established=True` **and** `Offered=True`. This is what allows the claims
 Applications to wait safely for the CRDs to be registered before syncing.
 
-### 2 — Install Crossplane
+### 2 — Wait for Argo CD to install Crossplane
+
+Crossplane is managed GitOps-style via `demos/gitops/apps/crossplane-install.yaml`.
+Argo CD installs it automatically from the Helm chart once the app-of-apps syncs.
+Run this script to block until Crossplane is healthy before proceeding:
 
 ```bash
 bash demos/crossplane/bootstrap/10-install-crossplane.sh
 ```
 
-Installs Crossplane `v2.2.1` via Helm into `crossplane-system`.
-See `bootstrap/install-crossplane.md` for details.
+To upgrade Crossplane, change `targetRevision` in `crossplane-install.yaml` and push — Argo CD does the rest.
 
-### 3 — Create the Azure provider credentials Secret
+### 3 — Create the Azure and GitHub provider credentials Secrets
+
+These secrets contain sensitive values and **cannot be stored in Git**. They must
+be created imperatively before the providers can authenticate.
+
+> **Production note:** in a real environment you would use
+> [External Secrets Operator](https://external-secrets.io) (pulling from Azure Key Vault)
+> or [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets) to manage
+> these GitOps-style. For demo speed we create them directly.
+
+**Azure credentials** (bridged from the shared SP secret created by Demo 1):
 
 ```bash
 bash demos/crossplane/bootstrap/20-crossplane-azure-creds.sh
 ```
 
-Reads the four fields from `azure-creds/azure-credentials` (the shared SP
-Secret) and writes `crossplane-system/azure-provider-creds` as a JSON blob
-for the Crossplane Azure provider. **No new service principal is created.**
-
-### 4 — Create the GitHub provider credentials Secret
+**GitHub credentials:**
 
 ```bash
 export GITHUB_TOKEN=ghp_...   # PAT with repo + read:org + delete_repo scopes
@@ -128,11 +137,7 @@ export GITHUB_OWNER=Geertvdc  # your GitHub username or org
 bash demos/crossplane/bootstrap/30-github-creds.sh
 ```
 
-Writes `crossplane-system/github-provider-creds` with key `credentials` as a JSON blob
-`{"token":"...","owner":"..."}`. The same `GITHUB_TOKEN` already set for Argo CD
-(Demo 1) works here if it has the required scopes.
-
-### 5 — Install Providers and wait for CRDs
+### 3 — Install Providers and wait for CRDs
 
 ```bash
 bash demos/crossplane/bootstrap/40-install-providers.sh
@@ -142,7 +147,7 @@ Applies the three Provider packages and **blocks until each is `HEALTHY=True`**
 (~2–3 min on first run while images pull). This pre-registers all Azure and
 GitHub CRDs so Argo CD never encounters a missing resource during sync.
 
-### 6 — Let Argo CD sync the rest
+### 4 — Let Argo CD sync the rest
 
 Providers live in `bootstrap/` and are managed imperatively (step 5 above).
 Everything else — XRDs, Compositions, and claims — is managed by Argo CD via
@@ -309,9 +314,9 @@ demos/crossplane/
 │   ├── 40-install-providers.sh        # Apply Providers + wait for Healthy + apply ProviderConfigs
 │   ├── argocd-cm-crossplane-health.yaml  # Full health checks — apply LIVE during demo (Part 0)
 │   └── provider/
-│       ├── provider-azure-resources.yaml  # Azure Resources provider (ghcr.io, v2.5.0)
-│       ├── provider-azure-storage.yaml    # Azure Storage provider (ghcr.io, v2.5.0)
-│       ├── provider-github.yaml           # GitHub provider (ghcr.io, v0.19.0)
+│       ├── provider-azure-resources.yaml  # Azure Resources provider (v2.5.4)
+│       ├── provider-azure-storage.yaml    # Azure Storage provider (v2.5.4)
+│       ├── provider-github.yaml           # GitHub provider (v0.19.0)
 │       ├── providerconfig.yaml            # Azure ProviderConfig → azure-provider-creds
 │       └── providerconfig-github.yaml     # GitHub ProviderConfig → github-provider-creds
 ├── composition/
@@ -335,6 +340,7 @@ Argo CD Applications in `demos/gitops/apps/` (all labelled `demo: demo-3`):
 
 | File | Watches | Purpose |
 |---|---|---|
+| `crossplane-install.yaml` | Helm chart | Installs Crossplane v2.2.1 via Argo CD (GitOps-managed) |
 | `crossplane-appstorage.yaml` | `composition/appstorage/` | Syncs XRD + Composition for AppStorage |
 | `crossplane-appstorage-claims.yaml` | `samples/appstorage/` | Syncs namespace + AppStorage claim |
 | `crossplane-appteam.yaml` | `composition/appteam/` | Syncs XRD + Composition for AppTeam |
