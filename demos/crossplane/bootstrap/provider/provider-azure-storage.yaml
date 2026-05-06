@@ -12,4 +12,4 @@ kind: Provider
 metadata:
   name: upbound-provider-azure-storage
 spec:
-  package: ghcr.io/crossplane-contrib/provider-azure-storage:v2.5.0
+  package: xpkg.upbound.io/upbound/provider-azure-storage:v2.5.4

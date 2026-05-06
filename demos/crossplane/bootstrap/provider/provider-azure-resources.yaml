@@ -9,4 +9,4 @@ kind: Provider
 metadata:
   name: upbound-provider-azure-resources
 spec:
-  package: ghcr.io/crossplane-contrib/provider-azure-resources:v2.5.0
+  package: xpkg.upbound.io/upbound/provider-azure-resources:v2.5.4
