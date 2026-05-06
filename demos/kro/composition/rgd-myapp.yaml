@@ -30,21 +30,14 @@ spec:
     spec:
       name:
         type: string
-        description: >-
-          Logical app name. Used to derive the app namespace and Azure Storage
-          Account name ("st<name>").
-          Must be 3–18 lowercase alphanumeric characters.
+        description: "Logical app name. Derives the namespace and Storage Account name (st<name>). 3-18 lowercase alphanumeric characters."
       team:
         type: string
-        description: >-
-          Team name. Bound to the built-in "edit" ClusterRole in the app
-          namespace — team members can deploy workloads without cluster-admin.
+        description: "Team name. Bound to the edit ClusterRole in the app namespace."
       size:
         type: string
         default: small
-        description: >-
-          Storage tier. Maps to Azure replication:
-          small = LRS, medium = GRS, large = RAGRS.
+        description: "Storage tier: small=LRS, medium=GRS, large=RAGRS."
 
   resources:
     # ── App Namespace ──────────────────────────────────────────────────────────
