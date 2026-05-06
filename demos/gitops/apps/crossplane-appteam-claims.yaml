@@ -1,0 +1,30 @@
+# Claims only — depends on crossplane-appteam being Healthy first.
+# Argo CD will not advance to Sync until the XRD app health check (Lua) returns
+# Healthy, meaning Crossplane has registered platform.demo.io/AppTeam.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-appteam-claims
+  namespace: argocd
+  labels:
+    demo: demo-3
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Geertvdc/platformengineering-talk
+    targetRevision: main
+    path: demos/crossplane/samples/appteam
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: crossplane-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true
