@@ -5,14 +5,14 @@
 #
 # Platform opinions encoded here (NOT exposed to developers):
 #   - Azure region:        westeurope
-#   - Resource group:      aso-demo-rg  (shared sandbox RG from Demo #2)
+#   - Resource group:      kro-demo-rg  (dedicated to this demo — see bootstrap/bootstrap.sh)
 #   - Storage naming:      "st" + spec.name  (e.g. "stmyapp")
 #   - Security baseline:   TLS 1.2, no public blob access
 #   - Size → SKU mapping:  small=LRS, medium=GRS, large=RAGRS
 #   - Connection secret:   <name>-connection in the app namespace (written by ASO)
 #
-# Prereqs: KRO controller running in kro-system, ASO installed (Demo #2),
-#          sandbox RG "aso-demo-rg" pre-created in Azure.
+# Prereqs: KRO controller running in kro-system, ASO installed on the platform cluster.
+#          Run demos/kro/bootstrap/bootstrap.sh to set up everything for this demo.
 apiVersion: kro.run/v1alpha1
 kind: ResourceGraphDefinition
 metadata:
@@ -85,13 +85,11 @@ spec:
           location: westeurope
           kind: StorageV2
           owner:
-            # armId targets the pre-existing sandbox RG — ASO manages only the
-            # Storage Account, not the RG itself.
-            # IMPORTANT: Replace REPLACE_WITH_SUBSCRIPTION_ID with your Azure
-            # subscription ID before committing (see bootstrap/install-kro.md Step 4).
-            armId: /subscriptions/REPLACE_WITH_SUBSCRIPTION_ID/resourceGroups/aso-demo-rg
+            # armId targets the kro-demo-specific resource group.
+            # Set by bootstrap/bootstrap.sh — do not edit manually.
+            armId: /subscriptions/b8affb75-1fd8-4116-8065-dc871fdbe8bc/resourceGroups/kro-demo-rg
           sku:
-            name: ${schema.spec.size == "large" ? "Standard_RAGRS" : schema.spec.size == "medium" ? "Standard_GRS" : "Standard_LRS"}
+            name: "${schema.spec.size == 'large' ? 'Standard_RAGRS' : schema.spec.size == 'medium' ? 'Standard_GRS' : 'Standard_LRS'}"
           accessTier: Hot
           minimumTlsVersion: TLS1_2
           allowBlobPublicAccess: false
