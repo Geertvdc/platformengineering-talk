@@ -12,6 +12,6 @@ metadata:
   name: myapp
   namespace: kro-demo
 spec:
-  name: myapp
+  name: myappx9812
   team: platform-team
   size: small
