@@ -5,7 +5,7 @@ apiVersion: platform.demo.io/v1alpha1
 kind: AppStorage
 metadata:
   name: demo-app-store
-  namespace: crossplane-demo
+  namespace: crossplane-appstorage-demo
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:

@@ -95,6 +95,12 @@ pre-creation needed (the Azure provider creates it). Ensure the SP has
 This creates the kind cluster, installs Argo CD, registers the GitHub repo,
 and creates the shared `azure-credentials` Secret in `azure-creds`.
 
+It also patches `argocd-cm` with a custom Lua health check for
+`CompositeResourceDefinition` so that Argo CD treats an XRD as `Healthy` only
+once Crossplane has set `Established=True` **and** `Offered=True`. This is what
+allows the claims Applications to wait safely for the CRDs to be registered
+before syncing.
+
 ### 2 — Install Crossplane
 
 ```bash
@@ -138,24 +144,39 @@ GitHub CRDs so Argo CD never encounters a missing resource during sync.
 
 ### 6 — Let Argo CD sync the rest
 
-The `crossplane-demo` Application is registered in `demos/gitops/apps/crossplane.yaml`.
-It watches only `composition/` and `samples/` (providers live in `bootstrap/` and
-are managed imperatively). Argo CD applies in three sync waves:
+Providers live in `bootstrap/` and are managed imperatively (step 5 above).
+Everything else — XRDs, Compositions, and claims — is managed by Argo CD via
+four Applications in `demos/gitops/apps/`, all labelled `demo: demo-3`:
 
-| Resource | Kind | Wave |
-|----------|------|------|
-| `xappstorages.platform.demo.io` | `CompositeResourceDefinition` | 1 |
-| `xappteams.platform.demo.io` | `CompositeResourceDefinition` | 1 |
-| `xappstorages-azure` | `Composition` | 2 |
-| `xappteams-azure-github` | `Composition` | 2 |
-| `crossplane-demo` | `Namespace` | 3 |
-| `demo-app-store` | `AppStorage` | 3 |
-| `alpha-team` | `AppTeam` | 3 |
+| Application | Watches | What it deploys |
+|---|---|---|
+| `crossplane-appstorage` | `composition/appstorage/` | XRD + Composition for AppStorage |
+| `crossplane-appstorage-claims` | `samples/appstorage/` | `crossplane-demo` namespace + AppStorage claim |
+| `crossplane-appteam` | `composition/appteam/` | XRD + Composition for AppTeam |
+| `crossplane-appteam-claims` | `samples/appteam/` | `crossplane-demo` namespace + AppTeam claim |
+
+**Why four apps, not one?**
+Argo CD validates *all* resources in an Application before any sync wave runs.
+If the XRD and the claim are in the same app, Argo CD fails the entire sync
+because the `AppStorage`/`AppTeam` CRD doesn't exist yet — so wave 1 (the XRD)
+never gets applied. Splitting compositions and claims into separate Applications
+means:
+
+1. `crossplane-appstorage` syncs and Crossplane registers the `AppStorage` CRD.
+2. A custom Lua health check in `argocd-cm` (applied by `10-install-argocd.sh`)
+   keeps the XRD app in `Progressing` until `Established=True` **and**
+   `Offered=True` — only then does Argo CD consider it `Healthy`.
+3. `crossplane-appstorage-claims` syncs and the claim is applied against an
+   already-registered CRD.
+
+The `crossplane.yaml` file in `demos/gitops/apps/` is intentionally empty
+(placeholder comment only) — it exists so the app-of-apps directory structure
+is self-documenting.
 
 Wait for all Providers to become healthy (~2–3 min while images pull):
 
 ```bash
-kubectl get providers -w
+kubectl get providers.pkg.crossplane.io -w
 # NAME                                INSTALLED   HEALTHY
 # upbound-provider-azure-resources   True        True
 # upbound-provider-azure-storage     True        True
@@ -169,6 +190,17 @@ kubectl get xrd
 # NAME                              ESTABLISHED   OFFERED
 # xappstorages.platform.demo.io   True          True
 # xappteams.platform.demo.io      True          True
+```
+
+Verify all four Argo CD Applications are healthy:
+
+```bash
+kubectl get application -n argocd -l demo=demo-3
+# NAME                           SYNC STATUS   HEALTH STATUS
+# crossplane-appstorage          Synced        Healthy
+# crossplane-appstorage-claims   Synced        Healthy
+# crossplane-appteam             Synced        Healthy
+# crossplane-appteam-claims      Synced        Healthy
 ```
 
 ---
@@ -254,7 +286,7 @@ demos/crossplane/
 │   ├── 10-install-crossplane.sh       # Helm install (run before talk)
 │   ├── 20-crossplane-azure-creds.sh   # Bridge SP creds to Crossplane format
 │   ├── 30-github-creds.sh             # Create github-provider-creds from GITHUB_TOKEN + GITHUB_OWNER
-│   ├── 40-install-providers.sh        # Apply Providers + wait for healthy + apply ProviderConfigs
+│   ├── 40-install-providers.sh        # Apply Providers + wait for Healthy + apply ProviderConfigs
 │   └── provider/
 │       ├── provider-azure-resources.yaml  # Azure Resources provider (ghcr.io, v2.5.0)
 │       ├── provider-azure-storage.yaml    # Azure Storage provider (ghcr.io, v2.5.0)
@@ -278,9 +310,18 @@ demos/crossplane/
 └── README.md
 ```
 
-Argo CD Applications (both labelled `demo: demo-3`):
-- `demos/gitops/apps/crossplane-appstorage.yaml` — XRD + Composition + claim for AppStorage
-- `demos/gitops/apps/crossplane-appteam.yaml` — XRD + Composition + claim for AppTeam
+Argo CD Applications in `demos/gitops/apps/` (all labelled `demo: demo-3`):
+
+| File | Watches | Purpose |
+|---|---|---|
+| `crossplane-appstorage.yaml` | `composition/appstorage/` | Syncs XRD + Composition for AppStorage |
+| `crossplane-appstorage-claims.yaml` | `samples/appstorage/` | Syncs namespace + AppStorage claim |
+| `crossplane-appteam.yaml` | `composition/appteam/` | Syncs XRD + Composition for AppTeam |
+| `crossplane-appteam-claims.yaml` | `samples/appteam/` | Syncs namespace + AppTeam claim |
+| `crossplane.yaml` | — | Intentional placeholder (empty); documents the split |
+
+The compositions and claims are in **separate Applications** by design — see
+step 6 of the bootstrap section for the full explanation.
 
 ---
 

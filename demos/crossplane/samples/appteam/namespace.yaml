@@ -5,4 +5,4 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
   labels:
-    purpose: crossplane-demo
+    purpose: crossplane-appteam-demo

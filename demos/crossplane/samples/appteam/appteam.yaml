@@ -2,7 +2,7 @@ apiVersion: platform.demo.io/v1alpha1
 kind: AppTeam
 metadata:
   name: alpha-team
-  namespace: crossplane-demo
+  namespace: crossplane-appteam-demo
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
