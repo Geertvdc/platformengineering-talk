@@ -1,0 +1,110 @@
+# Platform composition: MyApp → Namespace + RBAC + ASO StorageAccount + connection Secret
+#
+# Platform team writes this once. Developers never edit this file — they only
+# write a MyApp instance (demos/kro/samples/myapp.yaml) with name, team, and size.
+#
+# Platform opinions encoded here (NOT exposed to developers):
+#   - Azure region:        westeurope
+#   - Resource group:      aso-demo-rg  (shared sandbox RG from Demo #2)
+#   - Storage naming:      "st" + spec.name  (e.g. "stmyapp")
+#   - Security baseline:   TLS 1.2, no public blob access
+#   - Size → SKU mapping:  small=LRS, medium=GRS, large=RAGRS
+#   - Connection secret:   <name>-connection in the app namespace (written by ASO)
+#
+# Prereqs: KRO controller running in kro-system, ASO installed (Demo #2),
+#          sandbox RG "aso-demo-rg" pre-created in Azure.
+apiVersion: kro.run/v1alpha1
+kind: ResourceGraphDefinition
+metadata:
+  name: myapp
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  schema:
+    apiVersion: v1alpha1
+    kind: MyApp
+    spec:
+      name:
+        type: string
+        description: >-
+          Logical app name. Used to derive the app namespace, Azure Storage
+          Account name ("st<name>"), and the connection secret name.
+          Must be 3–18 lowercase alphanumeric characters.
+      team:
+        type: string
+        description: >-
+          Team name. Bound to the built-in "edit" ClusterRole in the app
+          namespace — team members can deploy workloads without cluster-admin.
+      size:
+        type: string
+        default: small
+        description: >-
+          Storage tier. Maps to Azure replication:
+          small = LRS, medium = GRS, large = RAGRS.
+
+  resources:
+    # ── App Namespace ──────────────────────────────────────────────────────────
+    - id: appnamespace
+      template:
+        apiVersion: v1
+        kind: Namespace
+        metadata:
+          name: ${schema.spec.name}
+          labels:
+            app.kubernetes.io/managed-by: kro
+            team: ${schema.spec.team}
+
+    # ── RBAC — bind team group to the edit ClusterRole in the app namespace ───
+    - id: rolebinding
+      template:
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: RoleBinding
+        metadata:
+          name: ${schema.spec.team}-edit
+          namespace: ${schema.spec.name}
+        subjects:
+          - kind: Group
+            name: ${schema.spec.team}
+            apiGroup: rbac.authorization.k8s.io
+        roleRef:
+          kind: ClusterRole
+          name: edit
+          apiGroup: rbac.authorization.k8s.io
+
+    # ── ASO Storage Account ────────────────────────────────────────────────────
+    # ASO provisions the Azure resource and writes connection details to the
+    # "<name>-connection" Secret in the same namespace (via operatorSpec.secrets).
+    - id: storageaccount
+      template:
+        apiVersion: storage.azure.com/v1api20210401
+        kind: StorageAccount
+        metadata:
+          name: st${schema.spec.name}
+          namespace: ${schema.spec.name}
+        spec:
+          location: westeurope
+          kind: StorageV2
+          owner:
+            # armId targets the pre-existing sandbox RG — ASO manages only the
+            # Storage Account, not the RG itself.
+            # IMPORTANT: Replace REPLACE_WITH_SUBSCRIPTION_ID with your Azure
+            # subscription ID before committing (see bootstrap/install-kro.md Step 4).
+            armId: /subscriptions/REPLACE_WITH_SUBSCRIPTION_ID/resourceGroups/aso-demo-rg
+          sku:
+            name: ${schema.spec.size == "large" ? "Standard_RAGRS" : schema.spec.size == "medium" ? "Standard_GRS" : "Standard_LRS"}
+          accessTier: Hot
+          minimumTlsVersion: TLS1_2
+          allowBlobPublicAccess: false
+          operatorSpec:
+            # ASO writes the provisioned keys into "<name>-connection" Secret.
+            # The Secret is created/updated by ASO when the account is Ready.
+            secrets:
+              primaryKey:
+                name: ${schema.spec.name}-connection
+                key: primaryKey
+              secondaryKey:
+                name: ${schema.spec.name}-connection
+                key: secondaryKey
+              blobEndpoint:
+                name: ${schema.spec.name}-connection
+                key: blobEndpoint
