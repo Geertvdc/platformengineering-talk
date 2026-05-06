@@ -1,10 +1,10 @@
 apiVersion: platform.demo.io/v1alpha1
 kind: AppTeam
 metadata:
-  name: alpha-team
+  name: techorama-team
   namespace: crossplane-appteam-demo
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
-  teamName: alpha
+  teamName: techorama
   githubOrg: Geertvdc
