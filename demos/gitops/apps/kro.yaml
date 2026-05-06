@@ -1,11 +1,13 @@
-# Argo CD Application — KRO demo (installs the ResourceGraphDefinition).
+# Argo CD Application — KRO demo, platform layer (RGD).
 #
-# This Application points at demos/kro/composition/ and keeps the RGD
-# (ResourceGraphDefinition) in sync. The developer CR (demos/kro/samples/myapp.yaml)
-# is applied during the live demo via `kubectl apply` or a branch merge.
+# Points at demos/kro/composition/ and keeps the ResourceGraphDefinition in sync.
+# This is the platform team's concern — it registers the MyApp CRD on the cluster.
 #
-# Convention for demos #2-#5: exactly one Application file per demo in this
-# folder, pointing at the demo's own path. No demo modifies another demo's folder.
+# The developer-facing layer is a separate Application: kro-instance.yaml
+# It points at demos/kro/samples/ — committing myapp.yaml there is the live demo action.
+#
+# Convention: one Application per concern per demo in this folder.
+# No demo modifies another demo's folder.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

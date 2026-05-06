@@ -96,46 +96,62 @@ kubectl get crd myapps.kro.run
 ### Pre-validate end-to-end (rehearsal)
 
 ```bash
-# Submit the developer CR
-kubectl apply -f demos/kro/samples/myapp.yaml
+# Rename and push to trigger the GitOps flow
+git mv demos/kro/samples/myapp.yaml.dontdeployyet demos/kro/samples/myapp.yaml
+git commit -m "rehearsal: deploy myapp"
+git push
 
-# KRO creates these immediately (< 1 s):
+# KRO creates these immediately (< 1 s after Argo CD syncs):
 kubectl get namespace myapp
 kubectl get rolebinding -n myapp              # platform-team-edit
 
 # ASO provisions the Azure resource (~30–60 s):
 kubectl get storageaccount -n myapp -w
-# NAME      READY   SEVERITY   REASON      MESSAGE
+# NAME      READY   SEVERITY   REASON
 # stmyapp   True               Succeeded
 
-# Reset
-kubectl delete -f demos/kro/samples/myapp.yaml
-# KRO removes the namespace and everything in it automatically.
-# The Azure Storage Account deletion is triggered by ASO when the CR is removed.
+# Reset — revert the commit so the file goes back to .dontdeployyet
+git mv demos/kro/samples/myapp.yaml demos/kro/samples/myapp.yaml.dontdeployyet
+git commit -m "rehearsal: reset myapp"
+git push
+# Argo CD prunes the MyApp CR → KRO removes the namespace and RoleBinding
+# → ASO deletes the Azure Storage Account (~30–60 s)
 ```
 
 ---
 
 ## Live demo script (≤ 3 min)
 
+The demo action is a single Git commit. Argo CD picks it up and KRO + ASO do the rest.
+
 | # | You do | Audience sees |
 |---|---|---|
-| 1 | Open `demos/kro/composition/rgd-myapp.yaml` | Point out the template: namespace, RoleBinding, ASO StorageAccount — all wired together. Highlight that region, RG, SKU, TLS are all encoded here. |
-| 2 | Open `demos/kro/samples/myapp.yaml` | "Three fields. Name, team, size. That's the entire developer interface." |
-| 3 | `kubectl apply -f demos/kro/samples/myapp.yaml` | `myapp.kro.run/myapp created` |
-| 4 | `kubectl get namespace myapp` | Namespace appears in < 1 s |
-| 5 | `kubectl get rolebinding -n myapp` | `platform-team-edit` present |
-| 6 | `kubectl get storageaccount -n myapp -w` | Status transitions `Reconciling → Succeeded` (~30–60 s) |
-| 7 | Open Azure Portal → Storage Accounts, filter `kro-demo-rg` | `stmyapp` is there |
-| 8 | Verbal contrast with Crossplane | _"KRO composes; Crossplane abstracts."_ |
+| 1 | Open `demos/kro/composition/rgd-myapp.yaml` | Point out the template: namespace, RoleBinding, ASO StorageAccount — all wired together. Region, RG, SKU, TLS encoded here by the platform team. |
+| 2 | Open `demos/kro/samples/myapp.yaml.dontdeployyet` | "Three fields. Name, team, size. That's the entire developer interface." |
+| 3 | Rename and commit the sample file: | |
+
+```bash
+git mv demos/kro/samples/myapp.yaml.dontdeployyet demos/kro/samples/myapp.yaml
+git commit -m "demo: deploy myapp"
+git push
+```
+
+| # | You do | Audience sees |
+|---|---|---|
+| 4 | Switch to Argo CD UI | `kro-demo-instance` Application picks up the change and syncs |
+| 5 | `kubectl get namespace myapp` | Namespace created in < 1 s |
+| 6 | `kubectl get rolebinding -n myapp` | `platform-team-edit` present |
+| 7 | `kubectl get storageaccount -n myapp -w` | Status transitions `Reconciling → Succeeded` (~30–60 s) |
+| 8 | Open Azure Portal → Storage Accounts, filter `kro-demo-rg` | `stmyapp` is there |
+| 9 | Verbal contrast with Crossplane | _"KRO composes; Crossplane abstracts."_ |
 
 **Talking points:**
 
 - *"The ResourceGraphDefinition is the platform team's blueprint. They write it once. It bundles the namespace, the RBAC, and the Azure Storage Account into one composable unit."*
-- *"The developer writes three fields. They don't know about Azure SKUs, resource groups, or TLS settings — the platform encoded all of that in the RGD."*
-- *"One `kubectl apply` produces three real resources: a namespace, RBAC, and an Azure Storage Account — all consistently named and labelled."*
+- *"The developer writes three fields and commits them to Git. They don't know about Azure SKUs, resource groups, or TLS settings — the platform encoded all of that in the RGD."*
+- *"One Git commit produces three real resources: a namespace, RBAC, and an Azure Storage Account — all consistently named and labelled."*
 - *"KRO doesn't need its own credential setup. It reuses ASO, which already handles Azure auth. Fewer moving parts than Crossplane for this use case."*
-- *"When you delete the CR, KRO removes the namespace and everything in it. ASO cascades that to Azure and deletes the Storage Account. One delete, full cleanup."*
+- *"When you revert the commit, Argo CD prunes the file, KRO removes the namespace and everything in it, and ASO deletes the Azure Storage Account. Full cleanup from a single git revert."*
 
 ---
 
@@ -157,17 +173,16 @@ kubectl delete -f demos/kro/samples/myapp.yaml
 ## Resetting between runs
 
 ```bash
-# Delete the developer CR — KRO removes the namespace, RoleBinding, and StorageAccount CR.
-# ASO then deletes the Azure Storage Account.
-kubectl delete -f demos/kro/samples/myapp.yaml
+# Revert the commit — Argo CD prunes the MyApp CR from the cluster
+git mv demos/kro/samples/myapp.yaml demos/kro/samples/myapp.yaml.dontdeployyet
+git commit -m "reset: remove myapp instance"
+git push
+# KRO removes the namespace and RoleBinding automatically.
+# ASO deletes the Azure Storage Account (~30–60 s).
 
-# Confirm the namespace is gone (KRO handles this automatically):
+# Confirm namespace is gone:
 kubectl get namespace myapp
 # Error from server (NotFound): ...
-
-# Confirm the Azure resource is being deleted:
-# (may take 30–60 s for ASO to finish)
-az storage account show --name stmyapp --resource-group kro-demo-rg 2>&1 | grep provisioningState
 ```
 
 ---
@@ -177,17 +192,18 @@ az storage account show --name stmyapp --resource-group kro-demo-rg 2>&1 | grep 
 ```
 demos/kro/
 ├── bootstrap/
-│   └── bootstrap.sh          # one-command setup: KRO + Azure RG + RGD patch + kro-demo namespace
+│   └── bootstrap.sh                    # one-command setup: KRO + Azure RG + RGD patch + kro-demo namespace
 ├── composition/
-│   └── rgd-myapp.yaml        # ResourceGraphDefinition (namespace + RBAC + ASO StorageAccount)
+│   └── rgd-myapp.yaml                  # ResourceGraphDefinition (namespace + RBAC + ASO StorageAccount)
 ├── samples/
-│   └── myapp.yaml            # what a developer writes (three fields)
-└── README.md                 # this file
+│   └── myapp.yaml.dontdeployyet        # developer CR — rename to .yaml to trigger the demo
+└── README.md                           # this file
 ```
 
-Related (managed by the platform bootstrap, do not modify from this demo):
+Argo CD Applications (managed by the GitOps bootstrap, do not modify from this demo):
 
 ```
 demos/gitops/apps/
-└── kro.yaml                  # Argo CD Application pointing at demos/kro/composition/
+├── kro.yaml                            # platform layer — syncs demos/kro/composition/ → registers the RGD
+└── kro-instance.yaml                   # developer layer — syncs demos/kro/samples/ → deploys MyApp instances
 ```
