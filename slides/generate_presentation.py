@@ -1070,6 +1070,498 @@ add_text(slide, 'DRIFT DETECTED  \u2192  ARGO RECONCILES WITHIN SECONDS',
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# S4-01 — Real-World Complexity
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '111111')
+add_text(slide, 'MESSY',
+         x=700, y=80, w=1400, h=700,
+         font_name='Inter', font_size_px=480, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1072, 200, 8, 'FFFFFF')
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '04 / REAL-WORLD COMPLEXITY',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# mid block — abs positions from snapshot_layout (cnt at y=100, mid at y=323)
+add_text(slide, 'THE MESSY REALITY.',
+         x=120, y=323, w=900, h=70,
+         font_name='Inter', font_size_px=44, font_weight=800,
+         hex_color='444444', letter_spacing_px=0, extra_nudge_y=3)
+add_text(slide, 'MULTIPLE.',
+         x=120, y=393, w=1700, h=176,
+         font_name='Inter', font_size_px=200, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'EXISTING.',
+         x=120, y=569, w=900, h=79,
+         font_name='Inter', font_size_px=90, font_weight=900,
+         hex_color='444444', letter_spacing_px=0)
+add_text(slide, 'CONSTRAINED.',
+         x=120, y=648, w=1400, h=88,
+         font_name='Inter', font_size_px=100, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+# bot block
+add_rect(slide, 120, 935, 80, 4, 'FFFFFF')
+add_text(slide, 'Multiple teams, existing Terraform, real compliance. Platforms must work with what exists.',
+         x=120, y=953, w=1400, h=27,
+         font_name='Inter', font_size_px=22, font_weight=400,
+         hex_color='555555', extra_nudge_y=3)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S4-02 — The Dimensions (Tensions)
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, 'FFFFFF')
+add_text(slide, 'TENSION',
+         x=560, y=150, w=1600, h=600,
+         font_name='Inter', font_size_px=400, font_weight=900,
+         hex_color='000000', letter_spacing_px=0, opacity=0.04)
+add_rect(slide, 0, 0, 8, 1080, '000000')
+add_rect(slide, 1720, 1072, 200, 8, '000000')
+add_rect(slide, 120, 120, 14, 14, '000000')
+add_text(slide, '04 / REAL-WORLD COMPLEXITY',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='888888', letter_spacing_px=4, extra_nudge_y=5)
+# Tension 1 — abs y=313 (cnt at y=100, tensions at y=213)
+add_text(slide, '01',
+         x=120, y=313, w=60, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='CCCCCC', letter_spacing_px=4, extra_nudge_y=5)
+# row bottom = 313+21+90 = 424; 100px→h≈88, bottom-align: y=334; 44px→h≈40 → y=384; 72px→h≈65 → y=359
+add_text(slide, 'SELF-SERVICE',
+         x=120, y=334, w=640, h=90,
+         font_name='Inter', font_size_px=100, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'vs',
+         x=772, y=384, w=80, h=40,
+         font_name='Inter', font_size_px=44, font_weight=700,
+         hex_color='AAAAAA', letter_spacing_px=0, extra_nudge_y=3)
+add_text(slide, 'GUARDRAILS',
+         x=860, y=359, w=600, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='888888', letter_spacing_px=0)
+add_rect(slide, 120, 452, 1680, 2, 'DDDDDD')
+# Tension 2 — abs y=482
+add_text(slide, '02',
+         x=120, y=482, w=60, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='CCCCCC', letter_spacing_px=4, extra_nudge_y=5)
+# row bottom = 593
+add_text(slide, 'CONSISTENCY',
+         x=120, y=503, w=680, h=90,
+         font_name='Inter', font_size_px=100, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'vs',
+         x=812, y=553, w=80, h=40,
+         font_name='Inter', font_size_px=44, font_weight=700,
+         hex_color='AAAAAA', letter_spacing_px=0, extra_nudge_y=3)
+add_text(slide, 'FLEXIBILITY',
+         x=900, y=528, w=560, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='888888', letter_spacing_px=0)
+add_rect(slide, 120, 621, 1680, 2, 'DDDDDD')
+# Tension 3 — abs y=651
+add_text(slide, '03',
+         x=120, y=651, w=60, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='CCCCCC', letter_spacing_px=4, extra_nudge_y=5)
+# row bottom = 762
+add_text(slide, 'VELOCITY',
+         x=120, y=672, w=460, h=90,
+         font_name='Inter', font_size_px=100, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'vs',
+         x=592, y=722, w=80, h=40,
+         font_name='Inter', font_size_px=44, font_weight=700,
+         hex_color='AAAAAA', letter_spacing_px=0, extra_nudge_y=3)
+add_text(slide, 'CONTROL',
+         x=680, y=697, w=420, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='888888', letter_spacing_px=0)
+# footer
+add_text(slide, 'Every platform decision lives at the intersection of these three tensions.',
+         x=120, y=951, w=1400, h=29,
+         font_name='Inter', font_size_px=24, font_weight=400,
+         hex_color='888888', extra_nudge_y=3)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S4-03 — Sovereignty
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_text(slide, 'OWN',
+         x=850, y=200, w=1200, h=700,
+         font_name='Inter', font_size_px=520, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1072, 200, 8, 'FFFFFF')
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '04 / REAL-WORLD COMPLEXITY',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# mid — abs (120,306)
+add_text(slide, 'SOVEREIGNTY.',
+         x=120, y=306, w=1700, h=141,
+         font_name='Inter', font_size_px=160, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'WHO CONTROLS THE API?',
+         x=120, y=455, w=1200, h=54,
+         font_name='Inter', font_size_px=60, font_weight=900,
+         hex_color='555555', letter_spacing_px=0)
+# callout boxes — abs at (120,691), 3 × 560px side by side
+add_rect(slide, 120, 691, 560, 62, '111111')
+add_text(slide, 'WHERE IS THE STATE?',
+         x=144, y=711, w=500, h=22,
+         font_name='Inter', font_size_px=18, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+add_rect(slide, 680, 691, 560, 62, '1A1A1A')
+add_text(slide, 'WHO OWNS THE AUDIT TRAIL?',
+         x=704, y=711, w=500, h=22,
+         font_name='Inter', font_size_px=18, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+add_rect(slide, 1240, 691, 560, 62, '111111')
+add_text(slide, 'WHAT IF THE VENDOR LEAVES?',
+         x=1264, y=711, w=500, h=22,
+         font_name='Inter', font_size_px=18, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+# bot
+add_rect(slide, 120, 935, 80, 4, 'FFFFFF')
+add_text(slide, 'All four tools share one property: the control plane stays inside your Kubernetes API.',
+         x=120, y=953, w=1400, h=27,
+         font_name='Inter', font_size_px=22, font_weight=400,
+         hex_color='555555', extra_nudge_y=3)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S4-04 — Flexible Control Plane
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, 'FFFFFF')
+add_rect(slide, 0, 0, 8, 1080, '000000')
+add_rect(slide, 1720, 1072, 200, 8, '000000')
+add_rect(slide, 120, 120, 14, 14, '000000')
+add_text(slide, '04 / REAL-WORLD COMPLEXITY',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='888888', letter_spacing_px=4, extra_nudge_y=5)
+# header — abs (120,199)
+add_text(slide, 'THE FLEXIBLE CONTROL PLANE.',
+         x=120, y=199, w=1600, h=72,
+         font_name='Inter', font_size_px=80, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'ONE ENGINE. FOUR TOOLS. YOUR CHOICE.',
+         x=120, y=279, w=1200, h=36,
+         font_name='Inter', font_size_px=30, font_weight=700,
+         hex_color='888888', letter_spacing_px=0, extra_nudge_y=3)
+# diagram outer border (ANLn3) — abs (120,391), w=1680, h=485, blue stroke
+add_rect_outlined(slide, 120, 391, 1680, 485, '326CE5', stroke_opacity=1.0)
+# K8s badge at top-left of border
+add_rect(slide, 132, 376, 170, 21, '326CE5')
+add_text(slide, 'KUBERNETES',
+         x=142, y=378, w=150, h=17,
+         font_name='Inter', font_size_px=13, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+# 4 tool cards — each 408px wide, abs y=403, h=179
+tool_cards = [
+    (132, '0078D4', 'A', 'ASO', 'Azure resources as K8s CRDs', '0078D4', 'DEMO'),
+    (548, 'EF4444', 'X', 'CROSSPLANE', 'Build your own platform API', 'EF4444', 'DEMO'),
+    (964, '8B5CF6', 'K', 'KRO', 'Compose multi-resource app concepts', '8B5CF6', 'DEMO'),
+    (1380, '10B981', 'T', 'TERRANETES', 'Terraform under K8s control', '10B981', 'DEMO'),
+]
+for cx, icon_color, icon_letter, name, desc, badge_color, badge_text in tool_cards:
+    add_rect(slide, cx, 403, 408, 179, 'F5F5F5')
+    icon_x = cx + int((408-40)/2)
+    add_oval(slide, icon_x, 427, 40, 40, icon_color)
+    add_text(slide, icon_letter,
+             x=icon_x+11, y=436, w=20, h=22,
+             font_name='Inter', font_size_px=18, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, name,
+             x=cx+24, y=478, w=360, h=27,
+             font_name='Inter', font_size_px=22, font_weight=900,
+             hex_color='000000', letter_spacing_px=0, extra_nudge_y=3)
+    add_text(slide, desc,
+             x=cx+24, y=509, w=360, h=34,
+             font_name='Inter', font_size_px=14, font_weight=500,
+             hex_color='888888', letter_spacing_px=0, extra_nudge_y=5, word_wrap=True)
+    add_rect(slide, cx+24, 545, 60, 22, badge_color)
+    add_text(slide, badge_text,
+             x=cx+30, y=548, w=50, h=15,
+             font_name='Inter', font_size_px=12, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+# 4 down arrows (WPMxl row at abs y=582)
+for ax in [327, 741, 1155, 1569]:
+    add_text(slide, '\u2193',
+             x=ax, y=586, w=30, h=34,
+             font_name='Inter', font_size_px=28, font_weight=400,
+             hex_color='CCCCCC', letter_spacing_px=0, extra_nudge_y=3)
+# K8s layer — abs (132,632), w=1656, h=93
+add_rect(slide, 132, 632, 1656, 93, '1A3358')
+add_oval(slide, 665, 659, 40, 40, '326CE5')
+add_text(slide, 'K8s',
+         x=673, y=667, w=30, h=16,
+         font_name='Inter', font_size_px=13, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'KUBERNETES API',
+         x=721, y=645, w=600, h=34,
+         font_name='Inter', font_size_px=28, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=3)
+add_text(slide, 'THE CONTROL PLANE \u2014 ALL TOOLS RUN AS OPERATORS HERE',
+         x=721, y=679, w=800, h=17,
+         font_name='Inter', font_size_px=14, font_weight=600,
+         hex_color='4A7AB5', letter_spacing_px=2, extra_nudge_y=5)
+# single down arrow (MDjkc at abs y=725)
+add_text(slide, '\u2193',
+         x=948, y=731, w=30, h=34,
+         font_name='Inter', font_size_px=28, font_weight=400,
+         hex_color='CCCCCC', letter_spacing_px=0, extra_nudge_y=3)
+# Argo layer — abs (132,771), w=1656, h=93
+add_rect(slide, 132, 771, 1656, 93, '0D0D0D')
+add_oval(slide, 699, 797, 40, 40, 'EF7B4D')
+add_text(slide, 'A',
+         x=714, y=807, w=12, h=19,
+         font_name='Inter', font_size_px=18, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'ARGO CD',
+         x=755, y=784, w=400, h=34,
+         font_name='Inter', font_size_px=28, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=3)
+add_text(slide, 'GITOPS DELIVERY LAYER \u2014 SITS BENEATH ALL TOOLS',
+         x=755, y=818, w=700, h=17,
+         font_name='Inter', font_size_px=14, font_weight=600,
+         hex_color='666666', letter_spacing_px=2, extra_nudge_y=5)
+# footer
+add_text(slide, 'Use one. Use all four. The control plane is flexible.',
+         x=120, y=951, w=900, h=29,
+         font_name='Inter', font_size_px=24, font_weight=400,
+         hex_color='888888', extra_nudge_y=3)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S5-01 — Decision Framework
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, 'FFFFFF')
+add_rect(slide, 0, 0, 8, 1080, '000000')
+add_rect(slide, 1720, 1072, 200, 8, '000000')
+add_rect(slide, 120, 120, 14, 14, '000000')
+add_text(slide, '05 / DECISION FRAMEWORK',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='888888', letter_spacing_px=4, extra_nudge_y=5)
+# header — abs (120,230)
+add_text(slide, 'FOUR TOOLS.',
+         x=120, y=230, w=900, h=72,
+         font_name='Inter', font_size_px=80, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'CHOOSE BY ABSTRACTION, SKILLS, AND EXISTING INVESTMENTS.',
+         x=120, y=306, w=1300, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='AAAAAA', letter_spacing_px=1, extra_nudge_y=5)
+# 4 tool cards (MdFOx at abs y=436, gap=6)
+decision_cards = [
+    (436, 'FAFAFA', None,     '0078D4', 'A', 'ASO \u2014 AZURE SERVICE OPERATOR',
+     'Azure resources in Git as Kubernetes YAML. If you think in Azure terms and want GitOps, start here.',
+     '0078D4', 'LOW',    '0078D4', '\u2705 AZURE NATIVE'),
+    (534, 'FFFFFF', 'F0F0F0', 'EF4444', 'X', 'CROSSPLANE',
+     'You design the API your developers use. Everything Azure is hidden behind your abstractions. Own the platform contract.',
+     'EF4444', 'HIGH',   '888888', 'PARTIAL'),
+    (632, 'FAFAFA', None,     '8B5CF6', 'K', 'KRO \u2014 KUBERNETES RESOURCE ORCHESTRATOR',
+     'One CR expands into many. Compose app-level concepts without full Crossplane complexity. Pairs perfectly with ASO.',
+     '8B5CF6', 'MEDIUM', '8B5CF6', '\u2705 + ASO'),
+    (730, 'FFFFFF', 'F0F0F0', '10B981', 'T', 'TERRANETES',
+     'Your Terraform, under Kubernetes control. Policy-gated, Git-tracked, no rewrite required. The pragmatic choice.',
+     '10B981', 'MEDIUM', '10B981', '\u2705 AZURE NATIVE'),
+]
+for card_y, card_fill, card_stroke, icon_col, icon_ltr, title, desc, badge_col, badge_lbl, tag_col, tag_lbl in decision_cards:
+    add_rect(slide, 120, card_y, 1680, 92, card_fill)
+    if card_stroke:
+        add_rect_outlined(slide, 120, card_y, 1680, 92, card_stroke, stroke_opacity=1.0)
+    # icon circle
+    add_oval(slide, 144, card_y+20, 52, 52, icon_col)
+    add_text(slide, icon_ltr,
+             x=163, y=card_y+28, w=20, h=24,
+             font_name='Inter', font_size_px=22, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=3)
+    # title + desc
+    add_text(slide, title,
+             x=216, y=card_y+22, w=1300, h=27,
+             font_name='Inter', font_size_px=22, font_weight=900,
+             hex_color='000000', letter_spacing_px=0, extra_nudge_y=3)
+    add_text(slide, desc,
+             x=216, y=card_y+52, w=1300, h=30,
+             font_name='Inter', font_size_px=15, font_weight=400,
+             hex_color='666666', letter_spacing_px=0, extra_nudge_y=5, word_wrap=True)
+    # abstraction badge (pill)
+    add_rect(slide, 1655, card_y+24, 60, 20, badge_col)
+    add_text(slide, badge_lbl,
+             x=1660, y=card_y+26, w=50, h=14,
+             font_name='Inter', font_size_px=12, font_weight=800,
+             hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+    # tag label
+    add_text(slide, tag_lbl,
+             x=1655, y=card_y+48, w=120, h=14,
+             font_name='Inter', font_size_px=12, font_weight=700,
+             hex_color=tag_col, letter_spacing_px=1, extra_nudge_y=5)
+# Argo row — abs (120,928), h=52, fill=#0D0D0D, cornerRadius=6
+add_rect(slide, 120, 928, 1680, 52, '0D0D0D')
+add_oval(slide, 144, 940, 28, 28, 'EF7B4D')
+add_text(slide, 'A',
+         x=154, y=948, w=10, h=15,
+         font_name='Inter', font_size_px=12, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'ARGO CD \u2014 DELIVERS ALL OF THE ABOVE THROUGH GITOPS',
+         x=184, y=933, w=900, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S5-02 — Not Mutually Exclusive
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, 'FFFFFF')
+add_text(slide, 'LAYERS',
+         x=550, y=180, w=1500, h=600,
+         font_name='Inter', font_size_px=380, font_weight=900,
+         hex_color='000000', letter_spacing_px=0, opacity=0.03)
+add_rect(slide, 0, 0, 8, 1080, '000000')
+add_rect(slide, 1720, 1072, 200, 8, '000000')
+add_rect(slide, 120, 120, 14, 14, '000000')
+add_text(slide, '05 / DECISION FRAMEWORK',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='888888', letter_spacing_px=4, extra_nudge_y=5)
+# header — abs (120,281)
+add_text(slide, 'NOT MUTUALLY EXCLUSIVE.',
+         x=120, y=281, w=1600, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'USE ONE. USE ALL FOUR. REAL PLATFORMS MIX AND MATCH.',
+         x=120, y=352, w=1300, h=27,
+         font_name='Inter', font_size_px=22, font_weight=600,
+         hex_color='AAAAAA', letter_spacing_px=1, extra_nudge_y=3)
+# Layer rows — abs (120,536)
+# Row 1 DEVELOPER (abs y=536, h=56)
+add_rect(slide, 288, 536, 1512, 56, 'F0F4FF')
+add_text(slide, 'DEVELOPER',
+         x=120, y=543, w=155, h=13,
+         font_name='Inter', font_size_px=11, font_weight=700,
+         hex_color='AAAAAA', letter_spacing_px=3, extra_nudge_y=5)
+add_text(slide, 'Simple CR \u2014 give me an AppDatabase  \u00b7  One KRO ResourceGroup  \u00b7  No YAML knowledge required',
+         x=308, y=549, w=1472, h=30,
+         font_name='Inter', font_size_px=16, font_weight=600,
+         hex_color='333333', letter_spacing_px=0, extra_nudge_y=5)
+# Row 2 PROVISIONING (abs y=600, h=68)
+add_rect(slide, 288, 600, 1512, 68, 'F8F8F8')
+add_text(slide, 'PROVISIONING',
+         x=120, y=607, w=155, h=13,
+         font_name='Inter', font_size_px=11, font_weight=700,
+         hex_color='AAAAAA', letter_spacing_px=3, extra_nudge_y=5)
+prov_tools = [('ASO', 'EBF5FF', '0078D4'), ('CROSSPLANE', 'FEF2F2', 'EF4444'),
+              ('KRO', 'F5F3FF', '8B5CF6'), ('TERRANETES', 'ECFDF5', '10B981')]
+ptx = 304
+for ptool, pbg, pcol in prov_tools:
+    pw = int(len(ptool)*10 + 32)
+    add_rect(slide, ptx, 612, pw, 44, pbg)
+    add_oval(slide, ptx+10, 622, 24, 24, pcol)
+    add_text(slide, ptool[0],
+             x=ptx+16, y=627, w=12, h=15,
+             font_name='Inter', font_size_px=12, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, ptool,
+             x=ptx+42, y=622, w=len(ptool)*9, h=22,
+             font_name='Inter', font_size_px=14, font_weight=800,
+             hex_color=pcol, letter_spacing_px=0, extra_nudge_y=5)
+    ptx += pw + 8
+# Row 3 DELIVERY (abs y=676, h=64)
+add_rect(slide, 288, 676, 1512, 64, '0D0D0D')
+add_text(slide, 'DELIVERY',
+         x=120, y=683, w=155, h=13,
+         font_name='Inter', font_size_px=11, font_weight=700,
+         hex_color='AAAAAA', letter_spacing_px=3, extra_nudge_y=5)
+add_oval(slide, 308, 692, 32, 32, 'EF7B4D')
+add_text(slide, 'A',
+         x=319, y=699, w=12, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'ARGO CD \u2014 WATCHES GIT  \u00b7  SYNCS TO KUBERNETES  \u00b7  DELIVERS EVERYTHING',
+         x=350, y=685, w=1400, h=19,
+         font_name='Inter', font_size_px=16, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+# Row 4 SOURCE (abs y=748, h=51)
+add_rect(slide, 288, 748, 1512, 51, 'F5F5F5')
+add_text(slide, 'SOURCE',
+         x=120, y=755, w=155, h=13,
+         font_name='Inter', font_size_px=11, font_weight=700,
+         hex_color='AAAAAA', letter_spacing_px=3, extra_nudge_y=5)
+add_text(slide, 'GIT REPOSITORY',
+         x=308, y=761, w=260, h=19,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='333333', letter_spacing_px=1, extra_nudge_y=5)
+add_text(slide, '\u2014 single source of truth for all resource definitions',
+         x=576, y=761, w=900, h=19,
+         font_name='Inter', font_size_px=16, font_weight=400,
+         hex_color='888888', letter_spacing_px=0, extra_nudge_y=5)
+# footer
+add_text(slide, "The platform team\u2019s job is to assemble these layers thoughtfully \u2014 not to standardise on a single tool.",
+         x=120, y=956, w=1400, h=24,
+         font_name='Inter', font_size_px=20, font_weight=400,
+         hex_color='888888', extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S5-03 — Demo Intro
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_text(slide, 'BUILD',
+         x=620, y=100, w=1400, h=700,
+         font_name='Inter', font_size_px=480, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1072, 200, 8, 'FFFFFF')
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '05 / DECISION FRAMEWORK  \u00b7  DEMO',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# mid — abs (120,400) and (120,584)
+add_text(slide, "LET\u2019S BUILD.",
+         x=120, y=400, w=1700, h=176,
+         font_name='Inter', font_size_px=200, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'FOUR TOOLS. FOUR PROBLEMS. LIVE.',
+         x=120, y=584, w=1600, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='444444', letter_spacing_px=0)
+# demo tags — abs y=924
+demo_tags = [
+    (120,  116, '0078D4', 'A', 'ASO'),
+    (248,  198, 'EF4444', 'X', 'CROSSPLANE'),
+    (458,  116, '8B5CF6', 'K', 'KRO'),
+    (586,  196, '10B981', 'T', 'TERRANETES'),
+]
+for tx, tw, tc, tl, tn in demo_tags:
+    add_rect(slide, tx, 924, tw, 56, '111111')
+    add_oval(slide, tx+20, 938, 28, 28, tc)
+    add_text(slide, tl,
+             x=tx+29, y=946, w=12, h=15,
+             font_name='Inter', font_size_px=12, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, tn,
+             x=tx+58, y=933, w=tw-60, h=19,
+             font_name='Inter', font_size_px=16, font_weight=800,
+             hex_color='FFFFFF', letter_spacing_px=1, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 out = '/Users/geertvdc/dev/github/geertvdc/platformengineering-talk/presentation.pptx'
 prs.save(out)
 print(f'Saved {len(prs.slides)} slides to: {out}')
