@@ -10,6 +10,9 @@
 # The module provisions:
 #   - Azure Resource Group  (azurerm provider)
 #   - GitHub repository     (integrations/github provider)
+#
+# Note: GITHUB_TOKEN is injected via the 'azure' Provider secret (combined creds).
+# See bootstrap/30-github-creds.sh which patches GITHUB_TOKEN into azure-provider-creds.
 apiVersion: terraform.appvia.io/v1alpha1
 kind: Revision
 metadata:
@@ -23,19 +26,14 @@ spec:
     description: "Provisions an Azure Resource Group and a GitHub repository for a team."
     revision: "1.0.0"
 
-  # Terraform module stored in this repo — versioned, reviewed like any other code.
-  module: https://github.com/Geertvdc/platformengineering-talk//demos/terranetes/module?ref=main
-
-  # Which Terranetes Provider supplies Azure credentials.
-  providerRef:
-    name: azure
-    namespace: terranetes-system
-
-  # Inject GITHUB_TOKEN from the secret so the github provider can authenticate.
-  envFrom:
-    - secret:
-        name: github-provider-creds
-        namespace: terranetes-system
+  # configuration holds the module source and provider wiring.
+  configuration:
+    module: https://github.com/Geertvdc/platformengineering-talk//demos/terranetes/module?ref=main
+    providerRef:
+      name: azure
+      namespace: terranetes-system
+    enableAutoApproval: true
+    enableDriftDetection: true
 
   # Allowed input variables (developers customise these via CloudResource).
   inputs:

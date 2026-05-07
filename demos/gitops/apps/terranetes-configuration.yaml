@@ -27,3 +27,15 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+  # Ignore fields the Terranetes controller writes back to the Revision spec
+  # (conditions, lastReconcile, lastSuccess) and labels/finalizers it manages.
+  ignoreDifferences:
+    - group: terraform.appvia.io
+      kind: Revision
+      jsonPointers:
+        - /metadata/finalizers
+        - /metadata/labels/terraform.appvia.io~1plan
+        - /metadata/labels/terraform.appvia.io~1revision-name
+        - /spec/conditions
+        - /spec/lastReconcile
+        - /spec/lastSuccess
