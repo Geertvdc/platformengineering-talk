@@ -1,11 +1,3 @@
-# Developer-facing MyApp instance.
-# Platform team owns the RGD — developers only specify name, team, and size.
-# No Azure fields, no resource group, no region, no SKU details.
-#
-# What this creates (via KRO + ASO):
-#   - Namespace:       myapp
-#   - RoleBinding:     platform-team-edit  (in namespace myapp)
-#   - StorageAccount:  stmyapp             (Azure, in kro-demo-rg)
 apiVersion: kro.run/v1alpha1
 kind: MyApp
 metadata:
