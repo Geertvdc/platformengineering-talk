@@ -19,6 +19,8 @@ metadata:
   name: teaminfra-v1
   annotations:
     argocd.argoproj.io/sync-wave: "2"
+    # Allow ArgoCD to update this Revision even while a CloudResource is using it.
+    terraform.appvia.io/revision.skip-update-protection: "true"
 spec:
   # plan groups this Revision under a named plan with a semantic version.
   plan:
