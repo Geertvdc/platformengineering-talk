@@ -33,10 +33,11 @@ spec:
     module: https://github.com/Geertvdc/platformengineering-talk//demos/terranetes/module?ref=main
     # auth references a secret with GIT_PASSWORD — required because the repo is private.
     # The Terranetes source downloader uses GIT_PASSWORD to authenticate git clone.
+    # Must be in the same namespace as the CloudResource (terranetes-demo).
     # Created by bootstrap/30-github-creds.sh.
     auth:
       name: git-module-creds
-      namespace: terranetes-system
+      namespace: terranetes-demo
     providerRef:
       name: azure
       namespace: terranetes-system
