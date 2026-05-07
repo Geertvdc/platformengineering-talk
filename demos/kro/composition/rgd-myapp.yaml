@@ -1,22 +1,3 @@
-# Platform composition: MyApp → Namespace + RBAC + ASO StorageAccount
-#
-# Platform team writes this once. Developers never edit this file — they only
-# write a MyApp instance (demos/kro/samples/myapp.yaml) with name, team, and size.
-#
-# Platform opinions encoded here (NOT exposed to developers):
-#   - Azure region:        westeurope
-#   - Resource group:      kro-demo-rg  (dedicated to this demo — see bootstrap/bootstrap.sh)
-#   - Storage naming:      "st" + spec.name  (e.g. "stmyapp")
-#   - Security baseline:   TLS 1.2, no public blob access
-#   - Size → SKU mapping:  small=LRS, medium=GRS, large=RAGRS
-#
-# Note on connection secrets: ASO's operatorSpec.secrets uses a freeform map
-# that KRO cannot introspect (x-kubernetes-preserve-unknown-fields). Connection
-# secret wiring is therefore handled outside KRO — e.g. via a SecretProviderClass
-# or a post-provisioning job — and is not part of this composition.
-#
-# Prereqs: KRO controller running in kro-system, ASO installed on the platform cluster.
-#          Run demos/kro/bootstrap/bootstrap.sh to set up everything for this demo.
 apiVersion: kro.run/v1alpha1
 kind: ResourceGraphDefinition
 metadata:
