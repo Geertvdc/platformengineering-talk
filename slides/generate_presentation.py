@@ -1133,15 +1133,15 @@ add_text(slide, '01',
          hex_color='CCCCCC', letter_spacing_px=4, extra_nudge_y=5)
 # row bottom = 313+21+90 = 424; 100px→h≈88, bottom-align: y=334; 44px→h≈40 → y=384; 72px→h≈65 → y=359
 add_text(slide, 'SELF-SERVICE',
-         x=120, y=334, w=640, h=90,
+         x=120, y=334, w=760, h=90,
          font_name='Inter', font_size_px=100, font_weight=900,
          hex_color='000000', letter_spacing_px=0)
 add_text(slide, 'vs',
-         x=772, y=384, w=80, h=40,
+         x=900, y=384, w=80, h=40,
          font_name='Inter', font_size_px=44, font_weight=700,
          hex_color='AAAAAA', letter_spacing_px=0, extra_nudge_y=3)
 add_text(slide, 'GUARDRAILS',
-         x=860, y=359, w=600, h=65,
+         x=992, y=359, w=500, h=65,
          font_name='Inter', font_size_px=72, font_weight=900,
          hex_color='888888', letter_spacing_px=0)
 add_rect(slide, 120, 452, 1680, 2, 'DDDDDD')
@@ -1152,15 +1152,15 @@ add_text(slide, '02',
          hex_color='CCCCCC', letter_spacing_px=4, extra_nudge_y=5)
 # row bottom = 593
 add_text(slide, 'CONSISTENCY',
-         x=120, y=503, w=680, h=90,
+         x=120, y=503, w=760, h=90,
          font_name='Inter', font_size_px=100, font_weight=900,
          hex_color='000000', letter_spacing_px=0)
 add_text(slide, 'vs',
-         x=812, y=553, w=80, h=40,
+         x=880, y=553, w=80, h=40,
          font_name='Inter', font_size_px=44, font_weight=700,
          hex_color='AAAAAA', letter_spacing_px=0, extra_nudge_y=3)
 add_text(slide, 'FLEXIBILITY',
-         x=900, y=528, w=560, h=65,
+         x=972, y=528, w=500, h=65,
          font_name='Inter', font_size_px=72, font_weight=900,
          hex_color='888888', letter_spacing_px=0)
 add_rect(slide, 120, 621, 1680, 2, 'DDDDDD')
@@ -1171,15 +1171,15 @@ add_text(slide, '03',
          hex_color='CCCCCC', letter_spacing_px=4, extra_nudge_y=5)
 # row bottom = 762
 add_text(slide, 'VELOCITY',
-         x=120, y=672, w=460, h=90,
+         x=120, y=672, w=580, h=90,
          font_name='Inter', font_size_px=100, font_weight=900,
          hex_color='000000', letter_spacing_px=0)
 add_text(slide, 'vs',
-         x=592, y=722, w=80, h=40,
+         x=712, y=722, w=80, h=40,
          font_name='Inter', font_size_px=44, font_weight=700,
          hex_color='AAAAAA', letter_spacing_px=0, extra_nudge_y=3)
 add_text(slide, 'CONTROL',
-         x=680, y=697, w=420, h=65,
+         x=804, y=697, w=380, h=65,
          font_name='Inter', font_size_px=72, font_weight=900,
          hex_color='888888', letter_spacing_px=0)
 # footer
@@ -1361,7 +1361,7 @@ add_text(slide, 'FOUR TOOLS.',
          font_name='Inter', font_size_px=80, font_weight=900,
          hex_color='000000', letter_spacing_px=0)
 add_text(slide, 'CHOOSE BY ABSTRACTION, SKILLS, AND EXISTING INVESTMENTS.',
-         x=120, y=306, w=1300, h=24,
+         x=120, y=335, w=1300, h=24,
          font_name='Inter', font_size_px=20, font_weight=600,
          hex_color='AAAAAA', letter_spacing_px=1, extra_nudge_y=5)
 # 4 tool cards (MdFOx at abs y=436, gap=6)
