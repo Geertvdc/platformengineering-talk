@@ -1,5 +1,5 @@
-# Terranetes Configuration template — synced before the live demo sample.
-# Manages: Namespace + the teaminfra Configuration resource.
+# Terranetes Revision (platform template) — synced before the live demo sample.
+# Manages: Revision resource that defines what the teaminfra module provisions.
 #
 # The Provider itself is applied imperatively by bootstrap/40-configure-providers.sh
 # (it references a Secret that cannot live in Git).

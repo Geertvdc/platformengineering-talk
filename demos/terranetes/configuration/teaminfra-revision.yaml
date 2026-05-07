@@ -1,0 +1,53 @@
+# Terranetes Revision: TeamInfra
+#
+# Platform team template. Defines WHAT can be provisioned and WHERE the module lives.
+# Developers never edit this — they submit a CloudResource that references it.
+#
+# This is the Terranetes equivalent of Crossplane's Composition:
+#   Crossplane: XRD + Composition  →  developer submits AppTeam claim
+#   Terranetes: Revision           →  developer submits CloudResource
+#
+# The module provisions:
+#   - Azure Resource Group  (azurerm provider)
+#   - GitHub repository     (integrations/github provider)
+apiVersion: terraform.appvia.io/v1alpha1
+kind: Revision
+metadata:
+  name: teaminfra-v1
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  # Terraform module stored in this repo — versioned, reviewed like any other code.
+  module: https://github.com/Geertvdc/platformengineering-talk//demos/terranetes/module?ref=main
+
+  # Which Terranetes Provider supplies Azure credentials.
+  providerRef:
+    name: azure
+    namespace: terranetes-system
+
+  # Inject GITHUB_TOKEN from the secret so the github provider can authenticate.
+  envFrom:
+    - secret:
+        name: github-provider-creds
+        namespace: terranetes-system
+
+  # Allowed input variables (developers customise these via CloudResource).
+  inputs:
+    - key: team_name
+      description: "Short team name — lowercase letters and hyphens, 3–20 chars."
+      required: true
+    - key: environment
+      description: "Deployment environment: dev, staging, or prod."
+      required: false
+      default: "dev"
+    - key: location
+      description: "Azure region for the resource group."
+      required: false
+      default: "westeurope"
+    - key: github_org
+      description: "GitHub organisation or username."
+      required: true
+    - key: github_repo_visibility
+      description: "GitHub repository visibility: public, private, or internal."
+      required: false
+      default: "private"

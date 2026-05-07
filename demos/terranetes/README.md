@@ -20,10 +20,10 @@ The same multi-cloud story from Crossplane's `AppTeam` applies here, but now:
 | Provider ecosystem | Upbound providers only | 1 000+ Terraform providers |
 | State | Stored in K8s Secrets | Stored in K8s Secrets |
 | GitOps | Yes (via Argo CD) | Yes (via Argo CD) |
-| Developer UX | `AppTeam` claim | `Configuration` YAML |
+| Developer UX | `AppTeam` claim | `CloudResource` YAML |
 
 **Demo composition (mirrors Crossplane's AppTeam):**
-One `Configuration` → Terranetes runs OpenTofu → creates:
+One `CloudResource` → Terranetes runs OpenTofu → creates:
 1. **Azure Resource Group** (`hashicorp/azurerm` provider)
 2. **GitHub repository** (`integrations/github` provider)
 
@@ -103,8 +103,8 @@ App-of-Apps root:
 
 | Application | Watches | What it deploys |
 |---|---|---|
-| `terranetes-configuration` | `configuration/` | Namespace + Configuration template |
-| `terranetes-team` | `samples/team/` | Live demo Configuration instance |
+| `terranetes-configuration` | `configuration/` | Namespace + Revision (platform template) |
+| `terranetes-team` | `samples/team/` | Namespace + live demo CloudResource instance |
 
 ```bash
 kubectl get application -n argocd -l demo=demo-5
@@ -169,9 +169,10 @@ Show the Argo CD UI: `terranetes-team` Application should be **Synced / Healthy*
 Show the running OpenTofu job:
 
 ```bash
+kubectl get cloudresources.terraform.appvia.io -n terranetes-demo
 kubectl get jobs -n terranetes-demo
 kubectl logs -n terranetes-demo \
-  -l terraform.appvia.io/configuration=teaminfra -f
+  -l terraform.appvia.io/cloudresource=techorama-team -f
 ```
 
 > _"Terranetes spawned a Job that runs `tofu apply`. The state is stored in a
@@ -190,14 +191,14 @@ az group show --name rg-techorama-demo-dev --query name -o tsv
 gh repo view Geertvdc/techorama-demo-platform-infra
 ```
 
-> _"One Configuration YAML. Two providers. Two cloud resources. The same
+> _"One CloudResource YAML. Two providers. Two cloud resources. The same
 > multi-cloud story as Crossplane — but with the entire Terraform ecosystem
 > available on day one."_
 
 Show the outputs stored in Kubernetes:
 
 ```bash
-kubectl get secret teaminfra-outputs -n terranetes-demo -o yaml
+kubectl get secret techorama-team-outputs -n terranetes-demo -o yaml
 ```
 
 ---
@@ -218,11 +219,11 @@ demos/terranetes/
 │   ├── variables.tf                   # typed inputs with validation
 │   └── outputs.tf                     # Azure RG name/id, GitHub repo URL
 ├── configuration/
-│   └── teaminfra-configuration.yaml   # Configuration template (managed by Argo CD)
+│   └── teaminfra-revision.yaml        # Revision = platform template (managed by Argo CD)
 ├── samples/
 │   └── team/                          # live demo instance (what the developer applies)
 │       ├── namespace.yaml
-│       └── teaminfra.yaml
+│       └── cloudresource.yaml         # CloudResource references the Revision
 └── README.md
 ```
 
@@ -253,7 +254,7 @@ Same pattern as Demos 2–4:
 
 ```bash
 # Remove Terranetes resources (this destroys the cloud infrastructure)
-kubectl delete configuration --all -n terranetes-demo
+kubectl delete cloudresource --all -n terranetes-demo
 
 # Uninstall Terranetes
 helm uninstall terranetes-controller -n terranetes-system

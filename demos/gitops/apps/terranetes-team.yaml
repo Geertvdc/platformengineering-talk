@@ -1,7 +1,7 @@
-# Terranetes live demo sample — the Configuration a developer would apply.
-# Syncs after terranetes-configuration is healthy.
+# Terranetes live demo sample — the CloudResource a developer would apply.
+# Syncs after terranetes-configuration is healthy (Revision must exist first).
 #
-# This is the file shown live on stage: one Configuration → Azure RG + GitHub repo.
+# This is the file shown live on stage: one CloudResource → Azure RG + GitHub repo.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
