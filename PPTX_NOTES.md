@@ -59,6 +59,8 @@ rPr.set('spc', str(int(to_pt(letter_spacing_px) * 100)))
 | +1px | +75 |
 | +4px | +300 |
 
+> ⚠️ **IMPORTANT — Empirical finding:** Negative letter spacing on bold/headline text looks **too tight** in PowerPoint even when the math is correct. **Set `letter_spacing_px=0` for all bold headline text.** Only use positive letter spacing for small tags (+4) and footers (+1/+2). The Pencil design values (e.g. -7, -8) should NOT be applied to PPTX bold text.
+
 ---
 
 ## Font Weight
@@ -215,16 +217,70 @@ These compensate for PowerPoint ascender space above cap-height at each font siz
 | 72px (54pt)   | 0 |
 | 42px (31.5pt) | 3 |
 | 24px (18pt)   | 3 |
+| 22px (16.5pt) | 3 |
 | 20px (15pt)   | 5 |
+| 18px (13.5pt) | 5 |
+| 16px (12pt)   | 5 |
 
 ---
 
-## Working Script
+## Subtitle Gap After Large Fonts (empirical)
 
-The final working script for the opening slide is:
-`slides/slide_opening.py`
+PowerPoint renders large headline text **taller** than its declared textbox height. A description/subtitle placed immediately below (at `headline_y + headline_h`) will visually overlap the large text.
 
-Run it with:
+**Add an extra gap between headline bottom and the next element:**
+
+| Headline font size | Extra gap to add |
+|--------------------|-----------------|
+| 100px              | +25px |
+| 160px              | +10–15px |
+| 180px              | +10px |
+| 200px+             | ≈ 0 (use snapshot_layout positions directly) |
+| 220px              | +20px |
+| 240px              | +15px |
+
+> When a slide has multiple stacked headline+description pairs (e.g. S2-05 Three Outcomes), apply the extra gap **independently** to each pair — do NOT shift everything uniformly, as that leaves zero gap for items 2 and 3. Each description must be at `headline_y + headline_h + extra_gap`.
+
+---
+
+## Section Tag Style (standardized)
+
+All slides across all sections use the **same tag style** in the top-left corner:
+
+```python
+# Filled square bullet
+add_rect(slide, 120, 120, 14, 14, 'HEX_COLOR')   # color matches text on bg
+
+# Tag label
+add_text(slide, 'NN / SECTION NAME',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='HEX_COLOR', letter_spacing_px=4, extra_nudge_y=5)
 ```
-/var/folders/dn/_590ldjj4cb4zygjhjm72mbh0000gn/T/opencode/pptx-venv/bin/python3 slides/slide_opening.py
+
+- Square: 14×14px at x=120, y=120
+- Text: x=150 (gap=16 after square), y=120, 20px SemiBold, letter_spacing=+4
+- Color: white on dark backgrounds, black on light backgrounds, `#666666` for dimmed variant
+- **y=120 is fixed for all slides** regardless of where Pencil's content frame starts
+
+---
+
+## Master Script
+
+The single script that regenerates the entire deck:
+`slides/generate_presentation.py`
+
+Run with:
 ```
+/var/folders/dn/_590ldjj4cb4zygjhjm72mbh0000gn/T/opencode/pptx-venv/bin/python3 slides/generate_presentation.py
+```
+
+Output: `presentation.pptx` at the repo root.
+
+**Workflow for adding a new slide:**
+1. `pencil-snapshot_layout` on the slide node → get absolute pixel positions
+2. `pencil-batch_get` on the slide node → get colors, font sizes, text content
+3. `pencil-get_screenshot` → visual reference for comparison
+4. Append new slide block to `generate_presentation.py` before the `# Save` section
+5. Run the script and compare output against the screenshot
+6. Adjust `extra_nudge_y` and subtitle gaps empirically as needed
