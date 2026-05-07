@@ -984,77 +984,77 @@ add_text(slide, 'SECTION 3  \u00b7  ARGO CD PATTERNS',
          font_name='Inter', font_size_px=20, font_weight=600,
          hex_color='000000', letter_spacing_px=4, extra_nudge_y=5)
 
-# Two-line headline
+# Two-line headline (Pencil: content frame y=80, headline at abs y=184)
 add_text(slide, 'APP OF APPS.',
-         x=120, y=117, w=1200, h=75,
+         x=120, y=184, w=1200, h=75,
          font_name='Inter', font_size_px=62, font_weight=900,
          hex_color='000000', letter_spacing_px=0)
 add_text(slide, 'APPLICATIONSETS.',
-         x=120, y=192, w=1200, h=75,
+         x=120, y=259, w=1200, h=75,
          font_name='Inter', font_size_px=62, font_weight=900,
          hex_color='000000', letter_spacing_px=0)
 
 # ── Left column: App of Apps tree ──
 add_text(slide, 'APP OF APPS',
-         x=120, y=287, w=400, h=27,
+         x=120, y=354, w=400, h=27,
          font_name='Inter', font_size_px=22, font_weight=800,
          hex_color='000000', letter_spacing_px=0, extra_nudge_y=3)
 
 # ROOT-APP box
-add_rect(slide, 393, 328, 280, 70, '111111')
+add_rect(slide, 393, 395, 280, 70, '111111')
 add_text(slide, 'ROOT-APP',
-         x=446, y=354, w=174, h=19,
+         x=446, y=421, w=174, h=19,
          font_name='Inter', font_size_px=16, font_weight=800,
          hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
 
 # Tree connector lines
-add_rect(slide, 532, 398, 2, 50, 'AAAAAA')
-add_rect(slide, 215, 448, 636, 2, 'AAAAAA')
-add_rect(slide, 215, 450, 2, 28, 'AAAAAA')
-add_rect(slide, 532, 450, 2, 28, 'AAAAAA')
-add_rect(slide, 849, 450, 2, 28, 'AAAAAA')
+add_rect(slide, 532, 465, 2, 50, 'AAAAAA')
+add_rect(slide, 215, 515, 636, 2, 'AAAAAA')
+add_rect(slide, 215, 517, 2, 28, 'AAAAAA')
+add_rect(slide, 532, 517, 2, 28, 'AAAAAA')
+add_rect(slide, 849, 517, 2, 28, 'AAAAAA')
 
 # Child boxes
-add_rect_outlined(slide, 120, 478, 192, 60, '000000', stroke_opacity=0.2)
-add_rect_outlined(slide, 436, 478, 192, 60, '000000', stroke_opacity=0.2)
-add_rect_outlined(slide, 754, 478, 192, 60, '000000', stroke_opacity=0.2)
+add_rect_outlined(slide, 120, 545, 192, 60, '000000', stroke_opacity=0.2)
+add_rect_outlined(slide, 436, 545, 192, 60, '000000', stroke_opacity=0.2)
+add_rect_outlined(slide, 754, 545, 192, 60, '000000', stroke_opacity=0.2)
 add_text(slide, 'INFRA-APP',
-         x=144, y=500, w=144, h=17,
+         x=144, y=567, w=144, h=17,
          font_name='Inter', font_size_px=13, font_weight=700,
          hex_color='333333', letter_spacing_px=0, extra_nudge_y=5)
 add_text(slide, 'PLATFORM-APP',
-         x=444, y=500, w=176, h=17,
+         x=444, y=567, w=176, h=17,
          font_name='Inter', font_size_px=13, font_weight=700,
          hex_color='333333', letter_spacing_px=0, extra_nudge_y=5)
 add_text(slide, 'APPS-APP',
-         x=778, y=500, w=144, h=17,
+         x=778, y=567, w=144, h=17,
          font_name='Inter', font_size_px=13, font_weight=700,
          hex_color='333333', letter_spacing_px=0, extra_nudge_y=5)
 
 # Column divider
-add_rect(slide, 956, 287, 2, 260, 'CCCCCC')
+add_rect(slide, 956, 354, 2, 295, 'CCCCCC')
 
 # ── Right column: ApplicationSets fan ──
 add_text(slide, 'APPLICATIONSETS',
-         x=982, y=287, w=600, h=27,
+         x=982, y=354, w=600, h=27,
          font_name='Inter', font_size_px=22, font_weight=800,
          hex_color='000000', letter_spacing_px=0, extra_nudge_y=3)
 
 # APPSET TEMPLATE box
-add_rect(slide, 982, 432, 280, 80, '111111')
+add_rect(slide, 982, 499, 280, 80, '111111')
 add_text(slide, 'APPSET TEMPLATE',
-         x=1006, y=462, w=232, h=19,
+         x=1006, y=529, w=232, h=19,
          font_name='Inter', font_size_px=13, font_weight=800,
          hex_color='FFFFFF', letter_spacing_px=1, extra_nudge_y=5)
 
 # Arrow
 add_text(slide, '\u2192',
-         x=1267, y=452, w=60, h=50,
+         x=1267, y=519, w=60, h=50,
          font_name='Inter', font_size_px=40, font_weight=400,
          hex_color='444444', letter_spacing_px=0, extra_nudge_y=0)
 
 # Generated cluster boxes
-for gi, (gy, label) in enumerate([(352, 'dev-cluster'), (432, 'staging-cluster'), (512, 'prod-cluster')]):
+for gi, (gy, label) in enumerate([(419, 'dev-cluster'), (499, 'staging-cluster'), (579, 'prod-cluster')]):
     add_rect_outlined(slide, 1342, gy, 200, 70, '000000', stroke_opacity=0.2)
     add_text(slide, label,
              x=1366, y=gy+26, w=152, h=17,
@@ -1062,9 +1062,9 @@ for gi, (gy, label) in enumerate([(352, 'dev-cluster'), (432, 'staging-cluster')
              hex_color='333333', letter_spacing_px=0, extra_nudge_y=5)
 
 # Footer strip
-add_rect(slide, 120, 787, 1680, 50, '111111')
+add_rect(slide, 120, 854, 1680, 50, '111111')
 add_text(slide, 'DRIFT DETECTED  \u2192  ARGO RECONCILES WITHIN SECONDS',
-         x=354, y=807, w=1213, h=19,
+         x=354, y=874, w=1213, h=19,
          font_name='Inter', font_size_px=16, font_weight=700,
          hex_color='FFFFFF', letter_spacing_px=3, extra_nudge_y=5)
 
@@ -1214,20 +1214,20 @@ add_text(slide, 'WHO CONTROLS THE API?',
          x=120, y=455, w=1200, h=54,
          font_name='Inter', font_size_px=60, font_weight=900,
          hex_color='555555', letter_spacing_px=0)
-# callout boxes — abs at (120,691), 3 × 560px side by side
-add_rect(slide, 120, 691, 560, 62, '111111')
+# callout boxes — abs at (120,691), 3 × 560px side by side, h=90 for presence on slide
+add_rect(slide, 120, 691, 560, 90, '111111')
 add_text(slide, 'WHERE IS THE STATE?',
-         x=144, y=711, w=500, h=22,
+         x=144, y=727, w=500, h=22,
          font_name='Inter', font_size_px=18, font_weight=800,
          hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
-add_rect(slide, 680, 691, 560, 62, '1A1A1A')
+add_rect(slide, 680, 691, 560, 90, '1A1A1A')
 add_text(slide, 'WHO OWNS THE AUDIT TRAIL?',
-         x=704, y=711, w=500, h=22,
+         x=704, y=727, w=500, h=22,
          font_name='Inter', font_size_px=18, font_weight=800,
          hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
-add_rect(slide, 1240, 691, 560, 62, '111111')
+add_rect(slide, 1240, 691, 560, 90, '111111')
 add_text(slide, 'WHAT IF THE VENDOR LEAVES?',
-         x=1264, y=711, w=500, h=22,
+         x=1264, y=727, w=500, h=22,
          font_name='Inter', font_size_px=18, font_weight=800,
          hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
 # bot
@@ -1259,8 +1259,8 @@ add_text(slide, 'ONE ENGINE. FOUR TOOLS. YOUR CHOICE.',
          x=120, y=279, w=1200, h=36,
          font_name='Inter', font_size_px=30, font_weight=700,
          hex_color='888888', letter_spacing_px=0, extra_nudge_y=3)
-# diagram outer border (ANLn3) — abs (120,391), w=1680, h=485, blue stroke
-add_rect_outlined(slide, 120, 391, 1680, 485, '326CE5', stroke_opacity=1.0)
+# diagram outer border (ANLn3) — abs (120,391), w=1680, h=540 (extended for taller K8s+Argo), blue stroke
+add_rect_outlined(slide, 120, 391, 1680, 540, '326CE5', stroke_opacity=1.0)
 # K8s badge at top-left of border
 add_rect(slide, 132, 376, 170, 21, '326CE5')
 add_text(slide, 'KUBERNETES',
@@ -1276,10 +1276,10 @@ tool_cards = [
 ]
 for cx, icon_color, icon_letter, name, desc, badge_color, badge_text in tool_cards:
     add_rect(slide, cx, 403, 408, 179, 'F5F5F5')
-    icon_x = cx + int((408-40)/2)
-    add_oval(slide, icon_x, 427, 40, 40, icon_color)
+    icon_x = cx + int((408-56)/2)
+    add_oval(slide, icon_x, 419, 56, 56, icon_color)
     add_text(slide, icon_letter,
-             x=icon_x+11, y=436, w=20, h=22,
+             x=icon_x+10, y=438, w=22, h=22,
              font_name='Inter', font_size_px=18, font_weight=700,
              hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
     add_text(slide, name,
@@ -1301,39 +1301,39 @@ for ax in [327, 741, 1155, 1569]:
              x=ax, y=586, w=30, h=34,
              font_name='Inter', font_size_px=28, font_weight=400,
              hex_color='CCCCCC', letter_spacing_px=0, extra_nudge_y=3)
-# K8s layer — abs (132,632), w=1656, h=93
-add_rect(slide, 132, 632, 1656, 93, '1A3358')
-add_oval(slide, 665, 659, 40, 40, '326CE5')
+# K8s layer — abs (132,632), w=1656, h=120 (enlarged for visibility)
+add_rect(slide, 132, 632, 1656, 120, '1A3358')
+add_oval(slide, 657, 664, 56, 56, '326CE5')
 add_text(slide, 'K8s',
-         x=673, y=667, w=30, h=16,
+         x=668, y=679, w=30, h=16,
          font_name='Inter', font_size_px=13, font_weight=700,
          hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
 add_text(slide, 'KUBERNETES API',
-         x=721, y=645, w=600, h=34,
+         x=730, y=659, w=600, h=34,
          font_name='Inter', font_size_px=28, font_weight=900,
          hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=3)
 add_text(slide, 'THE CONTROL PLANE \u2014 ALL TOOLS RUN AS OPERATORS HERE',
-         x=721, y=679, w=800, h=17,
+         x=730, y=693, w=800, h=17,
          font_name='Inter', font_size_px=14, font_weight=600,
          hex_color='4A7AB5', letter_spacing_px=2, extra_nudge_y=5)
-# single down arrow (MDjkc at abs y=725)
+# single down arrow (between K8s and Argo)
 add_text(slide, '\u2193',
-         x=948, y=731, w=30, h=34,
+         x=948, y=758, w=30, h=34,
          font_name='Inter', font_size_px=28, font_weight=400,
          hex_color='CCCCCC', letter_spacing_px=0, extra_nudge_y=3)
-# Argo layer — abs (132,771), w=1656, h=93
-add_rect(slide, 132, 771, 1656, 93, '0D0D0D')
-add_oval(slide, 699, 797, 40, 40, 'EF7B4D')
+# Argo layer — abs (132,798), w=1656, h=120 (enlarged for visibility)
+add_rect(slide, 132, 798, 1656, 120, '0D0D0D')
+add_oval(slide, 691, 830, 56, 56, 'EF7B4D')
 add_text(slide, 'A',
-         x=714, y=807, w=12, h=19,
+         x=710, y=847, w=14, h=20,
          font_name='Inter', font_size_px=18, font_weight=700,
          hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
 add_text(slide, 'ARGO CD',
-         x=755, y=784, w=400, h=34,
+         x=762, y=811, w=400, h=34,
          font_name='Inter', font_size_px=28, font_weight=900,
          hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=3)
 add_text(slide, 'GITOPS DELIVERY LAYER \u2014 SITS BENEATH ALL TOOLS',
-         x=755, y=818, w=700, h=17,
+         x=762, y=845, w=700, h=17,
          font_name='Inter', font_size_px=14, font_weight=600,
          hex_color='666666', letter_spacing_px=2, extra_nudge_y=5)
 # footer
