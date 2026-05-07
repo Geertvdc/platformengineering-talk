@@ -169,15 +169,20 @@ Show the Argo CD UI: `terranetes-team` Application should be **Synced / Healthy*
 Show the running OpenTofu job:
 
 ```bash
-kubectl get cloudresources.terraform.appvia.io -n terranetes-demo
-kubectl get jobs -n terranetes-demo
-kubectl logs -n terranetes-demo \
-  -l terraform.appvia.io/cloudresource=techorama-team -f
+# The CloudResource (developer-facing object)
+kubectl get cloudresource -n terranetes-demo
+
+# The plan/apply Jobs run in terranetes-system (controller-managed namespace)
+kubectl get jobs -n terranetes-system
+
+# Stream logs from the running job
+kubectl logs -n terranetes-system \
+  -l terraform.appvia.io/configuration=techorama-team-fth7r --tail=100 -f
 ```
 
-> _"Terranetes spawned a Job that runs `tofu apply`. The state is stored in a
-> Kubernetes Secret — no remote backend needed for the demo. In production,
-> you'd point it at Azure Blob Storage."_
+> _"Terranetes spawned a Job that runs `tofu plan` then `tofu apply`. The state is
+> stored in a Kubernetes Secret — no remote backend needed for the demo. In
+> production, you'd point it at Azure Blob Storage."_
 
 ---
 
@@ -242,8 +247,12 @@ Same pattern as Demos 2–4:
 - Stored as `azure-creds/azure-credentials` by Demo 1 bootstrap.
 - `20-terranetes-azure-creds.sh` reads the four keys and creates
   `terranetes-system/azure-provider-creds` with `ARM_*` env vars.
-- The GitHub token is a separate `terranetes-system/github-provider-creds` Secret,
-  injected into the OpenTofu runner via `spec.envFrom`.
+- `30-github-creds.sh` patches `GITHUB_TOKEN` into `azure-provider-creds`
+  (so the Terraform `integrations/github` provider picks it up from the
+  environment) and also creates `terranetes-demo/git-module-creds` with
+  `GIT_USERNAME=x-access-token` + `GIT_PASSWORD=TOKEN` for authenticating
+  the git clone of this private module repo (referenced via
+  `spec.configuration.auth` in the Revision).
 
 > **Production:** use workload identity / federated credentials + External Secrets
 > Operator. The SP-with-secret pattern here is for demo speed only.

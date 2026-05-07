@@ -20,6 +20,9 @@ spec:
     name: teaminfra
     revision: "1.0.0"
 
+  # Auto-approve the plan so apply runs immediately after planning.
+  enableAutoApproval: true
+
   variables:
     team_name: techorama-demo
     environment: dev
