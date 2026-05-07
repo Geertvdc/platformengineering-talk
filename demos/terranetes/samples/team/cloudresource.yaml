@@ -14,8 +14,11 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
-  revisionRef:
-    name: teaminfra-v1
+  # References the plan name + revision from the Revision's spec.plan block.
+  # (plan.name: teaminfra, plan.revision: 1.0.0)
+  plan:
+    name: teaminfra
+    revision: "1.0.0"
 
   variables:
     team_name: techorama-demo
@@ -24,5 +27,5 @@ spec:
     github_org: Geertvdc
     github_repo_visibility: public
 
-  writeOutputsToSecret:
+  writeConnectionSecretToRef:
     name: techorama-team-outputs
