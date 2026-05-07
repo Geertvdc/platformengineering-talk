@@ -13,14 +13,13 @@ terraform {
   }
 }
 
-provider "azurerm" {
-  features {}
-  # ARM_* env vars are injected by Terranetes from the azure-provider-creds secret.
-}
+# NOTE: No provider "azurerm" block here — Terranetes injects provider.tf.json
+# with the azurerm provider config (ARM_* vars from the Provider secret).
+# Adding one here causes "Duplicate provider configuration" at init time.
 
 provider "github" {
   owner = var.github_org
-  # GITHUB_TOKEN env var is injected by Terranetes from the github-provider-creds secret.
+  # GITHUB_TOKEN env var is injected by Terranetes from the azure-provider-creds secret.
 }
 
 # ── Azure: Resource Group ─────────────────────────────────────────────────────
