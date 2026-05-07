@@ -42,6 +42,7 @@ metadata:
   namespace: terranetes-demo
 type: Opaque
 data:
+  GIT_USERNAME: $(echo -n "oauth2" | base64)
   GIT_PASSWORD: ${ENCODED}
 YAML
 
