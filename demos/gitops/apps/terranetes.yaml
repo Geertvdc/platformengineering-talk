@@ -1,0 +1,4 @@
+# This file is intentionally empty.
+# The terranetes demo is split into two Argo CD Applications:
+#   - terranetes-configuration.yaml  (Namespace + Configuration template)
+#   - terranetes-team.yaml           (live demo sample Configuration)

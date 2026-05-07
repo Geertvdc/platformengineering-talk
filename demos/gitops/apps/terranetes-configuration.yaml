@@ -1,0 +1,29 @@
+# Terranetes Configuration template — synced before the live demo sample.
+# Manages: Namespace + the teaminfra Configuration resource.
+#
+# The Provider itself is applied imperatively by bootstrap/40-configure-providers.sh
+# (it references a Secret that cannot live in Git).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: terranetes-configuration
+  namespace: argocd
+  labels:
+    demo: demo-5
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Geertvdc/platformengineering-talk
+    targetRevision: main
+    path: demos/terranetes/configuration
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: terranetes-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

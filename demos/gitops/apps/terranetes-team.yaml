@@ -1,0 +1,31 @@
+# Terranetes live demo sample — the Configuration a developer would apply.
+# Syncs after terranetes-configuration is healthy.
+#
+# This is the file shown live on stage: one Configuration → Azure RG + GitHub repo.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: terranetes-team
+  namespace: argocd
+  labels:
+    demo: demo-5
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Geertvdc/platformengineering-talk
+    targetRevision: main
+    path: demos/terranetes/samples/team
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: terranetes-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true

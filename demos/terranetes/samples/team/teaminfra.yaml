@@ -1,0 +1,35 @@
+# TeamInfra Configuration — live demo instance
+#
+# This is what a developer would commit to request infrastructure.
+# One apply → Azure Resource Group + GitHub repository.
+#
+# The platform team controls the module (demos/terranetes/module/).
+# The developer only sets the variables they care about.
+apiVersion: terraform.appvia.io/v1alpha1
+kind: Configuration
+metadata:
+  name: teaminfra
+  namespace: terranetes-demo
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  module: https://github.com/Geertvdc/platformengineering-talk//demos/terranetes/module?ref=main
+
+  providerRef:
+    name: azure
+    namespace: terranetes-system
+
+  variables:
+    team_name: techorama-demo
+    environment: dev
+    location: westeurope
+    github_org: Geertvdc
+    github_repo_visibility: public
+
+  envFrom:
+    - secret:
+        name: github-provider-creds
+        namespace: terranetes-system
+
+  writeOutputsToSecret:
+    name: teaminfra-outputs

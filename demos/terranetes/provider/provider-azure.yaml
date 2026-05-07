@@ -1,0 +1,19 @@
+# Terranetes Provider for Azure.
+#
+# Tells Terranetes how to authenticate OpenTofu runs that use the azurerm provider.
+# The Secret contains ARM_* environment variables that the azurerm provider reads.
+#
+# This resource is applied by bootstrap/40-configure-providers.sh (not via Argo CD)
+# because it references a Secret that cannot be stored in Git.
+apiVersion: terraform.appvia.io/v1alpha1
+kind: Provider
+metadata:
+  name: azure
+  namespace: terranetes-system
+spec:
+  # Inject the ARM_* env vars from the secret into every OpenTofu runner pod
+  # that references this provider.
+  source: secret
+  secretRef:
+    namespace: terranetes-system
+    name: azure-provider-creds
