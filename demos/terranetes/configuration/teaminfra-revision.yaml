@@ -17,6 +17,12 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
+  # plan groups this Revision under a named plan with a semantic version.
+  plan:
+    name: teaminfra
+    description: "Provisions an Azure Resource Group and a GitHub repository for a team."
+    revision: "1.0.0"
+
   # Terraform module stored in this repo — versioned, reviewed like any other code.
   module: https://github.com/Geertvdc/platformengineering-talk//demos/terranetes/module?ref=main
 
