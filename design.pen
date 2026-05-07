@@ -4955,7 +4955,8 @@
                   "fill": "#FFFFFF55",
                   "content": "→",
                   "fontFamily": "Inter",
-                  "fontSize": 48
+                  "fontSize": 48,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "text",
@@ -4966,7 +4967,8 @@
                   "fill": "#FFFFFF55",
                   "content": "←",
                   "fontFamily": "Inter",
-                  "fontSize": 48
+                  "fontSize": 48,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "text",
@@ -4977,7 +4979,8 @@
                   "fill": "#FFFFFF55",
                   "content": "→",
                   "fontFamily": "Inter",
-                  "fontSize": 48
+                  "fontSize": 48,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "text",
@@ -5465,7 +5468,8 @@
                           "fill": "#444444",
                           "content": "→",
                           "fontFamily": "Inter",
-                          "fontSize": 40
+                          "fontSize": 40,
+                          "fontWeight": "normal"
                         },
                         {
                           "type": "frame",
