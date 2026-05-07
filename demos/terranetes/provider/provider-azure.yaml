@@ -11,6 +11,8 @@ metadata:
   name: azure
   namespace: terranetes-system
 spec:
+  # provider must match the Terraform provider name used in the module.
+  provider: azurerm
   # Inject the ARM_* env vars from the secret into every OpenTofu runner pod
   # that references this provider.
   source: secret
