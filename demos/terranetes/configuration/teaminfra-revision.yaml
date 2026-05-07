@@ -39,15 +39,18 @@ spec:
     - key: environment
       description: "Deployment environment: dev, staging, or prod."
       required: false
-      default: "dev"
+      default:
+        value: "dev"
     - key: location
       description: "Azure region for the resource group."
       required: false
-      default: "westeurope"
+      default:
+        value: "westeurope"
     - key: github_org
       description: "GitHub organisation or username."
       required: true
     - key: github_repo_visibility
       description: "GitHub repository visibility: public, private, or internal."
       required: false
-      default: "private"
+      default:
+        value: "private"
