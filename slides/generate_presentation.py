@@ -1561,6 +1561,267 @@ for tx, tw, tc, tl, tn in demo_tags:
              hex_color='FFFFFF', letter_spacing_px=1, extra_nudge_y=5)
 
 
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S6-01 — ASO Intro
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+# nav dots (section indicator — first dot bright, rest faded)
+add_oval(slide, 1780, 160, 14, 14, 'FFFFFF', 1.0)
+add_oval(slide, 1820, 160, 14, 14, 'FFFFFF', 0.4)
+add_oval(slide, 1860, 160, 14, 14, 'FFFFFF', 0.2)
+# background watermark
+add_text(slide, 'ASO',
+         x=580, y=220, w=1045, h=605,
+         font_name='Inter', font_size_px=500, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+# section tag
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '06 / ASO',
+         x=150, y=120, w=400, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# bottom headline block: h3xa1 at abs y=720 (content frame y=100 + rel y=620)
+add_text(slide, 'ASO.',
+         x=120, y=720, w=1680, h=176,
+         font_name='Inter', font_size_px=200, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+# subtitle: gap=8 after 176px line
+add_text(slide, 'YOUR AZURE. YAML-DRIVEN.',
+         x=120, y=904, w=1680, h=76,
+         font_name='Inter', font_size_px=84, font_weight=900,
+         hex_color='666666', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S6-02 — ASO Architecture
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+# section tag
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '06 / ASO',
+         x=150, y=120, w=400, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# headline: psYb9 at abs y=357 (content frame y=100 + rel y=257)
+add_text(slide, "WHAT WE'RE BUILDING.",
+         x=120, y=357, w=1680, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+# subtitle at rel y=71 → abs y=357+71=428
+add_text(slide, 'GIT COMMIT  \u2192  ARGO CD  \u2192  ASO CONTROLLER  \u2192  AZURE RESOURCE',
+         x=120, y=428, w=1680, h=24,
+         font_name='Inter', font_size_px=16, font_weight=600,
+         hex_color='555555', letter_spacing_px=2, extra_nudge_y=5)
+# 4 flow cards: r28HdW at abs (120, 680)
+# card abs x positions: 120, 557, 994, 1431 (width=370, gap=20, arrow=27)
+_arch_cards = [
+    (120,  '555555', 'GIT REPO',       '888888', 'storageaccount.yaml',
+     'Developer commits a Kubernetes manifest to the main branch'),
+    (557,  'EF7B4D', 'ARGO CD',        'EF7B4D', 'Detects & deploys',
+     'Watches the Git repo and applies the manifest to the cluster on every push'),
+    (994,  '0078D4', 'ASO CONTROLLER', '0078D4', 'Reads CRD, calls API',
+     'Azure Service Operator reconciles the StorageAccount CRD via Azure ARM API'),
+    (1431, '10B981', 'AZURE RESOURCE', '10B981', 'Storage Account ready',
+     'Azure Storage Account is provisioned and managed through the GitOps loop'),
+]
+for _cx, _bar, _lbl, _lcol, _name, _desc in _arch_cards:
+    add_rect(slide, _cx, 680, 370, 300, '111111')
+    add_rect(slide, _cx, 680, 370, 5, _bar)
+    # inner content starts at y=680+5+20=705 (bar + padding)
+    add_text(slide, _lbl,
+             x=_cx+20, y=705, w=330, h=16,
+             font_name='Inter', font_size_px=11, font_weight=700,
+             hex_color=_lcol, letter_spacing_px=3, extra_nudge_y=5)
+    add_text(slide, _name,
+             x=_cx+20, y=729, w=330, h=28,
+             font_name='Inter', font_size_px=20, font_weight=800,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _desc,
+             x=_cx+20, y=769, w=330, h=200,
+             font_name='Inter', font_size_px=13, font_weight=400,
+             hex_color='555555', letter_spacing_px=0, extra_nudge_y=5, word_wrap=True)
+# arrows: PVmL5/T7QtHr/fCCrz at rel y=133 → abs y=680+133=813
+for _ax in [510, 947, 1384]:
+    add_text(slide, '\u2192',
+             x=_ax, y=813, w=27, h=34,
+             font_name='Inter', font_size_px=28, font_weight=700,
+             hex_color='333333', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S6-02 — ASO Demo
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+# background watermark "YAML" at abs (500, 80)
+add_text(slide, 'YAML',
+         x=500, y=80, w=1313, h=557,
+         font_name='Inter', font_size_px=460, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+# section tag
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '06 / ASO \u00b7 DEMO',
+         x=150, y=120, w=500, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# headline vcqM1 at abs y=371 (content frame y=100 + rel y=271)
+_s6demo_140 = int(140 * 0.88)  # 123px per line
+# AEJhI at rel y=0 → abs y=371
+add_text(slide, 'APPLY YAML.',
+         x=120, y=371, w=1680, h=_s6demo_140,
+         font_name='Inter', font_size_px=140, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+# ie0PH at rel y=131 → abs y=502
+add_text(slide, 'GET AZURE.',
+         x=120, y=502, w=1680, h=_s6demo_140,
+         font_name='Inter', font_size_px=140, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+# EhJAn at rel y=262 → abs y=633
+add_text(slide, 'NO TERRAFORM. NO BICEP. NO ARM.',
+         x=120, y=633, w=1680, h=50,
+         font_name='Inter', font_size_px=36, font_weight=900,
+         hex_color='444444', letter_spacing_px=0)
+# bottom flow pills: KtiCm at abs (120, 924)
+_demo_steps_s6 = [
+    (120, 223, '0078D4', '1', 'KUBECTL APPLY'),
+    (390, 227, 'EF7B4D', '2', 'ARGO CD SYNCS'),
+    (664, 303, '10B981', '3', 'AZURE RESOURCE READY'),
+]
+for _sx, _sw, _sc, _sn, _sl in _demo_steps_s6:
+    add_rect(slide, _sx, 924, _sw, 56, '111111')
+    add_oval(slide, _sx+20, 938, 28, 28, _sc)
+    add_text(slide, _sn,
+             x=_sx+29, y=946, w=12, h=16,
+             font_name='Inter', font_size_px=12, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _sl,
+             x=_sx+58, y=933, w=_sw-70, h=19,
+             font_name='Inter', font_size_px=16, font_weight=800,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+# arrows: y46V5b/Wl9W6 at rel (235/509, 13.5) → abs (355/629, 938)
+for _arx in [355, 629]:
+    add_text(slide, '\u2192',
+             x=_arx, y=938, w=23, h=29,
+             font_name='Inter', font_size_px=24, font_weight=700,
+             hex_color='444444', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S6-03 — ASO Takeaway
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, 'FFFFFF')
+# background watermark
+add_text(slide, 'ASO',
+         x=580, y=200, w=962, h=557,
+         font_name='Inter', font_size_px=460, font_weight=900,
+         hex_color='000000', letter_spacing_px=0, opacity=0.03)
+add_rect(slide, 0, 0, 8, 1080, '000000')
+add_rect(slide, 1720, 1072, 200, 8, '000000')  # corner bar at 1072 (light slide)
+# section tag — dimmed on light slide
+add_rect(slide, 120, 120, 14, 14, '888888')
+add_text(slide, '06 / ASO',
+         x=150, y=120, w=400, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='888888', letter_spacing_px=4, extra_nudge_y=5)
+# headline O6Da77 at abs y=277 (content frame y=100 + rel y=177)
+# xqXpp: h=58 (64px * 0.9 lineHeight)
+add_text(slide, 'FAST. TRANSPARENT. COMPOSABLE.',
+         x=120, y=277, w=1680, h=58,
+         font_name='Inter', font_size_px=64, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+# GoKen at rel y=64 → abs y=341
+add_text(slide, 'THREE THINGS TO KNOW BEFORE YOU CHOOSE ASO.',
+         x=120, y=341, w=1680, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='AAAAAA', letter_spacing_px=1, extra_nudge_y=5)
+# 3 feature cards: yPFlo at abs y=518 (content frame y=100 + rel y=418)
+# cards at y=518, 610, 702 (h=84, gap=8)
+_s603_cards = [
+    (518, 'F8F8F8', None,     '1', 'FAST TO START',
+     'Zero abstractions to design. Install ASO, configure workload identity, start provisioning.'),
+    (610, 'FFFFFF', 'F0F0F0', '2', 'TRANSPARENT',
+     'Developers see Azure resource types directly. A feature for Azure-native teams; a limitation when you want to hide the cloud layer.'),
+    (702, 'F8F8F8', None,     '3', 'COMPOSABLE',
+     'Pairs naturally with KRO for higher-level developer APIs. ASO handles the Azure layer; KRO composes the experience.'),
+]
+for _cy, _bg, _stroke, _num, _title, _desc in _s603_cards:
+    if _stroke:
+        add_rect_outlined(slide, 120, _cy, 1680, 84, _stroke, fill_hex=_bg)
+    else:
+        add_rect(slide, 120, _cy, 1680, 84, _bg)
+    # icon: 36×36 blue rect at (144, cy+24) — vertically centered in 84px card
+    add_rect(slide, 144, _cy+24, 36, 36, '0078D4')
+    add_text(slide, _num,
+             x=155, y=_cy+34, w=16, h=20,
+             font_name='Inter', font_size_px=16, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    # body: nEHFj at abs (200, cy+20), title then description
+    add_text(slide, _title,
+             x=200, y=_cy+20, w=1460, h=22,
+             font_name='Inter', font_size_px=18, font_weight=800,
+             hex_color='000000', letter_spacing_px=0, extra_nudge_y=5)
+    # description at rel y=26 in nEHFj → abs y=cy+20+26=cy+46
+    add_text(slide, _desc,
+             x=200, y=_cy+46, w=1460, h=32,
+             font_name='Inter', font_size_px=15, font_weight=400,
+             hex_color='666666', letter_spacing_px=0, word_wrap=True)
+# bottom note bar iWqXR at abs (120, 939), h=41
+add_rect(slide, 120, 939, 1680, 41, '0D0D0D')
+# DPwcl at rel (24,12) → abs (144, 951), W2Ah3 at rel (406,12) → abs (526, 951)
+add_text(slide, 'WANT CLOUD-AGNOSTIC ABSTRACTIONS?',
+         x=144, y=951, w=366, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+add_text(slide, '\u2192  CROSSPLANE IS NEXT',
+         x=526, y=951, w=300, h=17,
+         font_name='Inter', font_size_px=14, font_weight=600,
+         hex_color='666666', letter_spacing_px=1, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S7-01 — Crossplane Intro
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+# nav dots
+add_oval(slide, 1780, 160, 14, 14, 'FFFFFF', 1.0)
+add_oval(slide, 1820, 160, 14, 14, 'FFFFFF', 0.4)
+add_oval(slide, 1860, 160, 14, 14, 'FFFFFF', 0.2)
+# background watermark "CROSS"
+add_text(slide, 'CROSS',
+         x=340, y=220, w=1662, h=605,
+         font_name='Inter', font_size_px=500, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+# section tag
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '07 / CROSSPLANE',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# bottom block: gn01P at abs y=720 (content frame y=100 + rel y=620)
+add_text(slide, 'CROSSPLANE.',
+         x=120, y=720, w=1680, h=176,
+         font_name='Inter', font_size_px=200, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+# subtitle: gap=8 after 176px line
+add_text(slide, 'YOU DESIGN THE API.',
+         x=120, y=904, w=1680, h=76,
+         font_name='Inter', font_size_px=84, font_weight=900,
+         hex_color='666666', letter_spacing_px=0)
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 out = '/Users/geertvdc/dev/github/geertvdc/platformengineering-talk/presentation.pptx'
 prs.save(out)
