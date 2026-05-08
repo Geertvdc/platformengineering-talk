@@ -71,7 +71,7 @@ def add_oval(slide, x, y, w, h, hex_color, opacity=1.0):
         a.set('val', str(int(opacity * 100000)))
     return shape
 
-def add_rect_outlined(slide, x, y, w, h, stroke_hex, stroke_opacity=1.0, fill_hex=None):
+def add_rect_outlined(slide, x, y, w, h, stroke_hex, stroke_opacity=1.0, fill_hex=None, corner_radius=0):
     """Rectangle with a semi-transparent stroke border (used for diagram boxes)."""
     shape = slide.shapes.add_shape(1, px(x,'x'), px(y,'y'), px(w,'x'), px(h,'y'))
     if fill_hex:
@@ -89,6 +89,21 @@ def add_rect_outlined(slide, x, y, w, h, stroke_hex, stroke_opacity=1.0, fill_he
             if srgbClr is not None:
                 alpha = etree.SubElement(srgbClr, qn('a:alpha'))
                 alpha.set('val', str(int(stroke_opacity * 100000)))
+    if corner_radius > 0:
+        sp = shape._element
+        prstGeom = sp.find('.//' + qn('a:prstGeom'))
+        if prstGeom is not None:
+            prstGeom.set('prst', 'roundRect')
+            avLst = prstGeom.find(qn('a:avLst'))
+            if avLst is None:
+                avLst = etree.SubElement(prstGeom, qn('a:avLst'))
+            for gd in avLst.findall(qn('a:gd')):
+                avLst.remove(gd)
+            gd = etree.SubElement(avLst, qn('a:gd'))
+            gd.set('name', 'adj')
+            short = min(w, h)
+            val = int(corner_radius / (short / 2) * 100000)
+            gd.set('fmla', f'val {val}')
     return shape
 
 def add_text(slide, text, x, y, w, h,
@@ -2378,6 +2393,167 @@ add_text(slide, '\u2192  START DIRECTLY WITH ASO OR CROSSPLANE',
          x=395, y=951, w=500, h=17,
          font_name='Inter', font_size_px=14, font_weight=600,
          hex_color='888888', letter_spacing_px=1, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S10-01 — Sovereignty Payoff
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_oval(slide, 1780, 160, 14, 14, 'FFFFFF', 1.0)
+add_oval(slide, 1820, 160, 14, 14, 'FFFFFF', 0.4)
+add_oval(slide, 1860, 160, 14, 14, 'FFFFFF', 0.2)
+add_text(slide, 'YOURS',
+         x=280, y=220, w=1400, h=640,
+         font_name='Inter', font_size_px=500, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '10 / SOVEREIGNTY',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# block at abs y=756 (same 180px+64px pattern as S9-01)
+add_text(slide, 'YOUR API.',
+         x=120, y=756, w=1680, h=158,
+         font_name='Inter', font_size_px=180, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+# subtitle: gap=8 after 158px → y=922
+add_text(slide, 'YOUR STATE. YOUR AUDIT TRAIL.',
+         x=120, y=922, w=1680, h=58,
+         font_name='Inter', font_size_px=64, font_weight=900,
+         hex_color='666666', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S10-02 — AI and the Platform
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, 'FFFFFF')
+add_rect(slide, 0, 0, 8, 1080, '000000')
+add_rect(slide, 1720, 1072, 200, 8, '000000')
+# "AI" watermark at abs x=1200, y=200 (outside content frame)
+add_text(slide, 'AI',
+         x=1200, y=200, w=720, h=640,
+         font_name='Inter', font_size_px=460, font_weight=900,
+         hex_color='000000', letter_spacing_px=0, opacity=0.03)
+add_rect(slide, 120, 120, 14, 14, '888888')
+add_text(slide, '10 / AI + PLATFORM',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='888888', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, 'AI WRITES THE YAML.',
+         x=120, y=277, w=1680, h=58,
+         font_name='Inter', font_size_px=64, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'THE PLATFORM DECIDES WHAT RUNS.',
+         x=120, y=341, w=1680, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='AAAAAA', letter_spacing_px=1, extra_nudge_y=5)
+# numbered cards at y=518/610/702 (same takeaway pattern)
+_s1002_cards = [
+    (518, 'F8F8F8', None,     '1', 'AI ACCELERATES VELOCITY',
+     'Developers generate more infrastructure requests, faster. Platforms built for ticket queues will break under that load.'),
+    (610, 'FFFFFF', 'F0F0F0', '2', 'PLATFORMS NEED GUARDRAILS',
+     'Self-service CRs. Automatic policy gates. GitOps audit trails. Scales linearly with developer velocity.'),
+    (702, 'F8F8F8', None,     '3', 'AI BUILDS THE PLATFORM TOO',
+     'Crossplane Compositions, KRO ResourceGroups, Terranetes policies \u2014 well-structured schemas AI is very good at generating.'),
+]
+for _cy, _bg, _stroke, _num, _title, _desc in _s1002_cards:
+    if _stroke:
+        add_rect_outlined(slide, 120, _cy, 1680, 84, _stroke, fill_hex=_bg, corner_radius=6)
+    else:
+        add_rect(slide, 120, _cy, 1680, 84, _bg, corner_radius=6)
+    add_rect(slide, 144, _cy+24, 36, 36, '2563EB', corner_radius=6)
+    add_text(slide, _num, x=155, y=_cy+34, w=16, h=20,
+             font_name='Inter', font_size_px=16, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _title, x=200, y=_cy+20, w=1460, h=22,
+             font_name='Inter', font_size_px=18, font_weight=800,
+             hex_color='000000', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _desc, x=200, y=_cy+46, w=1460, h=32,
+             font_name='Inter', font_size_px=15, font_weight=400,
+             hex_color='666666', letter_spacing_px=0, word_wrap=True)
+add_rect(slide, 120, 939, 1680, 41, '0D0D0D', corner_radius=6)
+add_text(slide, "THE BOTTLENECK ISN'T THE DEVELOPER.",
+         x=144, y=951, w=340, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+add_text(slide, "\u2192  IT'S A PLATFORM THAT DOESN'T SCALE",
+         x=500, y=951, w=500, h=17,
+         font_name='Inter', font_size_px=14, font_weight=600,
+         hex_color='666666', letter_spacing_px=1, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S11-01 — The Whole Picture
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '11 / THE WHOLE PICTURE',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, 'THE COMPLETE STACK.',
+         x=120, y=357, w=1680, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'GIT  \u2192  ARGO CD  \u2192  KUBERNETES API  \u2192  FOUR TOOLS  \u2192  AZURE',
+         x=120, y=428, w=1680, h=24,
+         font_name='Inter', font_size_px=16, font_weight=600,
+         hex_color='555555', letter_spacing_px=2, extra_nudge_y=5)
+_s1101_cards = [
+    (120,  '555555', None,     'SOURCE OF TRUTH',   '888888', 'Git + Argo CD',
+     'Every intent starts as a commit. Argo CD continuously reconciles the cluster to match the Git state.', 5),
+    (697,  '6366F1', '6366F1', 'THE CONTROL PLANE', '6366F1', 'Kubernetes API',
+     'The unified entry point for every team, tool, and automation. One API. One audit trail. Yours.', 5),
+    (1274, '10B981', None,     'THE PROVISIONERS',  '10B981', 'Four tools. One Azure.',
+     [('\u2014 ASO  \u00b7  direct Azure control', '0078D4'),
+      ('\u2014 Crossplane  \u00b7  platform abstractions', 'EF4444'),
+      ('\u2014 KRO  \u00b7  app bundles  \u00b7  Terranetes  \u00b7  Terraform', '8B5CF6')], 5),
+]
+_arch3_cards(slide, 680, _s1101_cards)
+add_text(slide, '\u2192', x=650, y=800, w=30, h=30,
+         font_name='Inter', font_size_px=20, font_weight=700,
+         hex_color='444444', letter_spacing_px=0)
+add_text(slide, '\u2192', x=1227, y=800, w=30, h=30,
+         font_name='Inter', font_size_px=20, font_weight=700,
+         hex_color='444444', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S11-02 — Closing
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_oval(slide, 1780, 160, 14, 14, 'FFFFFF', 1.0)
+add_oval(slide, 1820, 160, 14, 14, 'FFFFFF', 0.4)
+add_oval(slide, 1860, 160, 14, 14, 'FFFFFF', 0.2)
+add_text(slide, 'SAFE',
+         x=500, y=220, w=1420, h=640,
+         font_name='Inter', font_size_px=500, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '11 / CLOSING',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# block at abs y=756 (160px+84px → mid h=140+8+76=224, 980-224=756)
+add_text(slide, 'MAKE YES SAFE.',
+         x=120, y=756, w=1680, h=140,
+         font_name='Inter', font_size_px=160, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+# subtitle: gap=8 after 140px → y=904
+add_text(slide, 'THANK YOU.',
+         x=120, y=904, w=1680, h=76,
+         font_name='Inter', font_size_px=84, font_weight=900,
+         hex_color='666666', letter_spacing_px=0)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
