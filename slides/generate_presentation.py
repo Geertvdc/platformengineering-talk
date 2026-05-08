@@ -32,7 +32,7 @@ prs.slide_height = Emu(int(H_IN * EMU_PER_IN))
 def new_slide():
     return prs.slides.add_slide(prs.slide_layouts[6])
 
-def add_rect(slide, x, y, w, h, hex_color, opacity=1.0):
+def add_rect(slide, x, y, w, h, hex_color, opacity=1.0, corner_radius=0):
     shape = slide.shapes.add_shape(1, px(x,'x'), px(y,'y'), px(w,'x'), px(h,'y'))
     shape.fill.solid()
     shape.fill.fore_color.rgb = RGBColor.from_string(hex_color.lstrip('#'))
@@ -42,6 +42,21 @@ def add_rect(slide, x, y, w, h, hex_color, opacity=1.0):
         clr = spF.find(qn('a:srgbClr'))
         a = etree.SubElement(clr, qn('a:alpha'))
         a.set('val', str(int(opacity * 100000)))
+    if corner_radius > 0:
+        sp = shape._element
+        prstGeom = sp.find('.//' + qn('a:prstGeom'))
+        if prstGeom is not None:
+            prstGeom.set('prst', 'roundRect')
+            avLst = prstGeom.find(qn('a:avLst'))
+            if avLst is None:
+                avLst = etree.SubElement(prstGeom, qn('a:avLst'))
+            for gd in avLst.findall(qn('a:gd')):
+                avLst.remove(gd)
+            gd = etree.SubElement(avLst, qn('a:gd'))
+            gd.set('name', 'adj')
+            short = min(w, h)
+            val = int(corner_radius / (short / 2) * 100000)
+            gd.set('fmla', f'val {val}')
     return shape
 
 def add_oval(slide, x, y, w, h, hex_color, opacity=1.0):
@@ -1788,6 +1803,40 @@ add_text(slide, '\u2192  CROSSPLANE IS NEXT',
          hex_color='666666', letter_spacing_px=1, extra_nudge_y=5)
 
 
+def _arch3_cards(slide, y_abs, cards):
+    """Render 3 flow cards (510px wide) for architecture slides.
+    cards: list of (x_abs, bar_col, stroke_col_or_None, lbl, lbl_col, title, desc_or_list)
+    desc_or_list: str → single description; list of (text, color) → list items
+    bar_h: height of top bar (5 for CP/KRO, 6 for Terranetes)
+    """
+    for cx, bar_col, stroke_col, lbl, lbl_col, title, desc_or_list, bar_h in cards:
+        if stroke_col:
+            add_rect_outlined(slide, cx, y_abs, 510, 300, stroke_col, fill_hex='111111')
+        else:
+            add_rect(slide, cx, y_abs, 510, 300, '111111')
+        add_rect(slide, cx, y_abs, 510, bar_h, bar_col)
+        inner_y = y_abs + bar_h + 20
+        add_text(slide, lbl,
+                 x=cx+20, y=inner_y, w=470, h=16,
+                 font_name='Inter', font_size_px=11, font_weight=700,
+                 hex_color=lbl_col, letter_spacing_px=3, extra_nudge_y=5)
+        add_text(slide, title,
+                 x=cx+20, y=inner_y+24, w=470, h=28,
+                 font_name='Inter', font_size_px=20, font_weight=800,
+                 hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+        if isinstance(desc_or_list, str):
+            add_text(slide, desc_or_list,
+                     x=cx+20, y=inner_y+62, w=470, h=200,
+                     font_name='Inter', font_size_px=13, font_weight=400,
+                     hex_color='555555', letter_spacing_px=0, extra_nudge_y=5, word_wrap=True)
+        else:
+            for li, (ltxt, lcol) in enumerate(desc_or_list):
+                add_text(slide, ltxt,
+                         x=cx+20, y=inner_y+62+li*24, w=470, h=20,
+                         font_name='Inter', font_size_px=13, font_weight=400,
+                         hex_color=lcol, letter_spacing_px=0, extra_nudge_y=5)
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # S7-01 — Crossplane Intro
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -1820,6 +1869,515 @@ add_text(slide, 'YOU DESIGN THE API.',
          x=120, y=904, w=1680, h=76,
          font_name='Inter', font_size_px=84, font_weight=900,
          hex_color='666666', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S7-02 — Crossplane Architecture
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '07 / CROSSPLANE',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, "WHAT WE'RE BUILDING.",
+         x=120, y=357, w=1680, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'DEVELOPER WRITES 10 LINES  \u2192  CROSSPLANE PROVISIONS ACROSS TWO CLOUDS',
+         x=120, y=428, w=1680, h=24,
+         font_name='Inter', font_size_px=16, font_weight=600,
+         hex_color='555555', letter_spacing_px=2, extra_nudge_y=5)
+_cp_arch_cards = [
+    (120,  '555555', None,      'DEVELOPER CLAIM',        '888888', 'AppTeam claim',
+     '10 lines. teamName + githubOrg. No Azure fields. No region. No SKU.', 5),
+    (697,  'EF4444', 'EF4444',  'CROSSPLANE COMPOSITION', 'EF4444', "Platform team's API layer",
+     'XRD defines the API. Composition encodes every platform opinion \u2014 naming, networking, tagging, backup.', 5),
+    (1274, '10B981', None,      'CLOUD RESOURCES',        '10B981', '3 from 1 claim',
+     [('— Azure Resource Group', '666666'),
+      ('— Azure Storage Account', '666666'),
+      ('— GitHub Repository', '9F7AEA')], 5),
+]
+_arch3_cards(slide, 680, _cp_arch_cards)
+add_text(slide, '\u2192', x=650, y=800, w=30, h=30,
+         font_name='Inter', font_size_px=20, font_weight=700,
+         hex_color='444444', letter_spacing_px=0)
+add_text(slide, '\u2192', x=1227, y=800, w=30, h=30,
+         font_name='Inter', font_size_px=20, font_weight=700,
+         hex_color='444444', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S7-03 — Crossplane Demo
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_text(slide, 'API',
+         x=560, y=80, w=748, h=557,
+         font_name='Inter', font_size_px=460, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '07 / CROSSPLANE  \u00b7  DEMO',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, 'ONE CLAIM.',
+         x=120, y=371, w=1680, h=123,
+         font_name='Inter', font_size_px=140, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'THREE RESOURCES.',
+         x=120, y=502, w=1680, h=123,
+         font_name='Inter', font_size_px=140, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'AZURE + GITHUB. ZERO CLOUD KNOWLEDGE REQUIRED.',
+         x=120, y=633, w=1680, h=50,
+         font_name='Inter', font_size_px=36, font_weight=900,
+         hex_color='444444', letter_spacing_px=0)
+add_rect(slide, 120, 924, 199, 56, '111111', corner_radius=6)
+add_rect(slide, 134, 938, 28, 28, 'EF4444', corner_radius=6)
+add_text(slide, '1', x=140, y=942, w=16, h=20,
+         font_name='Inter', font_size_px=12, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'APPSTORAGE', x=172, y=938, w=130, h=28,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_rect(slide, 366, 924, 167, 56, '111111', corner_radius=6)
+add_rect(slide, 380, 938, 28, 28, 'EF4444', corner_radius=6)
+add_text(slide, '2', x=386, y=942, w=16, h=20,
+         font_name='Inter', font_size_px=12, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'APPTEAM', x=418, y=938, w=100, h=28,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_rect(slide, 580, 924, 287, 56, '111111', corner_radius=6)
+add_rect(slide, 594, 938, 28, 28, '10B981', corner_radius=6)
+add_text(slide, '\u2713', x=599, y=942, w=18, h=20,
+         font_name='Inter', font_size_px=12, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'TWO CLOUDS. ONE API.', x=632, y=938, w=218, h=28,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S7-04 — Crossplane Takeaway
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, 'FFFFFF')
+add_rect(slide, 0, 0, 8, 1080, '000000')
+add_rect(slide, 1720, 1072, 200, 8, '000000')
+add_text(slide, 'CROSS',
+         x=340, y=200, w=1531, h=557,
+         font_name='Inter', font_size_px=460, font_weight=900,
+         hex_color='000000', letter_spacing_px=0, opacity=0.03)
+add_rect(slide, 120, 120, 14, 14, '888888')
+add_text(slide, '07 / CROSSPLANE',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='888888', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, 'OWN YOUR ABSTRACTION.',
+         x=120, y=277, w=1680, h=58,
+         font_name='Inter', font_size_px=64, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'THREE THINGS CROSSPLANE CHANGES FOREVER.',
+         x=120, y=341, w=1680, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='AAAAAA', letter_spacing_px=1, extra_nudge_y=5)
+_s704_cards = [
+    (518, 'F8F8F8', None,     '1', 'EF4444', 'PLATFORM INVESTMENT',
+     'Write Compositions once. Every team that joins gets the same experience, forever.'),
+    (610, 'FFFFFF', 'F0F0F0', '2', 'EF4444', 'CLOUD AGNOSTIC',
+     "Today Azure. Swap the Composition. Developer manifest unchanged. That's genuine abstraction."),
+    (702, 'F8F8F8', None,     '3', 'EF4444', 'ENFORCES STANDARDS',
+     'Backup, naming, tagging, networking baked into every Composition. Impossible for developers to get it wrong.'),
+]
+for _cy, _bg, _stroke, _num, _icon_col, _title, _desc in _s704_cards:
+    if _stroke:
+        add_rect_outlined(slide, 120, _cy, 1680, 84, _stroke, fill_hex=_bg)
+    else:
+        add_rect(slide, 120, _cy, 1680, 84, _bg)
+    add_rect(slide, 144, _cy+24, 36, 36, _icon_col, corner_radius=6)
+    add_text(slide, _num, x=155, y=_cy+34, w=16, h=20,
+             font_name='Inter', font_size_px=16, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _title, x=200, y=_cy+20, w=1460, h=22,
+             font_name='Inter', font_size_px=18, font_weight=800,
+             hex_color='000000', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _desc, x=200, y=_cy+46, w=1460, h=32,
+             font_name='Inter', font_size_px=15, font_weight=400,
+             hex_color='666666', letter_spacing_px=0, word_wrap=True)
+add_rect(slide, 120, 939, 1680, 41, '0D0D0D')
+add_text(slide, 'SMALL TEAM OR AZURE-NATIVE?',
+         x=144, y=951, w=288, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+add_text(slide, '\u2192  KRO IS NEXT',
+         x=448, y=951, w=200, h=17,
+         font_name='Inter', font_size_px=14, font_weight=600,
+         hex_color='666666', letter_spacing_px=1, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S8-01 — KRO Intro
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_oval(slide, 1780, 160, 14, 14, 'FFFFFF', 1.0)
+add_oval(slide, 1820, 160, 14, 14, 'FFFFFF', 0.4)
+add_oval(slide, 1860, 160, 14, 14, 'FFFFFF', 0.2)
+add_text(slide, 'KRO',
+         x=680, y=220, w=1042, h=605,
+         font_name='Inter', font_size_px=500, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '08 / KRO',
+         x=150, y=120, w=400, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, 'KRO.',
+         x=120, y=720, w=1680, h=176,
+         font_name='Inter', font_size_px=200, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'ONE CR. MANY RESOURCES.',
+         x=120, y=904, w=1680, h=76,
+         font_name='Inter', font_size_px=84, font_weight=900,
+         hex_color='666666', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S8-02 — KRO Architecture
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '08 / KRO',
+         x=150, y=120, w=400, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, "WHAT WE'RE BUILDING.",
+         x=120, y=357, w=1680, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'DEVELOPER WRITES 3 FIELDS  \u2192  KRO COMPOSES NAMESPACE + RBAC + AZURE STORAGE',
+         x=120, y=428, w=1680, h=24,
+         font_name='Inter', font_size_px=16, font_weight=600,
+         hex_color='555555', letter_spacing_px=2, extra_nudge_y=5)
+_kro_arch_cards = [
+    (120,  '555555', None,      'DEVELOPER CR',          '888888', 'MyApp instance',
+     '3 fields. name + team + size. No Azure, no RBAC, no resource groups.', 5),
+    (697,  '8B5CF6', '8B5CF6',  'KRO RESOURCEGRAPHDEF',  '8B5CF6', "Platform team's template",
+     'Defines namespace, RoleBinding, and ASO StorageAccount. All consistently named and wired.', 5),
+    (1274, '10B981', None,      'KUBERNETES + AZURE',    '10B981', '3 resources instantly',
+     [('— Kubernetes Namespace', '666666'),
+      ('— Kubernetes RoleBinding', '666666'),
+      ('— Azure Storage Account', '0078D4')], 5),
+]
+_arch3_cards(slide, 680, _kro_arch_cards)
+add_text(slide, '\u2192', x=650, y=800, w=30, h=30,
+         font_name='Inter', font_size_px=20, font_weight=700,
+         hex_color='444444', letter_spacing_px=0)
+add_text(slide, '\u2192', x=1227, y=800, w=30, h=30,
+         font_name='Inter', font_size_px=20, font_weight=700,
+         hex_color='444444', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S8-03 — KRO Demo
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_text(slide, 'RGD',
+         x=560, y=80, w=933, h=557,
+         font_name='Inter', font_size_px=460, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '08 / KRO  \u00b7  DEMO',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, 'THREE FIELDS.',
+         x=120, y=371, w=1680, h=123,
+         font_name='Inter', font_size_px=140, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'THREE RESOURCES.',
+         x=120, y=502, w=1680, h=123,
+         font_name='Inter', font_size_px=140, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'NAMESPACE + RBAC + AZURE. ONE GIT COMMIT.',
+         x=120, y=633, w=1680, h=50,
+         font_name='Inter', font_size_px=36, font_weight=900,
+         hex_color='444444', letter_spacing_px=0)
+add_rect(slide, 120, 924, 217, 56, '111111', corner_radius=6)
+add_rect(slide, 134, 938, 28, 28, '8B5CF6', corner_radius=6)
+add_text(slide, 'P', x=141, y=942, w=16, h=20,
+         font_name='Inter', font_size_px=12, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'PLATFORM RGD', x=172, y=938, w=148, h=28,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_rect(slide, 384, 924, 238, 56, '111111', corner_radius=6)
+add_rect(slide, 398, 938, 28, 28, '8B5CF6', corner_radius=6)
+add_text(slide, 'D', x=405, y=942, w=16, h=20,
+         font_name='Inter', font_size_px=12, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'MYAPP INSTANCE', x=436, y=938, w=170, h=28,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_rect(slide, 669, 924, 261, 56, '111111', corner_radius=6)
+add_rect(slide, 683, 938, 28, 28, '10B981', corner_radius=6)
+add_text(slide, '\u2713', x=689, y=942, w=18, h=20,
+         font_name='Inter', font_size_px=12, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'K8S + AZURE READY', x=721, y=938, w=192, h=28,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S8-04 — KRO Takeaway
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, 'FFFFFF')
+add_rect(slide, 0, 0, 8, 1080, '000000')
+add_rect(slide, 1720, 1072, 200, 8, '000000')
+add_text(slide, 'KRO',
+         x=820, y=200, w=960, h=557,
+         font_name='Inter', font_size_px=460, font_weight=900,
+         hex_color='000000', letter_spacing_px=0, opacity=0.03)
+add_rect(slide, 120, 120, 14, 14, '888888')
+add_text(slide, '08 / KRO',
+         x=150, y=120, w=400, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='888888', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, 'COMPOSE WITHOUT COMPLEXITY.',
+         x=120, y=277, w=1680, h=58,
+         font_name='Inter', font_size_px=64, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'THREE THINGS KRO GETS RIGHT.',
+         x=120, y=341, w=1680, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='AAAAAA', letter_spacing_px=1, extra_nudge_y=5)
+_s804_cards = [
+    (518, 'F8F8F8', None,     '1', '8B5CF6', 'FAST TO ADOPT',
+     'The ResourceGraphDefinition format is straightforward. Write a template in an afternoon, not a sprint.'),
+    (610, 'FFFFFF', 'F0F0F0', '2', '8B5CF6', 'TRANSPARENT',
+     'Composition, not abstraction. You see exactly what was created. No magic provider layer.'),
+    (702, 'F8F8F8', None,     '3', '8B5CF6', 'PAIRS WITH ASO',
+     'KRO handles app assembly; ASO handles Azure provisioning. A complete story without needing Crossplane.'),
+]
+for _cy, _bg, _stroke, _num, _icon_col, _title, _desc in _s804_cards:
+    if _stroke:
+        add_rect_outlined(slide, 120, _cy, 1680, 84, _stroke, fill_hex=_bg)
+    else:
+        add_rect(slide, 120, _cy, 1680, 84, _bg)
+    add_rect(slide, 144, _cy+24, 36, 36, _icon_col, corner_radius=6)
+    add_text(slide, _num, x=155, y=_cy+34, w=16, h=20,
+             font_name='Inter', font_size_px=16, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _title, x=200, y=_cy+20, w=1460, h=22,
+             font_name='Inter', font_size_px=18, font_weight=800,
+             hex_color='000000', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _desc, x=200, y=_cy+46, w=1460, h=32,
+             font_name='Inter', font_size_px=15, font_weight=400,
+             hex_color='666666', letter_spacing_px=0, word_wrap=True)
+add_rect(slide, 120, 939, 1680, 41, '0D0D0D')
+add_text(slide, 'NEED FULL CLOUD ABSTRACTION OR MULTI-CLOUD?',
+         x=144, y=951, w=493, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+add_text(slide, '\u2192  CROSSPLANE HANDLES THAT',
+         x=613, y=951, w=340, h=17,
+         font_name='Inter', font_size_px=14, font_weight=600,
+         hex_color='666666', letter_spacing_px=1, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S9-01 — Terranetes Intro
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_oval(slide, 1780, 160, 14, 14, 'FFFFFF', 1.0)
+add_oval(slide, 1820, 160, 14, 14, 'FFFFFF', 0.4)
+add_oval(slide, 1860, 160, 14, 14, 'FFFFFF', 0.2)
+add_text(slide, 'TERRA',
+         x=360, y=220, w=1616, h=605,
+         font_name='Inter', font_size_px=500, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '09 / TERRANETES',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+# block at abs y=756 (rel y=656) — taller position than other intros
+add_text(slide, 'TERRANETES.',
+         x=120, y=756, w=1680, h=158,
+         font_name='Inter', font_size_px=180, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+# subtitle: gap=8 after 158px → y=756+158+8=922
+add_text(slide, 'YOUR TERRAFORM. OUR CONTROL PLANE.',
+         x=120, y=922, w=1680, h=58,
+         font_name='Inter', font_size_px=64, font_weight=900,
+         hex_color='666666', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S9-02 — Terranetes Architecture
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '09 / TERRANETES',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, "WHAT WE'RE BUILDING.",
+         x=120, y=357, w=1680, h=65,
+         font_name='Inter', font_size_px=72, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'CLOUDRESOURCE CR  \u2192  OPENTOFU JOB  \u2192  AZURE + GITHUB',
+         x=120, y=428, w=1680, h=24,
+         font_name='Inter', font_size_px=16, font_weight=600,
+         hex_color='555555', letter_spacing_px=2, extra_nudge_y=5)
+_terra_arch_cards = [
+    (120,  '666666', None,      'DEVELOPER CR',           '999999', 'CloudResource config',
+     'Points to a Terraform module in Git with variable values. No HCL needed from the developer.', 6),
+    (697,  '10B981', '10B981',  'TERRANETES CONTROLLER',  '10B981', 'Runs OpenTofu as a Job',
+     '1000+ Terraform providers. Policy gate before apply. State in Kubernetes Secrets.', 6),
+    (1274, '10B981', None,      'CLOUD RESOURCES',        '10B981', '2 from 1 claim',
+     [('— Azure Resource Group', '0078D4'),
+      ('— GitHub Repository', '9F7AEA')], 6),
+]
+_arch3_cards(slide, 680, _terra_arch_cards)
+add_text(slide, '\u2192', x=650, y=800, w=30, h=30,
+         font_name='Inter', font_size_px=20, font_weight=700,
+         hex_color='444444', letter_spacing_px=0)
+add_text(slide, '\u2192', x=1227, y=800, w=30, h=30,
+         font_name='Inter', font_size_px=20, font_weight=700,
+         hex_color='444444', letter_spacing_px=0)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S9-03 — Terranetes Demo
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, '000000')
+add_rect(slide, 0, 0, 8, 1080, 'FFFFFF')
+add_rect(slide, 1720, 1060, 200, 8, 'FFFFFF')
+add_text(slide, 'TOFU',
+         x=500, y=80, w=1186, h=557,
+         font_name='Inter', font_size_px=460, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0, opacity=0.05)
+add_rect(slide, 120, 120, 14, 14, 'FFFFFF')
+add_text(slide, '09 / TERRANETES  \u00b7  DEMO',
+         x=150, y=120, w=700, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='FFFFFF', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, 'YOUR MODULES.',
+         x=120, y=371, w=1680, h=123,
+         font_name='Inter', font_size_px=140, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, 'OUR CONTROL.',
+         x=120, y=502, w=1680, h=123,
+         font_name='Inter', font_size_px=140, font_weight=900,
+         hex_color='FFFFFF', letter_spacing_px=0)
+add_text(slide, '1000+ PROVIDERS. NO REWRITE. KUBERNETES-NATIVE.',
+         x=120, y=633, w=1680, h=50,
+         font_name='Inter', font_size_px=36, font_weight=900,
+         hex_color='444444', letter_spacing_px=0)
+add_rect(slide, 120, 924, 290, 56, '111111', corner_radius=6)
+add_rect(slide, 134, 938, 28, 28, '10B981', corner_radius=6)
+add_text(slide, 'CR', x=139, y=942, w=20, h=20,
+         font_name='Inter', font_size_px=10, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'CLOUDRESOURCE YAML', x=172, y=938, w=221, h=28,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_rect(slide, 457, 924, 268, 56, '111111', corner_radius=6)
+add_rect(slide, 471, 938, 28, 28, '10B981', corner_radius=6)
+add_text(slide, 'TF', x=477, y=942, w=20, h=20,
+         font_name='Inter', font_size_px=10, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'OPENTOFU JOB RUNS', x=509, y=938, w=199, h=28,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_rect(slide, 772, 924, 292, 56, '111111', corner_radius=6)
+add_rect(slide, 786, 938, 28, 28, '10B981', corner_radius=6)
+add_text(slide, '\u2713', x=791, y=942, w=18, h=20,
+         font_name='Inter', font_size_px=12, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+add_text(slide, 'AZURE + GITHUB READY', x=824, y=938, w=223, h=28,
+         font_name='Inter', font_size_px=16, font_weight=800,
+         hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# S9-04 — Terranetes Takeaway
+# ═══════════════════════════════════════════════════════════════════════════════
+slide = new_slide()
+add_rect(slide, 0, 0, 1920, 1080, 'FFFFFF')
+add_rect(slide, 0, 0, 8, 1080, '000000')
+add_rect(slide, 1720, 1072, 200, 8, '000000')
+add_text(slide, 'TERRA',
+         x=360, y=200, w=1488, h=557,
+         font_name='Inter', font_size_px=460, font_weight=900,
+         hex_color='000000', letter_spacing_px=0, opacity=0.03)
+add_rect(slide, 120, 120, 14, 14, '888888')
+add_text(slide, '09 / TERRANETES',
+         x=150, y=120, w=600, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='888888', letter_spacing_px=4, extra_nudge_y=5)
+add_text(slide, 'MEET TEAMS WHERE THEY ARE.',
+         x=120, y=277, w=1680, h=58,
+         font_name='Inter', font_size_px=64, font_weight=900,
+         hex_color='000000', letter_spacing_px=0)
+add_text(slide, 'THREE THINGS TERRANETES GETS RIGHT.',
+         x=120, y=341, w=1680, h=24,
+         font_name='Inter', font_size_px=20, font_weight=600,
+         hex_color='AAAAAA', letter_spacing_px=1, extra_nudge_y=5)
+_s904_cards = [
+    (518, 'F0F0F0', '1', '10B981', 'NO REWRITE REQUIRED',
+     'Existing Terraform modules work as-is. Teams keep writing HCL. The platform wraps it.'),
+    (610, 'E0E0E0', '2', '10B981', 'POLICY GATES BUILT IN',
+     'Require approval before any apply. Restrict modules. Enforce cost controls \u2014 in Kubernetes, not CI scripts.'),
+    (702, 'F0F0F0', '3', '10B981', 'GRADUAL MIGRATION PATH',
+     'Start here today. Migrate specific resources to ASO or Crossplane as they mature \u2014 driven by real need.'),
+]
+for _cy, _bg, _num, _icon_col, _title, _desc in _s904_cards:
+    add_rect(slide, 120, _cy, 1680, 84, _bg)
+    add_rect(slide, 144, _cy+24, 36, 36, _icon_col, corner_radius=6)
+    add_text(slide, _num, x=155, y=_cy+34, w=16, h=20,
+             font_name='Inter', font_size_px=16, font_weight=700,
+             hex_color='FFFFFF', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _title, x=200, y=_cy+20, w=1460, h=22,
+             font_name='Inter', font_size_px=18, font_weight=800,
+             hex_color='000000', letter_spacing_px=0, extra_nudge_y=5)
+    add_text(slide, _desc, x=200, y=_cy+46, w=1460, h=32,
+             font_name='Inter', font_size_px=15, font_weight=400,
+             hex_color='444444', letter_spacing_px=0, word_wrap=True)
+add_rect(slide, 120, 939, 1680, 41, '111111')
+add_text(slide, 'NO EXISTING TERRAFORM?',
+         x=144, y=951, w=235, h=17,
+         font_name='Inter', font_size_px=14, font_weight=700,
+         hex_color='FFFFFF', letter_spacing_px=2, extra_nudge_y=5)
+add_text(slide, '\u2192  START DIRECTLY WITH ASO OR CROSSPLANE',
+         x=395, y=951, w=500, h=17,
+         font_name='Inter', font_size_px=14, font_weight=600,
+         hex_color='888888', letter_spacing_px=1, extra_nudge_y=5)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
