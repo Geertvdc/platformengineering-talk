@@ -350,12 +350,12 @@ cat demos/crossplane/composition/appteam/composition-appteam.yaml
 **Show it running:**
 
 ```bash
-kubectl -n crossplane-appteam-demo get appteam techorama-team
+kubectl -n crossplane-appteam-demo get appteam azurefest-team
 # SYNCED=True   READY=True
 
-kubectl get resourcegroup   # Azure RG: rg-team-techorama
-kubectl get account         # Azure Storage: stteamtechorama
-kubectl get repository.repo.github.upbound.io   # GitHub: techorama-platform-infra
+kubectl get resourcegroup   # Azure RG: rg-team-azurefest
+kubectl get account         # Azure Storage: stteamazurefest
+kubectl get repository.repo.github.upbound.io   # GitHub: azurefest-platform-infra
 ```
 
 > _"The developer wrote ten lines. Crossplane created an Azure Resource Group,
@@ -366,9 +366,9 @@ kubectl get repository.repo.github.upbound.io   # GitHub: techorama-platform-inf
 |---|--------|-----------------|
 | 1 | `cat samples/appteam/appteam.yaml` | 10 lines: `teamName` + `githubOrg` |
 | 2 | `cat composition/appteam/composition-appteam.yaml` | Three sections: RG, Account, GitHub repo |
-| 3 | `kubectl -n crossplane-appteam-demo get appteam techorama-team` | `SYNCED=True READY=True` |
+| 3 | `kubectl -n crossplane-appteam-demo get appteam azurefest-team` | `SYNCED=True READY=True` |
 | 4 | `kubectl get resourcegroup,account` | Azure RG + Storage Account live |
-| 5 | GitHub → `Geertvdc/techorama-platform-infra` | Private repo exists |
+| 5 | GitHub → `Geertvdc/azurefest-platform-infra` | Private repo exists |
 
 ---
 
@@ -409,7 +409,7 @@ Watch the UI update: **yellow** (Progressing — Crossplane is reconciling) →
 
 ```bash
 # Watch claim status
-kubectl -n crossplane-appteam-demo get appteam techorama-team -w
+kubectl -n crossplane-appteam-demo get appteam azurefest-team -w
 
 # Watch all managed resources at once
 kubectl get managed -w

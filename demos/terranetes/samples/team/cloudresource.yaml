@@ -9,7 +9,7 @@
 apiVersion: terraform.appvia.io/v1alpha1
 kind: CloudResource
 metadata:
-  name: techorama-team
+  name: azurefest-team
   namespace: terranetes-demo
   annotations:
     argocd.argoproj.io/sync-wave: "3"
@@ -24,11 +24,11 @@ spec:
   enableAutoApproval: true
 
   variables:
-    team_name: techorama-demo
+    team_name: azurefest-demo
     environment: dev
     location: westeurope
     github_org: Geertvdc
     github_repo_visibility: public
 
   writeConnectionSecretToRef:
-    name: techorama-team-outputs
+    name: azurefest-team-outputs

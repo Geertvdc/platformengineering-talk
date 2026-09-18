@@ -177,7 +177,7 @@ kubectl get jobs -n terranetes-system
 
 # Stream logs from the running job
 kubectl logs -n terranetes-system \
-  -l terraform.appvia.io/configuration=techorama-team-fth7r --tail=100 -f
+  -l terraform.appvia.io/configuration=azurefest-team-fth7r --tail=100 -f
 ```
 
 > _"Terranetes spawned a Job that runs `tofu plan` then `tofu apply`. The state is
@@ -190,10 +190,10 @@ kubectl logs -n terranetes-system \
 
 ```bash
 # Azure Resource Group
-az group show --name rg-techorama-demo-dev --query name -o tsv
+az group show --name rg-azurefest-demo-dev --query name -o tsv
 
 # GitHub repository
-gh repo view Geertvdc/techorama-demo-platform-infra
+gh repo view Geertvdc/azurefest-demo-platform-infra
 ```
 
 > _"One CloudResource YAML. Two providers. Two cloud resources. The same
@@ -203,7 +203,7 @@ gh repo view Geertvdc/techorama-demo-platform-infra
 Show the outputs stored in Kubernetes:
 
 ```bash
-kubectl get secret techorama-team-outputs -n terranetes-demo -o yaml
+kubectl get secret azurefest-team-outputs -n terranetes-demo -o yaml
 ```
 
 ---

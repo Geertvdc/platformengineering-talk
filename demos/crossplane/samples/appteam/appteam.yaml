@@ -1,10 +1,10 @@
 apiVersion: platform.demo.io/v1alpha1
 kind: AppTeam
 metadata:
-  name: techorama-team2
+  name: azurefest-team2
   namespace: crossplane-appteam-demo
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
-  teamName: techorama2
+  teamName: azurefest2
   githubOrg: Geertvdc
