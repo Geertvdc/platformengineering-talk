@@ -26,7 +26,7 @@ Switch to Argo CD UI → `gitops-demo` goes OutOfSync (red) → auto-heals back 
 ## DEMO 2 — ASO
 
 ```bash
-git add demos/aso/samples/storageaccount.yaml
+git mv demos/aso/samples/storageaccount.yaml.nodeploy demos/aso/samples/storageaccount.yaml
 git commit -m "demo: add storage account"
 git push
 
@@ -53,7 +53,7 @@ kubectl get account
 # AppTeam — multi-cloud
 cat demos/crossplane/samples/appteam/appteam.yaml
 cat demos/crossplane/composition/appteam/composition-appteam.yaml
-kubectl -n crossplane-appteam-demo get appteam azurefest-team
+kubectl -n crossplane-appteam-demo get appteam azurefest-team2
 kubectl get resourcegroup,account
 kubectl get repository.repo.github.upbound.io
 
@@ -61,7 +61,7 @@ kubectl get repository.repo.github.upbound.io
 kubectl apply -f demos/crossplane/bootstrap/argocd-cm-crossplane-health.yaml
 kubectl rollout restart -n argocd deploy/argocd-repo-server
 # UI updates: yellow (Progressing) → green (Healthy)
-kubectl -n crossplane-appteam-demo get appteam azurefest-team -w
+kubectl -n crossplane-appteam-demo get appteam azurefest-team2 -w
 ```
 
 ---
@@ -99,7 +99,7 @@ cat demos/terranetes/module/main.tf
 kubectl get cloudresource -n terranetes-demo
 kubectl get jobs -n terranetes-system
 kubectl logs -n terranetes-system \
-  -l terraform.appvia.io/configuration=azurefest-team-fth7r --tail=100 -f
+  -l terraform.appvia.io/cloud-resource-name=azurefest-team --tail=100 -f
 
 # Verify results
 az group show --name rg-azurefest-demo-dev --query name -o tsv
