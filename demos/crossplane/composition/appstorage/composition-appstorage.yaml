@@ -1,17 +1,4 @@
-# Platform Composition: AppStorage → Azure Storage Account + Blob Container
-#
-# Platform team's implementation of the AppStorage API. Developers never edit
-# this file — they only write an AppStorage claim with name + size.
-#
-# Platform opinions encoded here (NOT exposed to developers):
-#   - Target resource group:   rg-platform-demo
-#   - Azure region:            westeurope
-#   - Naming prefix:           "st" + spec.name  (e.g. "stmyapp")
-#   - Container name:          spec.name + "-data"
-#   - Mandatory tags:          managed-by=crossplane, platform=true,
-#                              environment=demo, source=gitops
-#   - Security baseline:       httpsTrafficOnly, TLS 1.2 minimum
-#   - Replication tier:        small=LRS, medium=GRS, large=RAGRS
+# Composition is the implementation of the API that does the realisation of things requested in the API.
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:

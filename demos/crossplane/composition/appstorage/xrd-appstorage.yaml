@@ -1,16 +1,4 @@
-# Platform API: AppStorage
-#
-# This XRD defines the developer-facing abstraction. Developers create
-# AppStorage *claims* (namespaced); Crossplane creates an XAppStorage
-# *composite* (cluster-scoped) and the underlying Azure resources.
-#
-# Developer-visible fields:
-#   spec.name  — logical name; used to derive Azure resource names
-#   spec.size  — small | medium | large (maps to LRS / GRS / RAGRS)
-#
-# Everything else (RG, location, tags, naming prefix, TLS settings) is
-# encoded in the Composition — invisible to developers.
-apiVersion: apiextensions.crossplane.io/v1
+# XRD is a custom api your developers can request
 kind: CompositeResourceDefinition
 metadata:
   name: xappstorages.platform.demo.io
