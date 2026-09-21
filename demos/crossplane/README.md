@@ -256,8 +256,10 @@ kubectl get crd | grep storage.azure.upbound.io
 
 ```bash
 # Show a live managed resource and its status
-kubectl get account    # Azure Storage Account managed resource
-kubectl get resourcegroup
+# (fully-qualified: provider-family-azure also registers namespaced
+# ResourceGroup/Account CRDs, so the bare short names are ambiguous)
+kubectl get account.storage.azure.upbound.io    # Azure Storage Account managed resource
+kubectl get resourcegroup.azure.upbound.io
 kubectl get repository.repo.github.upbound.io
 ```
 
@@ -319,7 +321,7 @@ kubectl get managed | grep demoapp
 | 1 | `cat samples/appstorage/appstorage.yaml` | 11 lines: `name` + `size` only |
 | 2 | `cat composition/appstorage/composition-appstorage.yaml` | Platform-owned: tags, naming, RG, TLS |
 | 3 | `kubectl -n crossplane-appstorage-demo get appstorage` | `SYNCED=True READY=True` |
-| 4 | `kubectl get account` | Managed resource `stdemoapp` visible |
+| 4 | `kubectl get account.storage.azure.upbound.io` | Managed resource `stdemoapp` visible |
 | 5 | Azure Portal | Storage Account with `managed-by=crossplane` tag |
 
 ---
@@ -350,12 +352,12 @@ cat demos/crossplane/composition/appteam/composition-appteam.yaml
 **Show it running:**
 
 ```bash
-kubectl -n crossplane-appteam-demo get appteam azurefest-team
+kubectl -n crossplane-appteam-demo get appteam azurefest-team2
 # SYNCED=True   READY=True
 
-kubectl get resourcegroup   # Azure RG: rg-team-azurefest
-kubectl get account         # Azure Storage: stteamazurefest
-kubectl get repository.repo.github.upbound.io   # GitHub: azurefest-platform-infra
+kubectl get resourcegroup.azure.upbound.io   # Azure RG: rg-team-azurefest2
+kubectl get account.storage.azure.upbound.io # Azure Storage: stteamazurefest2
+kubectl get repository.repo.github.upbound.io   # GitHub: azurefest2-platform-infra
 ```
 
 > _"The developer wrote ten lines. Crossplane created an Azure Resource Group,
@@ -366,9 +368,9 @@ kubectl get repository.repo.github.upbound.io   # GitHub: azurefest-platform-inf
 |---|--------|-----------------|
 | 1 | `cat samples/appteam/appteam.yaml` | 10 lines: `teamName` + `githubOrg` |
 | 2 | `cat composition/appteam/composition-appteam.yaml` | Three sections: RG, Account, GitHub repo |
-| 3 | `kubectl -n crossplane-appteam-demo get appteam azurefest-team` | `SYNCED=True READY=True` |
-| 4 | `kubectl get resourcegroup,account` | Azure RG + Storage Account live |
-| 5 | GitHub → `Geertvdc/azurefest-platform-infra` | Private repo exists |
+| 3 | `kubectl -n crossplane-appteam-demo get appteam azurefest-team2` | `SYNCED=True READY=True` |
+| 4 | `kubectl get resourcegroup.azure.upbound.io,account.storage.azure.upbound.io` | Azure RG + Storage Account live |
+| 5 | GitHub → `Geertvdc/azurefest2-platform-infra` | Private repo exists |
 
 ---
 
@@ -440,7 +442,7 @@ kubectl get appstorage,appteam -A
 kubectl get managed
 
 # Azure + GitHub resources side by side
-kubectl get resourcegroup,account,repository.repo.github.upbound.io
+kubectl get resourcegroup.azure.upbound.io,account.storage.azure.upbound.io,repository.repo.github.upbound.io
 
 # Full XR status (shows all composed resource refs)
 kubectl describe xappstorage

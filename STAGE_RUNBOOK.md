@@ -45,16 +45,19 @@ kubectl get providers.pkg.crossplane.io
 kubectl get xrd
 
 # AppStorage — show the abstraction
+# (kind names below are fully-qualified: provider-family-azure also registers
+# namespaced ResourceGroup/Account CRDs, so bare "resourcegroup"/"account"
+# resolve ambiguously and return nothing)
 cat demos/crossplane/samples/appstorage/appstorage.yaml
 cat demos/crossplane/composition/appstorage/composition-appstorage.yaml
 kubectl -n crossplane-appstorage-demo get appstorage
-kubectl get account
+kubectl get account.storage.azure.upbound.io
 
 # AppTeam — multi-cloud
 cat demos/crossplane/samples/appteam/appteam.yaml
 cat demos/crossplane/composition/appteam/composition-appteam.yaml
 kubectl -n crossplane-appteam-demo get appteam azurefest-team2
-kubectl get resourcegroup,account
+kubectl get resourcegroup.azure.upbound.io,account.storage.azure.upbound.io
 kubectl get repository.repo.github.upbound.io
 
 # Lua health check reveal — show Argo CD UI first (all green, no real state)
